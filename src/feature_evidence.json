@@ -1,0 +1,47 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-remove-the-custom-interactive-cursor-from-the-react-app-and-restore-the-normal-system-cursor-across-all-routes",
+      "featureTitle": "Remove the custom interactive cursor from the React app and restore the normal system cursor across all routes.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/cursor/CustomCursor.tsx",
+        "frontend/src/hooks/useCustomCursor.ts",
+        "frontend/src/index.css"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-29"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-remove-the-custom-interactive-cursor-from-the-standalone-landing-page-and-restore-the-normal-system-cursor-without-breaking-existing-standalone-interactions",
+      "featureTitle": "Remove the custom interactive cursor from the standalone landing page and restore the normal system cursor without breaking existing standalone interactions.",
+      "files": [
+        "frontend/static/growwithtutor-standalone/script.js",
+        "frontend/static/growwithtutor-standalone/styles.css"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-30"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

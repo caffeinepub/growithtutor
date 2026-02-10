@@ -1,0 +1,320 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 19,
+  "summary": "Build a modern, attractive, SEO-friendly GrowithTutor website from scratch (static HTML/CSS/JS, multi-page) while keeping the same website name and logo, adding separate Student/Teacher enquiry forms connected to WhatsApp/phone and also sending enquiries to growithtutor@gmail.com, plus blogs/admin posting capability, FAQs, social links (Facebook + Instagram), and rich imagery.",
+  "architectural_notes": [
+    "Social links updated/confirmed: Facebook https://www.facebook.com/share/16pFZUt359/ and Instagram https://www.instagram.com/growithtutor?igsh=aWFiMm50cXhxdWh1",
+    "Enquiry handling should include email delivery to growithtutor@gmail.com (in addition to WhatsApp/phone CTAs).",
+    "Remove/disable the custom interactive cursor effect/assets and use a normal, clean, elegant default cursor aesthetic across the site."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-create-an-upgraded-modern-responsive-marketing-website-experience-for-growwithtutor-within-the-existing-react-app-including-a-clear-landing-page-structure-hero-value-proposition-services-offerings-how-it-works-testimonials-faq-and-contact-section-with-sensible-placeholder-copy-that-can-be-easily-replaced",
+      "title": "Create an upgraded, modern, responsive marketing website experience for GrowWithTutor within the existing React app, including a clear landing page structure (hero, value proposition, services/offerings, how it works, testimonials, FAQ, and contact section) with sensible placeholder copy that can be easily replaced.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-consistent-distinctive-visual-theme-for-the-upgraded-site-colors-typography-spacing-and-component-styling-and-apply-it-across-all-pages-sections-avoid-a-blue-purple-primary-palette",
+      "title": "Implement a consistent, distinctive visual theme for the upgraded site (colors, typography, spacing, and component styling) and apply it across all pages/sections; avoid a blue/purple primary palette.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-site-content-easy-to-update-by-centralizing-editable-marketing-copy-and-lists-services-faqs-testimonials-into-a-small-set-of-frontend-configuration-objects-files-and-wire-the-ui-to-render-from-those-structures",
+      "title": "Make site content easy to update by centralizing editable marketing copy and lists (services, FAQs, testimonials) into a small set of frontend configuration objects/files, and wire the UI to render from those structures.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-improve-baseline-ux-quality-accessibility-performance-and-seo-friendly-metadata-for-the-upgraded-marketing-experience-document-title-description-semantic-headings-keyboard-navigability-color-contrast",
+      "title": "Improve baseline UX quality: accessibility, performance, and SEO-friendly metadata for the upgraded marketing experience (document title/description, semantic headings, keyboard navigability, color contrast).",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-contact-section-with-a-simple-form-ui-name-email-message-and-client-side-validation-for-now-submission-should-display-a-clear-success-state-and-not-require-backend-persistence-unless-added-later",
+      "title": "Add a contact section with a simple form UI (name, email, message) and client-side validation; for now, submission should display a clear success state and not require backend persistence unless added later.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-required-generated-images-as-static-assets-under-frontend-public-assets-generated-and-use-them-in-the-upgraded-ui-e-g-logo-in-header-footer-hero-illustration-in-the-hero-section",
+      "title": "Add the required generated images as static assets under frontend/public/assets/generated and use them in the upgraded UI (e.g., logo in header/footer, hero illustration in the hero section).",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-standalone-no-react-version-of-the-current-marketing-landing-page-as-separated-files-html-css-js-that-the-user-can-manually-assemble-and-run-directly-in-a-browser",
+      "title": "Add a standalone, no-React version of the current marketing landing page as separated files (HTML + CSS + JS) that the user can manually assemble and run directly in a browser.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-standalone-static-page-references-existing-generated-image-assets-from-frontend-public-assets-generated-logo-hero-illustration-and-feature-icons-using-relative-paths-that-work-when-running-the-html-file-directly",
+      "title": "Ensure the standalone static page references existing generated image assets from frontend/public/assets/generated (logo, hero illustration, and feature icons) using relative paths that work when running the HTML file directly.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-short-readme-next-to-the-standalone-files-explaining-exactly-how-to-run-the-separated-parts-locally-including-any-optional-one-line-local-server-command-if-needed-and-which-files-to-edit-for-copy-styles",
+      "title": "Add a short README next to the standalone files explaining exactly how to run the separated parts locally (including any optional one-line local server command if needed) and which files to edit for copy/styles.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-new-from-scratch-growwithtutor-website-experience-inside-the-existing-react-app-that-keeps-the-website-name-growwithtutor-and-uses-the-existing-logo-file-unchanged-while-upgrading-the-overall-ui-to-look-modern-stylish-attractive-and-responsive",
+      "title": "Create a new, from-scratch GrowWithTutor website experience inside the existing React app that keeps the website name “GrowWithTutor” and uses the existing logo file unchanged, while upgrading the overall UI to look modern, stylish, attractive, and responsive.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-clear-navigation-and-page-structure-for-a-multi-page-marketing-site-including-at-minimum-home-student-form-teacher-form-blogs-terms-conditions-and-a-contact-section-page-ensure-users-can-easily-find-each-area-without-confusion",
+      "title": "Add clear navigation and page structure for a multi-page marketing site including at minimum: Home, Student Form, Teacher Form, Blogs, Terms & Conditions, and a Contact section/page; ensure users can easily find each area without confusion.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-dedicated-student-enquiry-form-with-client-side-validation-and-the-following-selectable-fields-subject-s-class-grade-board-language-medium-and-mode-online-offline-plus-basic-contact-fields-e-g-name-phone-optional-message-on-submit-the-user-must-be-guided-to-contact-via-whatsapp-phone-using-the-provided-numbers-9212374300-and-7011090796",
+      "title": "Implement a dedicated Student Enquiry Form with client-side validation and the following selectable fields: Subject(s), Class/Grade, Board, Language/Medium, and Mode (Online/Offline), plus basic contact fields (e.g., name, phone, optional message). On submit, the user must be guided to contact via WhatsApp/phone using the provided numbers 9212374300 and 7011090796.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-dedicated-teacher-registration-enquiry-form-with-client-side-validation-and-fields-appropriate-for-teachers-e-g-name-phone-subjects-they-can-teach-classes-levels-boards-language-medium-online-offline-availability-experience-and-on-submit-guide-them-to-contact-via-whatsapp-phone-using-9212374300-and-7011090796",
+      "title": "Implement a dedicated Teacher Registration / Enquiry Form with client-side validation and fields appropriate for teachers (e.g., name, phone, subjects they can teach, classes/levels, boards, language/medium, online/offline availability, experience), and on submit guide them to contact via WhatsApp/phone using 9212374300 and 7011090796.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-about-trust-style-section-that-prominently-highlights-20-years-experienced-tutors-1500-students-and-500-teachers-include-a-reviews-testimonials-section-that-looks-professional-and-can-be-edited-from-centralized-content-config",
+      "title": "Add an “About/Trust” style section that prominently highlights: 20+ years experienced tutors, 1500+ students, and 500+ teachers; include a reviews/testimonials section that looks professional and can be edited from centralized content/config.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-faqs-tailored-to-growwithtutor-offline-online-tutoring-for-all-subjects-classes-and-ensure-each-faq-item-is-expandable-collapsible-so-that-everything-is-explained-when-the-topic-is-clicked",
+      "title": "Add FAQs tailored to GrowWithTutor (offline + online tutoring for all subjects/classes), and ensure each FAQ item is expandable/collapsible so that “everything is explained when the topic is clicked.”",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-social-media-links-icons-so-that-clicking-them-navigates-directly-to-the-provided-facebook-page-and-an-instagram-profile-link-to-be-provided-by-the-user-if-not-already-available-use-the-exact-provided-facebook-url-https-www-facebook-com-share-1btxshkodv",
+      "title": "Update social media links/icons so that clicking them navigates directly to the provided Facebook page and an Instagram profile link (to be provided by the user if not already available). Use the exact provided Facebook URL: https://www.facebook.com/share/1BTXShKodv/",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-an-admin-managed-blogs-feature-authenticated-admin-can-create-edit-publish-unpublish-and-delete-blog-posts-public-users-can-view-the-blog-list-and-individual-blog-post-pages-admin-access-must-use-internet-identity-and-an-allowlist-of-admin-principals",
+      "title": "Implement an admin-managed Blogs feature: authenticated admin can create, edit, publish/unpublish, and delete blog posts; public users can view the blog list and individual blog post pages. Admin access must use Internet Identity and an allowlist of admin principals.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-terms-conditions-page-with-clear-editable-placeholder-content-in-english-linked-from-the-footer-navigation-and-ensure-it-is-seo-friendly-title-meta-description",
+      "title": "Add a Terms & Conditions page with clear, editable placeholder content in English, linked from the footer/navigation, and ensure it is SEO-friendly (title/meta description).",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-improve-seo-and-discoverability-across-the-new-pages-set-unique-titles-meta-descriptions-per-route-use-semantic-headings-and-ensure-fast-accessible-ui-keyboard-navigable-sufficient-contrast",
+      "title": "Improve SEO and discoverability across the new pages: set unique titles/meta descriptions per route, use semantic headings, and ensure fast, accessible UI (keyboard navigable, sufficient contrast).",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-short-what-we-need-from-you-checklist-as-a-readme-or-an-in-app-admin-setup-page-describing-exactly-what-inputs-are-required-to-finalize-the-build-1-the-logo-file-if-different-from-the-current-generated-asset-2-the-internet-identity-principal-s-to-grant-admin-access-3-the-exact-instagram-url-4-preferred-list-values-for-subjects-classes-boards-languages-and-5-preferred-contact-email-address-to-display-optional",
+      "title": "Create a short “What we need from you” checklist (as a README or an in-app admin/setup page) describing exactly what inputs are required to finalize the build: (1) the logo file if different from the current generated asset, (2) the Internet Identity principal(s) to grant admin access, (3) the exact Instagram URL, (4) preferred list values for Subjects/Classes/Boards/Languages, and (5) preferred contact email/address to display (optional).",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-site-s-social-links-configuration-to-use-the-exact-provided-urls-facebook-https-www-facebook-com-share-16pfzut359-instagram-https-www-instagram-com-growithtutor-igsh-awfimm50cxhxdwh1-ensure-these-links-are-used-everywhere-the-app-renders-social-icons-links-e-g-footer-and-any-other-marketing-sections",
+      "title": "Update the site’s social links configuration to use the exact provided URLs:\n- Facebook: https://www.facebook.com/share/16pFZUt359/\n- Instagram: https://www.instagram.com/growithtutor?igsh=aWFiMm50cXhxdWh1\nEnsure these links are used everywhere the app renders social icons/links (e.g., footer and any other marketing sections).",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-use-the-uploaded-image-file-untitled-design-7-png-as-the-growwithtutor-logo-across-the-react-app-and-the-standalone-static-landing-page-by-updating-replacing-the-existing-logo-asset-under-frontend-public-assets-generated-and-ensuring-all-existing-logo-references-display-the-updated-logo",
+      "title": "Use the uploaded image file (Untitled design (7).png) as the GrowWithTutor logo across the React app and the standalone static landing page by updating/replacing the existing logo asset under frontend/public/assets/generated and ensuring all existing logo references display the updated logo.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-custom-interactive-cursor-design-across-the-react-app-routes-all-pages-rendered-under-frontend-src-app-tsx-replacing-the-default-cursor-on-desktop-devices-with-a-styled-cursor-element-that-follows-the-pointer-and-visually-reacts-to-hovering-interactive-elements-links-buttons-form-inputs-textareas-selects-and-elements-with-role-button",
+      "title": "Implement a custom interactive cursor design across the React app routes (all pages rendered under `frontend/src/App.tsx`), replacing the default cursor on desktop devices with a styled cursor element that follows the pointer and visually reacts to hovering interactive elements (links, buttons, form inputs, textareas, selects, and elements with `role=\"button\"`).",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-same-interactive-cursor-design-behavior-to-the-standalone-static-landing-page-frontend-static-growwithtutor-standalone-index-html-using-only-its-existing-separated-files-styles-css-script-js-ensuring-it-works-when-opened-directly-in-a-browser-and-does-not-break-any-existing-standalone-interactions-mobile-menu-faq-accordion-smooth-scrolling-contact-form-success-state",
+      "title": "Add the same interactive cursor design behavior to the standalone static landing page (`frontend/static/growwithtutor-standalone/index.html`) using only its existing separated files (`styles.css` + `script.js`), ensuring it works when opened directly in a browser and does not break any existing standalone interactions (mobile menu, FAQ accordion, smooth scrolling, contact form success state).",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-custom-cursor-visuals-across-the-react-app-to-match-the-uploaded-cursor-design-image-cursor-images-jpg-while-keeping-the-existing-interactive-behavior-follows-pointer-on-fine-pointer-devices-hover-reactive-on-links-buttons-inputs-textareas-selects-role-button",
+      "title": "Update the custom cursor visuals across the React app to match the uploaded cursor design image (\"cursor images.jpg\"), while keeping the existing interactive behavior (follows pointer on fine-pointer devices; hover-reactive on links/buttons/inputs/textareas/selects/[role=\"button\"]).",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-standalone-landing-page-custom-cursor-to-use-the-same-uploaded-cursor-design-image-and-keep-all-existing-standalone-interactions-working-mobile-menu-toggle-faq-accordion-smooth-scrolling-contact-form-success-state",
+      "title": "Update the standalone landing page custom cursor to use the same uploaded cursor design image and keep all existing standalone interactions working (mobile menu toggle, FAQ accordion, smooth scrolling, contact form success state).",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-existing-custom-cursor-image-assets-to-1-remove-the-white-background-using-true-transparency-alpha-channel-and-2-flip-rotate-the-pointed-tip-so-the-cursor-visually-feels-like-a-real-pointer-this-must-apply-to-both-the-react-app-cursor-and-the-standalone-landing-page-cursor-they-reference-the-same-generated-assets",
+      "title": "Update the existing custom cursor image assets to (1) remove the white background using true transparency (alpha channel) and (2) flip/rotate the pointed tip so the cursor visually feels like a real pointer. This must apply to both the React app cursor and the standalone landing page cursor (they reference the same generated assets).",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-existing-flame-sword-cursor-image-assets-to-remove-the-white-background-using-true-transparency-alpha-channel-so-the-cursor-renders-without-a-white-box-in-both-the-react-app-and-the-standalone-landing-page",
+      "title": "Update the existing flame-sword cursor image assets to remove the white background using true transparency (alpha channel) so the cursor renders without a white box in both the React app and the standalone landing page.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-custom-interactive-cursor-from-the-react-app-and-restore-the-normal-system-cursor-across-all-routes",
+      "title": "Remove the custom interactive cursor from the React app and restore the normal system cursor across all routes.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-custom-interactive-cursor-from-the-standalone-landing-page-and-restore-the-normal-system-cursor-without-breaking-existing-standalone-interactions",
+      "title": "Remove the custom interactive cursor from the standalone landing page and restore the normal system cursor without breaking existing standalone interactions.",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Upgrade/improve the existing website growithtutor.com (scope/details TBD).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Provide the website code in separated parts/files (instead of a single HTML file) so the user can assemble/run it themselves.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Create a complete from-scratch modern, stylish, responsive static website (HTML/CSS/JS) for GrowithTutor, keeping the same site name and using the existing logo unchanged.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Add separate, clearly differentiated Student Form and Teacher Form with fields/options (subjects, classes, boards, medium/language, online/offline mode) and clear submit success UX.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Integrate contact actions so form submissions and CTAs connect users directly via WhatsApp/phone to 9212374300 and 7011090796.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Add a simple admin-friendly blog publishing workflow/page so the user can post daily updates easily (admin access).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Add dedicated pages/sections for FAQs, reviews/testimonials, key stats (20+ years experience, 1500+ students, 500+ teachers), and a Terms & Conditions page.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Add social media icons/links (Facebook provided, plus Instagram) that navigate directly to the respective profiles/pages.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Add many attractive images across the site (hero/sections) and ensure the overall build is SEO-friendly (metadata, headings, structure).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Send Student/Teacher enquiry form submissions to Gmail (growithtutor@gmail.com) in addition to WhatsApp/phone actions.",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "GrowithTutor",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

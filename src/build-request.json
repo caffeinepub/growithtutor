@@ -1,0 +1,65 @@
+{
+  "kind": "build_request",
+  "title": "Remove custom flame-sword cursor and restore a normal elegant cursor",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-29",
+      "text": "Remove the custom interactive cursor from the React app and restore the normal system cursor across all routes.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "remove it keep a normal asthetic and elegant cursor"
+        ]
+      },
+      "acceptanceCriteria": [
+        "`CustomCursor` is no longer rendered in the global React layout (no custom cursor overlay elements are mounted).",
+        "Global CSS no longer forces `cursor: none` for desktop devices; standard cursor behavior is restored (e.g., pointer cursor on links/buttons).",
+        "No cursor-follow animation runs on mousemove in the React app, and there are no leftover visual artifacts (ring/glow) on any page."
+      ]
+    },
+    {
+      "id": "REQ-30",
+      "text": "Remove the custom interactive cursor from the standalone landing page and restore the normal system cursor without breaking existing standalone interactions.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "remove it keep a normal asthetic and elegant cursor"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Standalone CSS no longer forces `cursor: none` and no longer defines/depends on `.custom-cursor-dot` / `.custom-cursor-ring` for cursor behavior.",
+        "Standalone JS no longer creates or animates custom cursor elements (the `initCustomCursor()` behavior is removed/disabled).",
+        "Mobile menu toggle, FAQ accordion, smooth scrolling, and contact-form success state continue to work when opening `frontend/static/growwithtutor-standalone/index.html` directly in a browser."
+      ]
+    }
+  ],
+  "constraints": [
+    "Frontend immutable paths must not be edited: `frontend/src/hooks/useInternetIdentity.ts`, `frontend/src/hooks/useInternetIdentity.tsx`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, and `frontend/src/components/ui`.",
+    "Keep backend as single-actor Motoko; no backend changes are required for this request."
+  ],
+  "nonGoals": [
+    "Do not introduce a new custom cursor design or cursor image assets; revert to standard system cursor behavior.",
+    "Do not redesign the marketing site UI/branding beyond cursor behavior changes."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}

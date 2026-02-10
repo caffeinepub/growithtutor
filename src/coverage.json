@@ -1,0 +1,61 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-09T17:21:09.832Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 2,
+    "implemented": 2,
+    "items": [
+      {
+        "id": "REQ-29",
+        "summary": "Remove the custom interactive cursor from the React app and restore the normal system cursor across all routes.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/index.css",
+          "frontend/src/components/cursor/CustomCursor.tsx",
+          "frontend/src/hooks/useCustomCursor.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/index.css",
+          "frontend/src/components/cursor/CustomCursor.tsx",
+          "frontend/src/hooks/useCustomCursor.ts"
+        ]
+      },
+      {
+        "id": "REQ-30",
+        "summary": "Remove the custom interactive cursor from the standalone landing page and restore the normal system cursor without breaking existing standalone interactions.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/static/growwithtutor-standalone/styles.css",
+          "frontend/static/growwithtutor-standalone/script.js"
+        ],
+        "matchedFiles": [
+          "frontend/static/growwithtutor-standalone/styles.css",
+          "frontend/static/growwithtutor-standalone/script.js"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/App.tsx",
+    "frontend/src/components/cursor/CustomCursor.tsx",
+    "frontend/src/hooks/useCustomCursor.ts",
+    "frontend/src/index.css",
+    "frontend/static/growwithtutor-standalone/script.js",
+    "frontend/static/growwithtutor-standalone/styles.css",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

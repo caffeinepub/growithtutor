@@ -1,0 +1,59 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Restore normal system cursor across React app and standalone landing page",
+  "requirements": [
+    {
+      "id": "REQ-29",
+      "summary": "Remove the React app custom flame-sword cursor overlay and restore normal system cursor behavior across all routes.",
+      "acceptanceCriteria": [
+        "`CustomCursor` is no longer rendered in the global React layout (no custom cursor overlay elements are mounted).",
+        "Global CSS no longer forces `cursor: none` for desktop devices; standard cursor behavior is restored (e.g., pointer cursor on links/buttons).",
+        "No cursor-follow animation runs on mousemove in the React app, and there are no leftover visual artifacts (ring/glow) on any page."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Remove the global CustomCursor import and rendering from the Layout so no custom cursor overlay mounts on any route."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Remove the global custom cursor CSS block (including any `cursor: none !important` rules and `.custom-cursor-*` styles) to restore default system cursor and pointer behavior."
+        },
+        {
+          "path": "frontend/src/components/cursor/CustomCursor.tsx",
+          "operation": "delete",
+          "description": "Delete the CustomCursor component to prevent accidental reintroduction and ensure no overlay elements can be mounted."
+        },
+        {
+          "path": "frontend/src/hooks/useCustomCursor.ts",
+          "operation": "delete",
+          "description": "Delete the custom cursor hook to ensure no mousemove-driven animation logic remains in the React app."
+        }
+      ]
+    },
+    {
+      "id": "REQ-30",
+      "summary": "Remove the standalone landing page custom cursor CSS/JS while preserving existing standalone interactions.",
+      "acceptanceCriteria": [
+        "Standalone CSS no longer forces `cursor: none` and no longer defines/depends on `.custom-cursor-dot` / `.custom-cursor-ring` for cursor behavior.",
+        "Standalone JS no longer creates or animates custom cursor elements (the `initCustomCursor()` behavior is removed/disabled).",
+        "Mobile menu toggle, FAQ accordion, smooth scrolling, and contact-form success state continue to work when opening `frontend/static/growwithtutor-standalone/index.html` directly in a browser."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/static/growwithtutor-standalone/styles.css",
+          "operation": "modify",
+          "description": "Remove the standalone custom cursor styling section (including `cursor: none !important` and `.custom-cursor-dot` / `.custom-cursor-ring` rules) so the system cursor is used."
+        },
+        {
+          "path": "frontend/static/growwithtutor-standalone/script.js",
+          "operation": "modify",
+          "description": "Remove/disable `initCustomCursor()` (and its initialization call) so no custom cursor elements are created/animated, while keeping smooth scrolling, mobile menu, FAQ accordion, and contact form success behavior unchanged."
+        }
+      ]
+    }
+  ]
+}
