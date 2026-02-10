@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { CheckCircle2, Circle } from 'lucide-react';
 import { contactNumbers, socialLinks, adminAllowlist } from '../content/siteContent';
 import { SITE_NAME } from '../config/siteConfig';
+import { PUBLIC_DOMAIN, getPublicAssetUrl } from '../config/publicDomain';
 
 export default function SetupChecklistPage() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function SetupChecklistPage() {
     description: `Complete setup guide for ${SITE_NAME} website configuration.`,
   });
 
-  const logoUrl = 'https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png';
+  const logoUrl = getPublicAssetUrl('/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png');
 
   const checklistItems = [
     {
@@ -25,10 +26,16 @@ export default function SetupChecklistPage() {
       details: `Current site name: "${SITE_NAME}". Edit frontend/src/config/siteConfig.ts to change the SITE_NAME constant.`,
     },
     {
+      title: 'Public Domain',
+      description: 'Configure the public domain/hostname for external asset URLs and self-referential links.',
+      status: 'complete',
+      details: `Current domain: "${PUBLIC_DOMAIN}". Set VITE_PUBLIC_DOMAIN environment variable or edit frontend/src/config/publicDomain.ts. See DEPLOYMENT.md for details.`,
+    },
+    {
       title: 'Logo',
       description: 'Logo is configured and displayed in the header and footer.',
       status: 'complete',
-      details: `Logo configured via external URL: ${logoUrl}`,
+      details: `Logo configured via domain-relative URL: ${logoUrl}`,
     },
     {
       title: 'Contact Numbers (WhatsApp & Phone)',

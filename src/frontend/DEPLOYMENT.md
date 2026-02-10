@@ -52,3 +52,33 @@ This document describes how to build and deploy the GrowWithTutor application to
 
 To deploy to the Internet Computer mainnet:
 
+1. **Ensure you have cycles** for deployment (required for mainnet)
+
+2. **Deploy to mainnet**:
+   ```bash
+   dfx deploy --network ic
+   ```
+
+3. **Access your application** at the canister URL provided after deployment
+
+## Changing the Domain
+
+If you need to change the public domain/hostname for your application (e.g., from `growithtutor.com` to your own domain), follow these steps:
+
+### 1. DNS Configuration
+
+First, configure your DNS settings:
+- Point your domain to the Internet Computer canister URL
+- Set up appropriate CNAME or A records as required by your DNS provider
+- If using a custom domain with Internet Computer, follow the [IC custom domains guide](https://internetcomputer.org/docs/current/developer-docs/production/custom-domain/)
+
+### 2. Update React App Domain Configuration
+
+The React application uses a centralized domain configuration:
+
+**Primary configuration location**: `frontend/src/config/publicDomain.ts`
+
+You have two options to change the domain:
+
+**Option A: Environment Variable (Recommended)**
+Set the `VITE_PUBLIC_DOMAIN` environment variable:

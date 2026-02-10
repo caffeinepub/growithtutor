@@ -1,48 +1,44 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T15:22:28.013Z",
-  "summary": "REQ-1 appears implemented by updating the centralized contactNumbers in siteContent.ts to include the “+91 ” prefix. However, the diff summary provides no visible evidence that the standalone landing page contact numbers were updated (REQ-2) or that tel/sms/wa.me deep links were adjusted to strip non-digits after adding the prefix (REQ-3). Additionally, project tracking/summary files were modified without being requested.",
+  "generatedAt": "2026-02-10T15:30:43.252Z",
+  "summary": "Implemented a centralized frontend public-domain configuration (VITE_PUBLIC_DOMAIN + fallbacks), updated marketing header/footer logo URLs to use it, added a read-only Public Domain item to the setup checklist UI, and updated the standalone static landing page to use a single domain constant for asset URL construction. Deployment docs include a new \"Changing the Domain\" section but the provided diff snippet is truncated before confirming all required details.",
   "missing_requirements": [
     {
-      "id": "REQ-2",
-      "requirement": "Update the standalone (non-React) landing page contact numbers to include the \"+91 \" prefix everywhere they are displayed, and ensure the standalone page still generates a valid wa.me link by stripping non-digits.",
-      "reason": "The provided truncation of frontend/static/growwithtutor-standalone/script.js does not show any CONTENT.contact.whatsapp/CONTENT.contact.phone fields nor any wa.me link generation/normalization logic, so there is no evidence the numbers were updated or that non-digit stripping for wa.me is in place.",
-      "evidence": [
-        "frontend/static/growwithtutor-standalone/script.js (truncated)"
-      ]
-    },
-    {
       "id": "REQ-3",
-      "requirement": "Ensure phone/WhatsApp/SMS deep links (tel:, sms:, and https://wa.me/...) continue to work by using digit-only numbers after adding the “+91 ” prefix to stored numbers.",
-      "reason": "No diff evidence is shown for React components/pages where tel:, sms:, or wa.me links are constructed/used, and the standalone script truncation does not show digit-stripping logic. Therefore, it cannot be verified that deep links now contain only digits.",
+      "requirement": "Deployment documentation must explicitly list all project locations affected by a domain change (including the standalone landing page) and explain how to keep the React app domain setting and standalone landing page domain setting in sync.",
+      "reason": "The diff shows a new \"Changing the Domain\" section, but the visible content is truncated before it demonstrates (a) an explicit list of all affected locations and (b) explicit instructions to update/keep in sync the standalone landing page setting alongside the React app setting.",
       "evidence": [
-        "frontend-file-summaries.txt (does not show link construction changes)",
-        "frontend/static/growwithtutor-standalone/script.js (truncated)"
+        "frontend/DEPLOYMENT.md (truncated in diff summary)"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Updated project tracking/state metadata unrelated to the requested phone-number prefix changes.",
-      "reason": "The BuildRequest does not ask to modify any project state/tracking JSON; only frontend phone number display/link behavior is requested.",
+      "description": "Added/updated project tracking metadata (project_state.json) with AR items and statuses.",
+      "reason": "The BuildRequest does not ask for any project management/state JSON updates; this appears unrelated to the domain-reference change requirements.",
       "evidence": [
         "project_state.json"
       ]
     },
     {
-      "description": "Modified a generated/aggregated frontend file summary document.",
-      "reason": "The BuildRequest does not request updating documentation or summary inventory files; only code/content changes related to phone numbers are in scope.",
+      "description": "Introduced or modified a generated \"frontend-file-summaries.txt\" artifact describing many frontend files and features (including a new /admin/setup route mention).",
+      "reason": "The BuildRequest does not request adding summary artifacts or describing other marketing/site content changes; this file is not part of the requested domain-configuration work.",
       "evidence": [
         "frontend-file-summaries.txt"
       ]
     }
   ],
-  "confidence": 0.66,
+  "confidence": 0.62,
   "changed_files": [
     "frontend-file-summaries.txt",
-    "frontend/src/content/siteContent.ts",
-    "frontend/static/growwithtutor-standalone/script.js",
+    "frontend/DEPLOYMENT.md",
+    "frontend/src/components/marketing/MarketingFooter.tsx",
+    "frontend/src/components/marketing/MarketingHeader.tsx",
+    "frontend/src/config/publicDomain.ts",
+    "frontend/src/config/siteConfig.ts",
+    "frontend/src/pages/SetupChecklistPage.tsx",
+    "frontend/static/growwithtutor-standalone/index.html",
     "project_state.json"
   ]
 }

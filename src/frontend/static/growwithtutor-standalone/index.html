@@ -6,6 +6,52 @@
   <title>Growithtutor - Expert Tutoring for Classes 1-12</title>
   <meta name="description" content="Transform your learning journey with personalized one-on-one tutoring. Expert tutors for all subjects from Class 1 to 12.">
   <link rel="stylesheet" href="styles.css">
+  <script>
+    /**
+     * Standalone Landing Page Domain Configuration
+     * 
+     * IMPORTANT: This is the domain configuration for the standalone HTML page.
+     * To change the domain, update the STANDALONE_PUBLIC_DOMAIN constant below.
+     * 
+     * For the React app domain configuration, see:
+     * - frontend/src/config/publicDomain.ts
+     * - VITE_PUBLIC_DOMAIN environment variable
+     */
+    const STANDALONE_PUBLIC_DOMAIN = 'growithtutor.com';
+    
+    /**
+     * Construct a full URL to an asset hosted on the public domain.
+     */
+    function getStandaloneAssetUrl(path) {
+      const cleanPath = path.startsWith('/') ? path : '/' + path;
+      return 'https://' + STANDALONE_PUBLIC_DOMAIN + cleanPath;
+    }
+    
+    // Set logo URLs when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      const logoPath = '/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png';
+      const logoUrl = getStandaloneAssetUrl(logoPath);
+      
+      // Set header logo
+      const headerLogo = document.querySelector('.logo-image');
+      if (headerLogo) {
+        headerLogo.src = logoUrl;
+      }
+      
+      // Set footer logo
+      const footerLogo = document.querySelector('.footer-logo-image');
+      if (footerLogo) {
+        footerLogo.src = logoUrl;
+      }
+      
+      // Update UTM content in footer caffeine.ai link
+      const caffeineLink = document.querySelector('a[href*="caffeine.ai"]');
+      if (caffeineLink) {
+        const appIdentifier = encodeURIComponent(STANDALONE_PUBLIC_DOMAIN);
+        caffeineLink.href = 'https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=' + appIdentifier;
+      }
+    });
+  </script>
 </head>
 <body>
   <!-- Header -->
@@ -15,7 +61,7 @@
         <div class="logo">
           <span class="logo-text">Growithtutor</span>
           <img 
-            src="https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png" 
+            src="" 
             alt="Growithtutor logo" 
             class="logo-image"
             onerror="this.style.display='none';"
@@ -124,7 +170,7 @@
           <div class="footer-logo">
             <span class="footer-logo-text">Growithtutor</span>
             <img 
-              src="https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png" 
+              src="" 
               alt="Growithtutor logo" 
               class="footer-logo-image"
               onerror="this.style.display='none';"

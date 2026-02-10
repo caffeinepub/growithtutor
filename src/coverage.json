@@ -1,46 +1,66 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T15:22:28.015Z",
+  "generatedAt": "2026-02-10T15:30:43.255Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 3,
-    "implemented": 2,
+    "total": 4,
+    "implemented": 4,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Update the central contact phone numbers to include the India country code prefix so all UI locations that render these numbers show them in the format \"+91 7011090796\" and \"+91 9212374300\" (including WhatsApp primary/secondary and phone1/phone2).",
+        "summary": "Add a single configurable \"public domain\" setting for the frontend (e.g., an env var or a central config constant) and use it anywhere the app needs to reference its own domain/host so the domain can be changed without hunting through code.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/content/siteContent.ts"
+          "frontend/src/config/publicDomain.ts",
+          "frontend/src/config/siteConfig.ts"
         ],
         "matchedFiles": [
-          "frontend/src/content/siteContent.ts"
+          "frontend/src/config/publicDomain.ts",
+          "frontend/src/config/siteConfig.ts"
         ]
       },
       {
         "id": "REQ-2",
-        "summary": "Update the standalone (non-React) landing page contact numbers to include the \"+91 \" prefix everywhere they are displayed.",
+        "summary": "Replace hardcoded references to the current domain where applicable, including the external logo URL host and any other occurrences of `growithtutor.com` in the React marketing header/footer and the standalone static landing page, so they can be updated to the new domain via the new domain setting (or via a clearly documented constant in the standalone page).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/static/growwithtutor-standalone/script.js"
+          "frontend/src/components/marketing/MarketingHeader.tsx",
+          "frontend/src/components/marketing/MarketingFooter.tsx",
+          "frontend/src/pages/SetupChecklistPage.tsx",
+          "frontend/static/growwithtutor-standalone/index.html"
         ],
         "matchedFiles": [
-          "frontend/static/growwithtutor-standalone/script.js"
+          "frontend/src/components/marketing/MarketingHeader.tsx",
+          "frontend/src/components/marketing/MarketingFooter.tsx",
+          "frontend/src/pages/SetupChecklistPage.tsx",
+          "frontend/static/growwithtutor-standalone/index.html"
         ]
       },
       {
         "id": "REQ-3",
-        "summary": "Ensure phone/WhatsApp/SMS deep links continue to work correctly after adding the \"+91 \" prefix to stored numbers (tel:, sms:, and https://wa.me/...).",
-        "status": "missing",
+        "summary": "Update deployment documentation to include explicit instructions for changing the production domain (DNS + any Internet Computer hosting/canister URL considerations) and explicitly list all project locations that are affected by a domain change (including the standalone landing page).",
+        "status": "implemented",
         "plannedFiles": [
-          "frontend/src/lib/whatsapp.ts",
-          "frontend/src/components/marketing/MarketingFooter.tsx"
+          "frontend/DEPLOYMENT.md"
         ],
-        "matchedFiles": []
+        "matchedFiles": [
+          "frontend/DEPLOYMENT.md"
+        ]
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Add a small “Domain Settings” checklist item or note somewhere appropriate in the app’s existing setup/checklist UX so an admin/deployer can easily verify the currently configured domain in the UI.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/SetupChecklistPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/SetupChecklistPage.tsx"
+        ]
       }
     ]
   },
@@ -49,8 +69,13 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/content/siteContent.ts",
-    "frontend/static/growwithtutor-standalone/script.js",
+    "frontend/DEPLOYMENT.md",
+    "frontend/src/components/marketing/MarketingFooter.tsx",
+    "frontend/src/components/marketing/MarketingHeader.tsx",
+    "frontend/src/config/publicDomain.ts",
+    "frontend/src/config/siteConfig.ts",
+    "frontend/src/pages/SetupChecklistPage.tsx",
+    "frontend/static/growwithtutor-standalone/index.html",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

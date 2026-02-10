@@ -2,10 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-update-the-central-contact-phone-numbers-to-include-the-india-country-code-prefix-so-all-ui-locations-that-render-these-numbers-show-them-in-the-format-91-7011090796-and-91-9212374300-including-whatsapp-primary-secondary-and-phone1-phone2",
-      "featureTitle": "Update the central contact phone numbers to include the India country code prefix so all UI locations that render these numbers show them in the format \"+91 7011090796\" and \"+91 9212374300\" (including WhatsApp primary/secondary and phone1/phone2).",
+      "featureId": "feature-add-a-single-configurable-public-domain-setting-for-the-frontend-e-g-an-env-var-or-a-central-config-constant-and-use-it-anywhere-the-app-needs-to-reference-its-own-domain-host-so-the-domain-can-be-changed-without-hunting-through-code",
+      "featureTitle": "Add a single configurable \"public domain\" setting for the frontend (e.g., an env var or a central config constant) and use it anywhere the app needs to reference its own domain/host so the domain can be changed without hunting through code.",
       "files": [
-        "frontend/src/content/siteContent.ts"
+        "frontend/src/config/publicDomain.ts",
+        "frontend/src/config/siteConfig.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -21,10 +22,13 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-update-the-standalone-non-react-landing-page-contact-numbers-to-include-the-91-prefix-everywhere-they-are-displayed",
-      "featureTitle": "Update the standalone (non-React) landing page contact numbers to include the \"+91 \" prefix everywhere they are displayed.",
+      "featureId": "feature-replace-hardcoded-references-to-the-current-domain-where-applicable-including-the-external-logo-url-host-and-any-other-occurrences-of-growithtutor-com-in-the-react-marketing-header-footer-and-the-standalone-static-landing-page-so-they-can-be-updated-to-the-new-domain-via-the-new-domain-setting-or-via-a-clearly-documented-constant-in-the-standalone-page",
+      "featureTitle": "Replace hardcoded references to the current domain where applicable, including the external logo URL host and any other occurrences of `growithtutor.com` in the React marketing header/footer and the standalone static landing page, so they can be updated to the new domain via the new domain setting (or via a clearly documented constant in the standalone page).",
       "files": [
-        "frontend/static/growwithtutor-standalone/script.js"
+        "frontend/src/components/marketing/MarketingFooter.tsx",
+        "frontend/src/components/marketing/MarketingHeader.tsx",
+        "frontend/src/pages/SetupChecklistPage.tsx",
+        "frontend/static/growwithtutor-standalone/index.html"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -36,6 +40,44 @@
       ],
       "testIds": [
         "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-deployment-documentation-to-include-explicit-instructions-for-changing-the-production-domain-dns-any-internet-computer-hosting-canister-url-considerations-and-explicitly-list-all-project-locations-that-are-affected-by-a-domain-change-including-the-standalone-landing-page",
+      "featureTitle": "Update deployment documentation to include explicit instructions for changing the production domain (DNS + any Internet Computer hosting/canister URL considerations) and explicitly list all project locations that are affected by a domain change (including the standalone landing page).",
+      "files": [
+        "frontend/DEPLOYMENT.md"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-small-domain-settings-checklist-item-or-note-somewhere-appropriate-in-the-app-s-existing-setup-checklist-ux-so-an-admin-deployer-can-easily-verify-the-currently-configured-domain-in-the-ui",
+      "featureTitle": "Add a small “Domain Settings” checklist item or note somewhere appropriate in the app’s existing setup/checklist UX so an admin/deployer can easily verify the currently configured domain in the UI.",
+      "files": [
+        "frontend/src/pages/SetupChecklistPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
       ],
       "confidence": "high"
     }

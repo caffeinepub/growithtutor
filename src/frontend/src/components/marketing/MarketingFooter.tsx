@@ -5,6 +5,7 @@ import { contactNumbers, socialLinks, optionalContactInfo } from '../../content/
 import { useNavigate } from '@tanstack/react-router';
 import { getGenericWhatsAppLink, openEmailCompose } from '../../lib/whatsapp';
 import { SITE_NAME } from '../../config/siteConfig';
+import { getPublicAssetUrl } from '../../config/publicDomain';
 
 export default function MarketingFooter() {
   const [imageError, setImageError] = useState(false);
@@ -28,7 +29,7 @@ export default function MarketingFooter() {
     );
   };
 
-  const logoUrl = 'https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png';
+  const logoUrl = getPublicAssetUrl('/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png');
 
   return (
     <footer className="border-t bg-muted/30">

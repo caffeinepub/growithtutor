@@ -1,68 +1,88 @@
 {
   "kind": "build_request",
-  "title": "Prefix all phone numbers with +91",
+  "title": "Change application domain name references",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Update the central contact phone numbers to include the India country code prefix so all UI locations that render these numbers show them in the format \"+91 7011090796\" and \"+91 9212374300\" (including WhatsApp primary/secondary and phone1/phone2).",
+      "text": "Add a single configurable \"public domain\" setting for the frontend (e.g., an env var or a central config constant) and use it anywhere the app needs to reference its own domain/host so the domain can be changed without hunting through code.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "recent-messages-5"
         ],
         "quotes": [
-          "now add +91 in front of all the phone numbers for example +91 7011090796 and +91 9212374300"
+          "i want to change the domain name"
         ]
       },
       "acceptanceCriteria": [
-        "In frontend/src/content/siteContent.ts, contactNumbers values are updated to include the \"+91 \" prefix for whatsapp, whatsappSecondary, phone1, and phone2.",
-        "ContactPage, ContactSection, and MarketingFooter (and any other React pages/components that display contactNumbers) display the phone numbers with the \"+91 \" prefix."
+        "There is exactly one clearly-documented place to set the app’s public domain (e.g., `VITE_PUBLIC_DOMAIN` or similar).",
+        "No UI text is introduced that hardcodes the previous domain.",
+        "Changing the configured domain updates all self-domain references that were wired to the setting."
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Update the standalone (non-React) landing page contact numbers to include the \"+91 \" prefix everywhere they are displayed.",
+      "text": "Replace hardcoded references to the current domain where applicable, including the external logo URL host and any other occurrences of `growithtutor.com` in the React marketing header/footer and the standalone static landing page, so they can be updated to the new domain via the new domain setting (or via a clearly documented constant in the standalone page).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "recent-messages-5"
         ],
         "quotes": [
-          "now add +91 in front of all the phone numbers for example +91 7011090796 and +91 9212374300"
+          "i want to change the domain name"
         ]
       },
       "acceptanceCriteria": [
-        "In frontend/static/growwithtutor-standalone/script.js, CONTENT.contact.whatsapp and CONTENT.contact.phone include the \"+91 \" prefix.",
-        "The standalone page still generates a valid wa.me link by stripping non-digits (resulting in a number like \"917011090796\")."
+        "`frontend/src/components/marketing/MarketingHeader.tsx` and `frontend/src/components/marketing/MarketingFooter.tsx` no longer hardcode `https://growithtutor.com/...` directly in-line; the hostname is sourced from a centralized configuration.",
+        "`frontend/static/growwithtutor-standalone/index.html` no longer hardcodes `https://growithtutor.com/...` directly in-line; the hostname is sourced from a clearly documented constant for the standalone page.",
+        "After changing the configured domain/host, the marketing header/footer logo loads from the updated domain (assuming the asset path exists on that domain)."
       ]
     },
     {
       "id": "REQ-3",
-      "text": "Ensure phone/WhatsApp/SMS deep links continue to work correctly after adding the \"+91 \" prefix to stored numbers (tel:, sms:, and https://wa.me/...).",
+      "text": "Update deployment documentation to include explicit instructions for changing the production domain (DNS + any Internet Computer hosting/canister URL considerations) and explicitly list all project locations that are affected by a domain change (including the standalone landing page).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "recent-messages-5"
         ],
         "quotes": [
-          "now add +91 in front of all the phone numbers for example +91 7011090796 and +91 9212374300"
+          "i want to change the domain name"
         ]
       },
       "acceptanceCriteria": [
-        "Clicking \"Call Now\" uses a tel: link that contains only digits (e.g., tel:917011090796).",
-        "Clicking \"Send SMS\" uses an sms: link that contains only digits (e.g., sms:917011090796...).",
-        "Clicking WhatsApp CTAs opens a wa.me link containing only digits (e.g., https://wa.me/917011090796...)."
+        "`frontend/DEPLOYMENT.md` contains a section titled similar to \"Changing the Domain\" that documents the steps and the config value(s) to update.",
+        "The doc lists the React app domain setting and the standalone landing page domain setting (if separate) and explains how to keep them in sync."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Add a small “Domain Settings” checklist item or note somewhere appropriate in the app’s existing setup/checklist UX so an admin/deployer can easily verify the currently configured domain in the UI.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "recent-messages-5"
+        ],
+        "quotes": [
+          "i want to change the domain name"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A setup/checklist area of the app displays the currently configured public domain/host value.",
+        "The displayed value is read-only (no need for an in-app editor) and matches the configuration setting used by the app."
       ]
     }
   ],
   "constraints": [
-    "Do not modify any files under frontend/src/components/ui.",
-    "Do not introduce any new backend canisters or external services."
+    "Use English for any user-facing text.",
+    "Do not modify files under `frontend/src/components/ui`, `frontend/src/hooks/useInternetIdentity.ts`, `frontend/src/hooks/useInternetIdentity.tsx`, `frontend/src/hooks/useActor.ts`, or `frontend/src/main.tsx` (compose instead of editing immutable paths).",
+    "Backend must remain a single Motoko actor in `backend/main.mo` (no new backend canisters/services)."
   ],
   "nonGoals": [
-    "Changing user-entered phone numbers in enquiry forms (only the app’s displayed contact numbers are in scope).",
-    "Any backend changes or data migrations."
+    "Implementing a registrar purchase/transfer flow for the domain.",
+    "Adding third-party DNS/provider integrations or automated certificate provisioning.",
+    "Changing the site/brand name (e.g., `SITE_NAME`) unless explicitly required for the domain change."
   ],
   "imageRequirements": {
     "required": [],
