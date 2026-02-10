@@ -38,12 +38,14 @@ export interface _SERVICE {
   'getUserEmail' : ActorMethod<[Principal], [] | [string]>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
+  'isSiteLive' : ActorMethod<[], boolean>,
   'performAllowListAdminBootstrap' : ActorMethod<[string], undefined>,
   'performDefaultAdminBootstrap' : ActorMethod<[string], undefined>,
   'removeAllowedAdminEmail' : ActorMethod<[string], undefined>,
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
   'setEmail' : ActorMethod<[string], undefined>,
   'setPublishedStatus' : ActorMethod<[bigint, boolean], undefined>,
+  'setSiteLive' : ActorMethod<[boolean], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

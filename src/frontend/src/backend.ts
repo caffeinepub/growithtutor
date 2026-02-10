@@ -121,12 +121,14 @@ export interface backendInterface {
     getUserEmail(user: Principal): Promise<string | null>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
+    isSiteLive(): Promise<boolean>;
     performAllowListAdminBootstrap(secret: string): Promise<void>;
     performDefaultAdminBootstrap(secret: string): Promise<void>;
     removeAllowedAdminEmail(email: string): Promise<void>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
     setEmail(email: string): Promise<void>;
     setPublishedStatus(blogId: bigint, published: boolean): Promise<void>;
+    setSiteLive(isLive: boolean): Promise<void>;
 }
 import type { Blog as _Blog, UserProfile as _UserProfile, UserRole as _UserRole } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
@@ -341,6 +343,20 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async isSiteLive(): Promise<boolean> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.isSiteLive();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.isSiteLive();
+            return result;
+        }
+    }
     async performAllowListAdminBootstrap(arg0: string): Promise<void> {
         if (this.processError) {
             try {
@@ -422,6 +438,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.setPublishedStatus(arg0, arg1);
+            return result;
+        }
+    }
+    async setSiteLive(arg0: boolean): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.setSiteLive(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.setSiteLive(arg0);
             return result;
         }
     }

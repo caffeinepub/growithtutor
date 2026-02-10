@@ -173,3 +173,32 @@ export function useSetEmail() {
     },
   });
 }
+
+export function useIsSiteLive() {
+  const { actor, isFetching } = useActor();
+
+  return useQuery<boolean>({
+    queryKey: ['siteLive'],
+    queryFn: async () => {
+      if (!actor) return true;
+      return actor.isSiteLive();
+    },
+    enabled: !!actor && !isFetching,
+    staleTime: 1000 * 30, // 30 seconds
+  });
+}
+
+export function useSetSiteLive() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (isLive: boolean) => {
+      if (!actor) throw new Error('Actor not available');
+      return actor.setSiteLive(isLive);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['siteLive'] });
+    },
+  });
+}

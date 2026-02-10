@@ -38,10 +38,12 @@ export interface backendInterface {
     getUserEmail(user: Principal): Promise<string | null>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
+    isSiteLive(): Promise<boolean>;
     performAllowListAdminBootstrap(secret: string): Promise<void>;
     performDefaultAdminBootstrap(secret: string): Promise<void>;
     removeAllowedAdminEmail(email: string): Promise<void>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
     setEmail(email: string): Promise<void>;
     setPublishedStatus(blogId: bigint, published: boolean): Promise<void>;
+    setSiteLive(isLive: boolean): Promise<void>;
 }

@@ -43,12 +43,14 @@ export const idlService = IDL.Service({
       ['query'],
     ),
   'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'isSiteLive' : IDL.Func([], [IDL.Bool], ['query']),
   'performAllowListAdminBootstrap' : IDL.Func([IDL.Text], [], []),
   'performDefaultAdminBootstrap' : IDL.Func([IDL.Text], [], []),
   'removeAllowedAdminEmail' : IDL.Func([IDL.Text], [], []),
   'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
   'setEmail' : IDL.Func([IDL.Text], [], []),
   'setPublishedStatus' : IDL.Func([IDL.Nat, IDL.Bool], [], []),
+  'setSiteLive' : IDL.Func([IDL.Bool], [], []),
 });
 
 export const idlInitArgs = [];
@@ -89,12 +91,14 @@ export const idlFactory = ({ IDL }) => {
         ['query'],
       ),
     'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'isSiteLive' : IDL.Func([], [IDL.Bool], ['query']),
     'performAllowListAdminBootstrap' : IDL.Func([IDL.Text], [], []),
     'performDefaultAdminBootstrap' : IDL.Func([IDL.Text], [], []),
     'removeAllowedAdminEmail' : IDL.Func([IDL.Text], [], []),
     'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
     'setEmail' : IDL.Func([IDL.Text], [], []),
     'setPublishedStatus' : IDL.Func([IDL.Nat, IDL.Bool], [], []),
+    'setSiteLive' : IDL.Func([IDL.Bool], [], []),
   });
 };
 

@@ -1,88 +1,54 @@
 {
   "kind": "build_request",
-  "title": "Change application domain name references",
+  "title": "Support domain name change guidance and unpublish (maintenance mode) workflow",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Add a single configurable \"public domain\" setting for the frontend (e.g., an env var or a central config constant) and use it anywhere the app needs to reference its own domain/host so the domain can be changed without hunting through code.",
-      "target": "frontend",
+      "text": "Provide a clear, admin-only “Unpublish / Take site offline” action that immediately puts the site into maintenance mode (sets backend siteLive=false) and clearly explains that this hides the public site without rolling back the deployed canister version.",
+      "target": "both",
       "source": {
         "messageIds": [
-          "recent-messages-5"
+          "msg-6"
         ],
         "quotes": [
-          "i want to change the domain name"
+          "please i want to change the domain name please unpublish the changes"
         ]
       },
       "acceptanceCriteria": [
-        "There is exactly one clearly-documented place to set the app’s public domain (e.g., `VITE_PUBLIC_DOMAIN` or similar).",
-        "No UI text is introduced that hardcodes the previous domain.",
-        "Changing the configured domain updates all self-domain references that were wired to the setting."
+        "When an authenticated admin visits /admin/blogs, they can perform an explicit action labeled in English as an unpublish/take-offline control (not just a generic toggle).",
+        "Triggering the action sets backend siteLive to false and shows a success confirmation in the UI.",
+        "After siteLive is false, all non-/admin routes render the maintenance screen, while /admin routes remain accessible.",
+        "The admin UI includes explanatory English text that this is an application-level maintenance mode and does not roll back the deployed version."
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Replace hardcoded references to the current domain where applicable, including the external logo URL host and any other occurrences of `growithtutor.com` in the React marketing header/footer and the standalone static landing page, so they can be updated to the new domain via the new domain setting (or via a clearly documented constant in the standalone page).",
+      "text": "Improve domain change support by making the public domain configuration steps explicit and discoverable in-app and in documentation, including the VITE_PUBLIC_DOMAIN environment variable and the standalone landing page domain note.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "recent-messages-5"
+          "msg-6"
         ],
         "quotes": [
-          "i want to change the domain name"
+          "please i want to change the domain name please unpublish the changes"
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/components/marketing/MarketingHeader.tsx` and `frontend/src/components/marketing/MarketingFooter.tsx` no longer hardcode `https://growithtutor.com/...` directly in-line; the hostname is sourced from a centralized configuration.",
-        "`frontend/static/growwithtutor-standalone/index.html` no longer hardcodes `https://growithtutor.com/...` directly in-line; the hostname is sourced from a clearly documented constant for the standalone page.",
-        "After changing the configured domain/host, the marketing header/footer logo loads from the updated domain (assuming the asset path exists on that domain)."
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "text": "Update deployment documentation to include explicit instructions for changing the production domain (DNS + any Internet Computer hosting/canister URL considerations) and explicitly list all project locations that are affected by a domain change (including the standalone landing page).",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "recent-messages-5"
-        ],
-        "quotes": [
-          "i want to change the domain name"
-        ]
-      },
-      "acceptanceCriteria": [
-        "`frontend/DEPLOYMENT.md` contains a section titled similar to \"Changing the Domain\" that documents the steps and the config value(s) to update.",
-        "The doc lists the React app domain setting and the standalone landing page domain setting (if separate) and explains how to keep them in sync."
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "text": "Add a small “Domain Settings” checklist item or note somewhere appropriate in the app’s existing setup/checklist UX so an admin/deployer can easily verify the currently configured domain in the UI.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "recent-messages-5"
-        ],
-        "quotes": [
-          "i want to change the domain name"
-        ]
-      },
-      "acceptanceCriteria": [
-        "A setup/checklist area of the app displays the currently configured public domain/host value.",
-        "The displayed value is read-only (no need for an in-app editor) and matches the configuration setting used by the app."
+        "Setup Checklist page shows the currently detected public domain and provides clear English instructions to change it via VITE_PUBLIC_DOMAIN or by editing the fallback in frontend/src/config/publicDomain.ts, and references frontend/DEPLOYMENT.md for full steps.",
+        "frontend/DEPLOYMENT.md includes a complete, step-by-step section for changing the domain, explicitly mentioning VITE_PUBLIC_DOMAIN and calling out the standalone landing page domain configuration location (frontend/static/growwithtutor-standalone/index.html).",
+        "No user-facing text related to domain change or unpublishing appears in a non-English language."
       ]
     }
   ],
   "constraints": [
-    "Use English for any user-facing text.",
-    "Do not modify files under `frontend/src/components/ui`, `frontend/src/hooks/useInternetIdentity.ts`, `frontend/src/hooks/useInternetIdentity.tsx`, `frontend/src/hooks/useActor.ts`, or `frontend/src/main.tsx` (compose instead of editing immutable paths).",
-    "Backend must remain a single Motoko actor in `backend/main.mo` (no new backend canisters/services)."
+    "Do not edit files under frontend/src/components/ui (read-only).",
+    "Do not modify immutable frontend hook/bootstrap files: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx."
   ],
   "nonGoals": [
-    "Implementing a registrar purchase/transfer flow for the domain.",
-    "Adding third-party DNS/provider integrations or automated certificate provisioning.",
-    "Changing the site/brand name (e.g., `SITE_NAME`) unless explicitly required for the domain change."
+    "Implementing DNS changes or custom domain registration/verification on behalf of the user (DNS is external to the app).",
+    "Rolling back the deployed Internet Computer canister version as a substitute for maintenance mode.",
+    "Adding third-party authentication providers beyond Internet Identity."
   ],
   "imageRequirements": {
     "required": [],

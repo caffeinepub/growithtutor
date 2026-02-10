@@ -1,87 +1,48 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Centralize and replace public domain references",
+  "title": "Admin maintenance-mode unpublish control and domain-change guidance",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Introduce a single, documented frontend public-domain setting and route all self-domain references through it.",
+      "summary": "Add an explicit admin-only Unpublish/Take-offline control in /admin/blogs and ensure maintenance mode behavior and messaging are clear.",
       "acceptanceCriteria": [
-        "There is exactly one clearly-documented place to set the app’s public domain (e.g., `VITE_PUBLIC_DOMAIN` or similar).",
-        "No UI text is introduced that hardcodes the previous domain.",
-        "Changing the configured domain updates all self-domain references that were wired to the setting."
+        "When an authenticated admin visits /admin/blogs, they can perform an explicit action labeled in English as an unpublish/take-offline control (not just a generic toggle).",
+        "Triggering the action sets backend siteLive to false and shows a success confirmation in the UI.",
+        "After siteLive is false, all non-/admin routes render the maintenance screen, while /admin routes remain accessible.",
+        "The admin UI includes explanatory English text that this is an application-level maintenance mode and does not roll back the deployed version."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/config/publicDomain.ts",
-          "operation": "create",
-          "description": "Create a centralized `PUBLIC_DOMAIN` (or `PUBLIC_HOST`) config sourced from a single Vite env var (e.g., `VITE_PUBLIC_DOMAIN`) with a safe runtime fallback (e.g., `window.location.host`/`hostname`) and clear inline documentation indicating this is the only place the React app should reference its own public domain."
+          "path": "frontend/src/pages/AdminBlogsPage.tsx",
+          "operation": "modify",
+          "description": "Replace/augment the existing generic site-live switch with a clearly labeled admin-only action (e.g., \"Unpublish / Take site offline\") that calls the existing maintenance-mode backend capability via the existing React Query hook, shows a success confirmation, and includes explicit English explanatory text that this hides the public site without rolling back the deployed canister version. Use existing shadcn-ui components already imported (Button/Card/Alert/Dialog/etc.) for the control and any confirmation UI; verify the component's usage instructions before implementing."
         },
         {
-          "path": "frontend/src/config/siteConfig.ts",
+          "path": "frontend/src/components/maintenance/SiteLiveGate.tsx",
           "operation": "modify",
-          "description": "Add documentation/comments that point deployers to the new public-domain configuration (in `frontend/src/config/publicDomain.ts` and `VITE_PUBLIC_DOMAIN`) to make the domain setting discoverable alongside existing site-level configuration."
+          "description": "Confirm/adjust gating so that when siteLive is false, all non-/admin routes render the maintenance screen while /admin routes bypass the gate and remain accessible. Keep all user-facing text in English. Use existing shadcn-ui components already used in this file; verify the component's usage instructions before implementing."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Replace hardcoded growithtutor.com references in marketing header/footer and the standalone static landing page with the centralized domain configuration (or a standalone constant).",
+      "summary": "Make domain-change steps explicit and discoverable in-app and in documentation, including VITE_PUBLIC_DOMAIN and the standalone landing page domain note.",
       "acceptanceCriteria": [
-        "`frontend/src/components/marketing/MarketingHeader.tsx` and `frontend/src/components/marketing/MarketingFooter.tsx` no longer hardcode `https://growithtutor.com/...` directly in-line; the hostname is sourced from a centralized configuration.",
-        "`frontend/static/growwithtutor-standalone/index.html` no longer hardcodes `https://growithtutor.com/...` directly in-line; the hostname is sourced from a clearly documented constant for the standalone page.",
-        "After changing the configured domain/host, the marketing header/footer logo loads from the updated domain (assuming the asset path exists on that domain)."
+        "Setup Checklist page shows the currently detected public domain and provides clear English instructions to change it via VITE_PUBLIC_DOMAIN or by editing the fallback in frontend/src/config/publicDomain.ts, and references frontend/DEPLOYMENT.md for full steps.",
+        "frontend/DEPLOYMENT.md includes a complete, step-by-step section for changing the domain, explicitly mentioning VITE_PUBLIC_DOMAIN and calling out the standalone landing page domain configuration location (frontend/static/growwithtutor-standalone/index.html).",
+        "No user-facing text related to domain change or unpublishing appears in a non-English language."
       ],
       "file_operations": [
-        {
-          "path": "frontend/src/components/marketing/MarketingHeader.tsx",
-          "operation": "modify",
-          "description": "Replace the hardcoded `https://growithtutor.com/...` logo URL with a URL composed from the centralized `PUBLIC_DOMAIN` configuration (from `frontend/src/config/publicDomain.ts`) plus the existing asset path so the host can be changed without code hunting."
-        },
-        {
-          "path": "frontend/src/components/marketing/MarketingFooter.tsx",
-          "operation": "modify",
-          "description": "Replace the hardcoded `https://growithtutor.com/...` logo URL with a URL composed from the centralized `PUBLIC_DOMAIN` configuration (from `frontend/src/config/publicDomain.ts`) plus the existing asset path; ensure no new inline hardcoded previous-domain text is introduced."
-        },
         {
           "path": "frontend/src/pages/SetupChecklistPage.tsx",
           "operation": "modify",
-          "description": "Update any hardcoded logo URL/detail strings that reference `https://growithtutor.com/...` so they derive from the centralized public-domain configuration, keeping the checklist accurate after a domain change."
+          "description": "Update the \"Public Domain\" checklist item to be more explicit and discoverable: show the currently detected domain, provide clear English instructions for changing it via VITE_PUBLIC_DOMAIN or by editing the fallback value in frontend/src/config/publicDomain.ts, and explicitly reference frontend/DEPLOYMENT.md for the full step-by-step guide (including a note that the standalone landing page domain is configured separately in frontend/static/growwithtutor-standalone/index.html). Use existing shadcn-ui components already used in this page; verify the component's usage instructions before implementing."
         },
-        {
-          "path": "frontend/static/growwithtutor-standalone/index.html",
-          "operation": "modify",
-          "description": "Remove inline hardcoded `https://growithtutor.com/...` references (e.g., header/footer logo image `src`) and instead wire them to a clearly documented standalone constant (e.g., `STANDALONE_PUBLIC_DOMAIN`) that is used to construct the full asset URLs at runtime (e.g., via a small inline script that assigns the image `src`). Also replace any other inline `growithtutor` host usage meant to represent the site domain (such as fixed UTM content) with a non-hardcoded value derived from the same constant or `window.location.hostname`."
-        }
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "summary": "Document how to change the production domain and enumerate all affected project locations, including the standalone landing page.",
-      "acceptanceCriteria": [
-        "`frontend/DEPLOYMENT.md` contains a section titled similar to \"Changing the Domain\" that documents the steps and the config value(s) to update.",
-        "The doc lists the React app domain setting and the standalone landing page domain setting (if separate) and explains how to keep them in sync."
-      ],
-      "file_operations": [
         {
           "path": "frontend/DEPLOYMENT.md",
           "operation": "modify",
-          "description": "Add a \"Changing the Domain\" section describing (1) DNS updates at a high level, (2) any Internet Computer hosting / canister URL considerations at a high level, and (3) the exact project configuration locations to change: the React app `VITE_PUBLIC_DOMAIN` used by `frontend/src/config/publicDomain.ts`, plus the standalone landing page domain constant in `frontend/static/growwithtutor-standalone/index.html`, with guidance on keeping both values in sync."
-        }
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "summary": "Expose the currently configured public domain/host as a read-only item in the existing setup/checklist UX for verification.",
-      "acceptanceCriteria": [
-        "A setup/checklist area of the app displays the currently configured public domain/host value.",
-        "The displayed value is read-only (no need for an in-app editor) and matches the configuration setting used by the app."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/SetupChecklistPage.tsx",
-          "operation": "modify",
-          "description": "Add a new read-only checklist item/note (e.g., \"Domain Settings\") that displays the currently configured `PUBLIC_DOMAIN` value from `frontend/src/config/publicDomain.ts` and points deployers to the single configuration location (the env var / config file) without providing in-app editing."
+          "description": "Complete and expand the \"Changing the Domain\" section into a clear step-by-step guide that explicitly mentions setting VITE_PUBLIC_DOMAIN, editing the fallback in frontend/src/config/publicDomain.ts, and calls out the standalone landing page domain configuration location at frontend/static/growwithtutor-standalone/index.html. Ensure all text is English-only."
         }
       ]
     }

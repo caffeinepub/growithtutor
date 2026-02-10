@@ -20,6 +20,7 @@ import AdminSetupPage from './pages/AdminSetupPage';
 import MarketingHeader from './components/marketing/MarketingHeader';
 import MarketingFooter from './components/marketing/MarketingFooter';
 import AdminRouteGuard from './components/auth/AdminRouteGuard';
+import SiteLiveGate from './components/maintenance/SiteLiveGate';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,7 +36,9 @@ function Layout() {
     <div className="flex flex-col min-h-screen">
       <MarketingHeader />
       <main className="flex-1">
-        <Outlet />
+        <SiteLiveGate>
+          <Outlet />
+        </SiteLiveGate>
       </main>
       <MarketingFooter />
     </div>

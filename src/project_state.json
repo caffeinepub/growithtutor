@@ -7,34 +7,18 @@
   "isFixRequest": false,
   "existing_features": [
     {
-      "id": "feature-add-a-single-configurable-public-domain-setting-for-the-frontend-e-g-an-env-var-or-a-central-config-constant-and-use-it-anywhere-the-app-needs-to-reference-its-own-domain-host-so-the-domain-can-be-changed-without-hunting-through-code",
-      "title": "Add a single configurable \"public domain\" setting for the frontend (e.g., an env var or a central config constant) and use it anywhere the app needs to reference its own domain/host so the domain can be changed without hunting through code.",
+      "id": "feature-provide-a-clear-admin-only-unpublish-take-site-offline-action-that-immediately-puts-the-site-into-maintenance-mode-sets-backend-sitelive-false-and-clearly-explains-that-this-hides-the-public-site-without-rolling-back-the-deployed-canister-version",
+      "title": "Provide a clear, admin-only “Unpublish / Take site offline” action that immediately puts the site into maintenance mode (sets backend siteLive=false) and clearly explains that this hides the public site without rolling back the deployed canister version.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-replace-hardcoded-references-to-the-current-domain-where-applicable-including-the-external-logo-url-host-and-any-other-occurrences-of-growithtutor-com-in-the-react-marketing-header-footer-and-the-standalone-static-landing-page-so-they-can-be-updated-to-the-new-domain-via-the-new-domain-setting-or-via-a-clearly-documented-constant-in-the-standalone-page",
-      "title": "Replace hardcoded references to the current domain where applicable, including the external logo URL host and any other occurrences of `growithtutor.com` in the React marketing header/footer and the standalone static landing page, so they can be updated to the new domain via the new domain setting (or via a clearly documented constant in the standalone page).",
+      "id": "feature-improve-domain-change-support-by-making-the-public-domain-configuration-steps-explicit-and-discoverable-in-app-and-in-documentation-including-the-vite-public-domain-environment-variable-and-the-standalone-landing-page-domain-note",
+      "title": "Improve domain change support by making the public domain configuration steps explicit and discoverable in-app and in documentation, including the VITE_PUBLIC_DOMAIN environment variable and the standalone landing page domain note.",
       "reqIds": [
         "REQ-2"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-update-deployment-documentation-to-include-explicit-instructions-for-changing-the-production-domain-dns-any-internet-computer-hosting-canister-url-considerations-and-explicitly-list-all-project-locations-that-are-affected-by-a-domain-change-including-the-standalone-landing-page",
-      "title": "Update deployment documentation to include explicit instructions for changing the production domain (DNS + any Internet Computer hosting/canister URL considerations) and explicitly list all project locations that are affected by a domain change (including the standalone landing page).",
-      "reqIds": [
-        "REQ-3"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-add-a-small-domain-settings-checklist-item-or-note-somewhere-appropriate-in-the-app-s-existing-setup-checklist-ux-so-an-admin-deployer-can-easily-verify-the-currently-configured-domain-in-the-ui",
-      "title": "Add a small “Domain Settings” checklist item or note somewhere appropriate in the app’s existing setup/checklist UX so an admin/deployer can easily verify the currently configured domain in the UI.",
-      "reqIds": [
-        "REQ-4"
       ],
       "version": 1
     }
@@ -42,12 +26,18 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Change the application's domain name",
+      "summary": "Change the domain name for the deployed site/app",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Unpublish/revert the recently deployed changes (take Version 27 offline or roll back)",
       "reqIds": [],
       "status": "pending"
     }
   ],
-  "projectName": "Change application domain name references",
+  "projectName": "Support domain name change guidance and unpublish (maintenance mode) workflow",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

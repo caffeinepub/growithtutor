@@ -3,7 +3,8 @@ import { usePageMeta } from '../hooks/usePageMeta';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { CheckCircle2, Circle } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { CheckCircle2, Circle, ExternalLink, Info } from 'lucide-react';
 import { contactNumbers, socialLinks, adminAllowlist } from '../content/siteContent';
 import { SITE_NAME } from '../config/siteConfig';
 import { PUBLIC_DOMAIN, getPublicAssetUrl } from '../config/publicDomain';
@@ -29,7 +30,35 @@ export default function SetupChecklistPage() {
       title: 'Public Domain',
       description: 'Configure the public domain/hostname for external asset URLs and self-referential links.',
       status: 'complete',
-      details: `Current domain: "${PUBLIC_DOMAIN}". Set VITE_PUBLIC_DOMAIN environment variable or edit frontend/src/config/publicDomain.ts. See DEPLOYMENT.md for details.`,
+      details: (
+        <div className="space-y-2">
+          <p><strong>Current domain:</strong> <code className="px-2 py-1 bg-muted rounded text-sm">{PUBLIC_DOMAIN}</code></p>
+          <Alert>
+            <Info className="h-4 w-4" />
+            <AlertDescription>
+              <strong>To change the domain:</strong>
+              <ul className="list-disc list-inside mt-2 space-y-1 text-sm">
+                <li><strong>Option A (Recommended):</strong> Set the <code className="px-1 bg-muted rounded">VITE_PUBLIC_DOMAIN</code> environment variable</li>
+                <li><strong>Option B:</strong> Edit the fallback value in <code className="px-1 bg-muted rounded">frontend/src/config/publicDomain.ts</code></li>
+              </ul>
+              <p className="mt-2 text-sm">
+                <strong>Note:</strong> The standalone landing page domain is configured separately in <code className="px-1 bg-muted rounded">frontend/static/growwithtutor-standalone/index.html</code>
+              </p>
+              <p className="mt-2">
+                <a 
+                  href="https://github.com/yourusername/yourrepo/blob/main/frontend/DEPLOYMENT.md#changing-the-domain" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline inline-flex items-center gap-1 text-sm font-medium"
+                >
+                  See DEPLOYMENT.md for full step-by-step guide
+                  <ExternalLink className="h-3 w-3" />
+                </a>
+              </p>
+            </AlertDescription>
+          </Alert>
+        </div>
+      ),
     },
     {
       title: 'Logo',
@@ -77,112 +106,115 @@ export default function SetupChecklistPage() {
     },
     {
       title: 'Testimonials',
-      description: 'Customize testimonials with real student and parent feedback.',
+      description: 'Customize testimonials to match your actual student/parent feedback.',
       status: 'optional',
       details: 'Edit frontend/src/content/siteContent.ts testimonials array',
     },
     {
       title: 'FAQs',
-      description: 'Review and update FAQ content to match your specific offerings.',
+      description: 'Review and update frequently asked questions.',
       status: 'optional',
       details: 'Edit frontend/src/content/siteContent.ts faqs array',
     },
+    {
+      title: 'Terms & Conditions',
+      description: 'Review and customize legal content.',
+      status: 'optional',
+      details: 'Edit frontend/src/content/legalContent.ts',
+    },
   ];
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'complete':
+        return <CheckCircle2 className="h-5 w-5 text-green-600" />;
+      case 'pending':
+        return <Circle className="h-5 w-5 text-orange-500" />;
+      case 'optional':
+        return <Circle className="h-5 w-5 text-muted-foreground" />;
+      default:
+        return <Circle className="h-5 w-5 text-muted-foreground" />;
+    }
+  };
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'complete':
+        return <Badge variant="default" className="bg-green-600">Complete</Badge>;
+      case 'pending':
+        return <Badge variant="secondary" className="bg-orange-500 text-white">Pending</Badge>;
+      case 'optional':
+        return <Badge variant="outline">Optional</Badge>;
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="container py-12 md:py-16">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
+        <div className="mb-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Setup Checklist</h1>
           <p className="text-lg text-muted-foreground">
-            Follow this checklist to complete your {SITE_NAME} website configuration.
+            Complete guide to configure your {SITE_NAME} website. Follow these steps to customize your site.
           </p>
         </div>
 
-        <div className="space-y-4">
+        <Alert className="mb-8">
+          <Info className="h-4 w-4" />
+          <AlertDescription>
+            This checklist helps you configure all aspects of your website. Items marked as "Complete" are already configured, "Pending" items need your attention, and "Optional" items can be customized as needed.
+          </AlertDescription>
+        </Alert>
+
+        <div className="space-y-4 mb-8">
           {checklistItems.map((item, index) => (
             <Card key={index}>
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="flex items-start gap-3 flex-1">
-                    {item.status === 'complete' ? (
-                      <CheckCircle2 className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
-                    ) : (
-                      <Circle className="h-6 w-6 text-muted-foreground mt-1 flex-shrink-0" />
-                    )}
+                    {getStatusIcon(item.status)}
                     <div className="flex-1">
-                      <CardTitle className="text-xl mb-2">{item.title}</CardTitle>
-                      <CardDescription>{item.description}</CardDescription>
+                      <CardTitle className="text-xl">{item.title}</CardTitle>
+                      <CardDescription className="mt-1">{item.description}</CardDescription>
                     </div>
                   </div>
-                  <Badge
-                    variant={
-                      item.status === 'complete'
-                        ? 'default'
-                        : item.status === 'pending'
-                        ? 'destructive'
-                        : 'secondary'
-                    }
-                  >
-                    {item.status}
-                  </Badge>
+                  {getStatusBadge(item.status)}
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="bg-muted p-4 rounded-md">
-                  <p className="text-sm font-mono break-all">{item.details}</p>
+                <div className="text-sm text-muted-foreground">
+                  {typeof item.details === 'string' ? (
+                    <p>{item.details}</p>
+                  ) : (
+                    item.details
+                  )}
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        <Card className="mt-8 border-primary">
+        <Card className="border-primary/20 bg-primary/5">
           <CardHeader>
-            <CardTitle>How to Get Admin Access</CardTitle>
+            <CardTitle>Admin Access</CardTitle>
             <CardDescription>
-              Follow these steps to gain admin privileges and manage blog posts.
+              To manage blog posts and site settings, you need admin access.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <ol className="list-decimal list-inside space-y-3 text-muted-foreground">
-              <li>
-                <strong>Log in with Internet Identity</strong> - Click the Login button and authenticate.
-              </li>
-              <li>
-                <strong>Navigate to Admin Setup</strong> - Go to the{' '}
-                <button
-                  type="button"
-                  onClick={() => navigate({ to: '/admin/setup' })}
-                  className="text-primary hover:underline font-medium"
-                >
-                  Admin Setup page
-                </button>
-                .
-              </li>
-              <li>
-                <strong>Enter Bootstrap Secret</strong> - Input the bootstrap secret token provided during deployment.
-              </li>
-              <li>
-                <strong>Confirm Admin Status</strong> - The system will verify your token and grant admin access.
-              </li>
-              <li>
-                <strong>Access Admin Panel</strong> - Navigate to{' '}
-                <button
-                  type="button"
-                  onClick={() => navigate({ to: '/admin/blogs' })}
-                  className="text-primary hover:underline font-medium"
-                >
-                  /admin/blogs
-                </button>{' '}
-                to manage blog posts.
-              </li>
+            <p className="text-sm text-muted-foreground">
+              Admin access is controlled by Principal IDs. To become an admin:
+            </p>
+            <ol className="list-decimal list-inside space-y-2 text-sm text-muted-foreground">
+              <li>Log in with Internet Identity to get your Principal ID</li>
+              <li>Add your Principal ID to the adminAllowlist in frontend/src/content/siteContent.ts</li>
+              <li>Redeploy the application</li>
+              <li>Navigate to the admin panel to manage content</li>
             </ol>
-            <div className="pt-4 border-t">
-              <Button onClick={() => navigate({ to: '/admin/setup' })} className="w-full">
-                Go to Admin Setup
-              </Button>
-            </div>
+            <Button onClick={() => navigate({ to: '/admin/blogs' })}>
+              Go to Admin Panel
+            </Button>
           </CardContent>
         </Card>
       </div>

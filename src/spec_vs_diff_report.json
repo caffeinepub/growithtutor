@@ -1,44 +1,68 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T15:30:43.252Z",
-  "summary": "Implemented a centralized frontend public-domain configuration (VITE_PUBLIC_DOMAIN + fallbacks), updated marketing header/footer logo URLs to use it, added a read-only Public Domain item to the setup checklist UI, and updated the standalone static landing page to use a single domain constant for asset URL construction. Deployment docs include a new \"Changing the Domain\" section but the provided diff snippet is truncated before confirming all required details.",
+  "generatedAt": "2026-02-10T16:20:45.931Z",
+  "summary": "Diff adds backend maintenance-mode state (siteLive) with admin-only setter and a frontend gate that shows a maintenance screen for non-/admin routes when the site is offline. It also adds in-app domain configuration guidance on the Setup Checklist page and updates DEPLOYMENT.md with maintenance mode documentation. Several additional unrelated frontend styling/marketing changes are present in the diff summary.",
   "missing_requirements": [
     {
-      "id": "REQ-3",
-      "requirement": "Deployment documentation must explicitly list all project locations affected by a domain change (including the standalone landing page) and explain how to keep the React app domain setting and standalone landing page domain setting in sync.",
-      "reason": "The diff shows a new \"Changing the Domain\" section, but the visible content is truncated before it demonstrates (a) an explicit list of all affected locations and (b) explicit instructions to update/keep in sync the standalone landing page setting alongside the React app setting.",
+      "id": "REQ-1",
+      "requirement": "Admin-only /admin/blogs page provides an explicit English-labeled “Unpublish / Take site offline” control (not just a generic toggle), shows a success confirmation, and includes explanatory English text that this is application-level maintenance mode and does not roll back the deployed canister version.",
+      "reason": "The /admin/blogs implementation is truncated right where the offline action handler begins, so the diff summary does not provide enough evidence that the UI includes (a) an explicit unpublish/take-offline labeled action (as opposed to only a Switch), (b) a success confirmation for the take-offline action, and (c) the required explanatory text in the admin UI.",
       "evidence": [
-        "frontend/DEPLOYMENT.md (truncated in diff summary)"
+        "frontend/src/pages/AdminBlogsPage.tsx (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "DEPLOYMENT.md includes a complete step-by-step domain change section explicitly mentioning VITE_PUBLIC_DOMAIN and calling out the standalone landing page domain configuration location (frontend/static/growwithtutor-standalone/index.html).",
+      "reason": "DEPLOYMENT.md is truncated partway through the “Changing the Domain” section; the provided excerpt does not show explicit mention of VITE_PUBLIC_DOMAIN or the standalone landing page configuration path, so completeness cannot be verified from the diff summary.",
+      "evidence": [
+        "frontend/DEPLOYMENT.md (truncated)"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Added/updated project tracking metadata (project_state.json) with AR items and statuses.",
-      "reason": "The BuildRequest does not ask for any project management/state JSON updates; this appears unrelated to the domain-reference change requirements.",
+      "description": "Broad marketing site content and section rewrites/additions (hero copy, value props, services, how-it-works, testimonials, FAQ, etc.) beyond domain-change guidance and maintenance-mode workflow.",
+      "reason": "BuildRequest only asks for maintenance mode/unpublish workflow and domain-change guidance; marketing page content expansion is not requested.",
       "evidence": [
-        "project_state.json"
+        "frontend-file-summaries.txt (frontend/src/content/marketingContent.ts)",
+        "frontend-file-summaries.txt (frontend/src/pages/MarketingLandingPage.tsx)",
+        "frontend-file-summaries.txt (frontend/src/components/marketing/sections/HeroSection.tsx)",
+        "frontend-file-summaries.txt (frontend/src/components/marketing/sections/ValuePropositionSection.tsx)",
+        "frontend-file-summaries.txt (frontend/src/components/marketing/sections/ServicesSection.tsx)",
+        "frontend-file-summaries.txt (frontend/src/components/marketing/sections/HowItWorksSection.tsx)",
+        "frontend-file-summaries.txt (frontend/src/components/marketing/sections/TestimonialsSection.tsx)",
+        "frontend-file-summaries.txt (frontend/src/components/marketing/sections/FaqSection.tsx)",
+        "frontend-file-summaries.txt (frontend/src/components/marketing/sections/ContactSection.tsx)",
+        "frontend-file-summaries.txt (frontend/src/components/marketing/ContactForm.tsx)"
       ]
     },
     {
-      "description": "Introduced or modified a generated \"frontend-file-summaries.txt\" artifact describing many frontend files and features (including a new /admin/setup route mention).",
-      "reason": "The BuildRequest does not request adding summary artifacts or describing other marketing/site content changes; this file is not part of the requested domain-configuration work.",
+      "description": "Global styling and Tailwind theme changes unrelated to the requested maintenance-mode and domain-change guidance.",
+      "reason": "No styling overhaul is requested in the BuildRequest.",
       "evidence": [
-        "frontend-file-summaries.txt"
+        "frontend-file-summaries.txt (frontend/src/index.css)",
+        "frontend-file-summaries.txt (frontend/tailwind.config.js)"
+      ]
+    },
+    {
+      "description": "Standalone landing page refactor to inject runtime logo URL and define STANDALONE_PUBLIC_DOMAIN constant (beyond simply documenting the standalone domain configuration location).",
+      "reason": "REQ-2 requires documentation/guidance and a note pointing to the standalone landing page domain configuration location; implementing additional standalone runtime injection behavior is not explicitly requested.",
+      "evidence": [
+        "frontend-file-summaries.txt (frontend/static/growwithtutor-standalone/index.html)"
       ]
     }
   ],
   "confidence": 0.62,
   "changed_files": [
+    "backend/main.mo",
+    "backend/migration.mo",
     "frontend-file-summaries.txt",
     "frontend/DEPLOYMENT.md",
-    "frontend/src/components/marketing/MarketingFooter.tsx",
-    "frontend/src/components/marketing/MarketingHeader.tsx",
-    "frontend/src/config/publicDomain.ts",
-    "frontend/src/config/siteConfig.ts",
+    "frontend/src/components/maintenance/SiteLiveGate.tsx",
+    "frontend/src/pages/AdminBlogsPage.tsx",
     "frontend/src/pages/SetupChecklistPage.tsx",
-    "frontend/static/growwithtutor-standalone/index.html",
     "project_state.json"
   ]
 }

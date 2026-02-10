@@ -61,11 +61,46 @@ To deploy to the Internet Computer mainnet:
 
 3. **Access your application** at the canister URL provided after deployment
 
+## Unpublishing / Maintenance Mode
+
+The application includes a maintenance mode feature that allows admins to temporarily make the site unavailable to public visitors while keeping admin access intact.
+
+### How It Works
+
+- When maintenance mode is enabled, public visitors see a maintenance screen instead of the normal site content
+- Admin routes (e.g., `/admin/blogs`, `/admin/setup`) remain fully accessible to authenticated admins
+- This is an **application-level** feature, not a network-level rollback
+- The backend canister remains deployed and running; only the public-facing UI is affected
+
+### Enabling Maintenance Mode (Taking Site Offline / Unpublishing)
+
+1. **Log in as an admin** using Internet Identity
+2. **Navigate to the admin panel**: Go to `/admin/blogs`
+3. **Find the "Site Status Control" card** at the top of the page
+4. **Click "Take Site Offline / Unpublish"** button or toggle the switch to "Offline"
+5. **Confirm the action** in the dialog that appears
+6. **Success**: You'll see a confirmation message, and public routes will now show the maintenance screen
+
+### Re-enabling the Site (Going Live / Publishing)
+
+1. **Log in as an admin** using Internet Identity
+2. **Navigate to the admin panel**: Go to `/admin/blogs`
+3. **Find the "Site Status Control" card** at the top of the page
+4. **Click "Bring Site Online / Publish"** button or toggle the switch to "Live"
+5. **Success**: You'll see a confirmation message, and public routes will be accessible again
+
+### Important Notes
+
+- **Not a rollback**: This feature does not roll back your canister deployment on the Internet Computer network. It only controls whether public visitors can access the site content.
+- **Admin access preserved**: Admins can always access admin routes, even when the site is in maintenance mode.
+- **State persists**: All data (blogs, user profiles, etc.) remains intact during maintenance mode.
+- **Automatic on upgrade**: After a backend upgrade, the site defaults to "live" status unless explicitly set to maintenance mode.
+
 ## Changing the Domain
 
 If you need to change the public domain/hostname for your application (e.g., from `growithtutor.com` to your own domain), follow these steps:
 
-### 1. DNS Configuration
+### 1. DNS Configuration (External)
 
 First, configure your DNS settings:
 - Point your domain to the Internet Computer canister URL
@@ -74,11 +109,9 @@ First, configure your DNS settings:
 
 ### 2. Update React App Domain Configuration
 
-The React application uses a centralized domain configuration:
+The React application uses a centralized domain configuration system. You have two options to change the domain:
 
-**Primary configuration location**: `frontend/src/config/publicDomain.ts`
+#### Option A: Environment Variable (Recommended)
 
-You have two options to change the domain:
+Set the `VITE_PUBLIC_DOMAIN` environment variable before building:
 
-**Option A: Environment Variable (Recommended)**
-Set the `VITE_PUBLIC_DOMAIN` environment variable:

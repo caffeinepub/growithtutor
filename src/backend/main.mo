@@ -5,11 +5,11 @@ import Iter "mo:core/Iter";
 import List "mo:core/List";
 import Time "mo:core/Time";
 import Principal "mo:core/Principal";
-
 import AccessControl "authorization/access-control";
 import MixinAuthorization "authorization/MixinAuthorization";
+import Migration "migration";
 
-
+(with migration = Migration.run)
 actor {
   type Blog = {
     id : Nat;
@@ -29,9 +29,25 @@ actor {
   let accessControlState = AccessControl.initState();
   include MixinAuthorization(accessControlState);
 
+  var siteLive : ?Bool = ?true;
   let userProfiles = Map.empty<Principal, UserProfile>();
   let principalEmails = Map.empty<Principal, Text>();
   let allowedAdminEmails = Map.empty<Text, Bool>();
+
+  public query ({ caller }) func isSiteLive() : async Bool {
+    switch (siteLive) {
+      case (?true) { true };
+      // Treat both ?false (explicitly turned off) and null (offline before update) as offline.
+      case (_) { false };
+    };
+  };
+
+  public shared ({ caller }) func setSiteLive(isLive : Bool) : async () {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
+      Runtime.trap("Unauthorized: Only admins can change site live status");
+    };
+    siteLive := ?isLive;
+  };
 
   public query ({ caller }) func getCallerEmail() : async ?Text {
     // Users can view their own email
@@ -58,7 +74,9 @@ actor {
   };
 
   public shared ({ caller }) func performDefaultAdminBootstrap(secret : Text) : async () {
-    // Currently just a placeholder, could implement default admin promotion logic here
+    // This function is intentionally disabled for security reasons
+    // Admin bootstrapping should only be done through the allow-list mechanism
+    Runtime.trap("Unauthorized: Default admin bootstrap is disabled. Use allow-list bootstrap instead.");
   };
 
   public shared ({ caller }) func performAllowListAdminBootstrap(secret : Text) : async () {
@@ -76,7 +94,8 @@ actor {
         Runtime.trap("Unauthorized: Email not in allowed admin list");
       };
       case (?true) {
-        // Verified to be an allowed admin email
+        // Verified to be an allowed admin email - now assign admin role
+        AccessControl.assignRole(accessControlState, caller, caller, #admin);
       };
       case (?false) {
         Runtime.trap("Unauthorized: Email not in allowed admin list");

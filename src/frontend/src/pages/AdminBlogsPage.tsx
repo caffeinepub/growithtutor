@@ -6,17 +6,22 @@ import {
   useEditBlog,
   useSetPublishedStatus,
   useDeleteBlog,
+  useIsSiteLive,
+  useSetSiteLive,
+  useIsCallerAdmin,
 } from '../hooks/useQueries';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { toast } from 'sonner';
-import { Plus, Edit, Trash2, Calendar } from 'lucide-react';
+import { Plus, Edit, Trash2, Calendar, Globe, AlertCircle, Power } from 'lucide-react';
 import LoginButton from '../components/auth/LoginButton';
 import type { Blog } from '../backend';
 
@@ -27,10 +32,13 @@ export default function AdminBlogsPage() {
   });
 
   const { data: blogs, isLoading } = useGetAllBlogs();
+  const { data: isSiteLive, isLoading: isSiteLiveLoading } = useIsSiteLive();
+  const { data: isAdmin } = useIsCallerAdmin();
   const createBlog = useCreateBlog();
   const editBlog = useEditBlog();
   const setPublished = useSetPublishedStatus();
   const deleteBlog = useDeleteBlog();
+  const setSiteLive = useSetSiteLive();
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -101,6 +109,26 @@ export default function AdminBlogsPage() {
     }
   };
 
+  const handleTakeSiteOffline = async () => {
+    try {
+      await setSiteLive.mutateAsync(false);
+      toast.success('Site taken offline - public visitors will see a maintenance screen');
+    } catch (error) {
+      toast.error('Failed to take site offline');
+      console.error(error);
+    }
+  };
+
+  const handleBringSiteOnline = async () => {
+    try {
+      await setSiteLive.mutateAsync(true);
+      toast.success('Site is now live and accessible to the public');
+    } catch (error) {
+      toast.error('Failed to bring site online');
+      console.error(error);
+    }
+  };
+
   const openEditDialog = (blog: Blog) => {
     setEditingBlog(blog);
     setFormData({ title: blog.title, content: blog.content });
@@ -117,6 +145,97 @@ export default function AdminBlogsPage() {
           </div>
           <LoginButton />
         </div>
+
+        {isAdmin && (
+          <Card className="mb-6 border-primary/20 bg-primary/5">
+            <CardHeader>
+              <div className="flex items-center gap-3 mb-2">
+                <Globe className="h-5 w-5 text-primary" />
+                <div>
+                  <CardTitle className="text-lg">Site Status Control</CardTitle>
+                  <CardDescription>
+                    {isSiteLiveLoading ? 'Loading...' : isSiteLive ? 'Site is live and accessible to the public' : 'Site is offline - public visitors see a maintenance screen'}
+                  </CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Alert>
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>
+                  <strong>Application-level maintenance mode:</strong> This control hides the public site from visitors while keeping admin routes accessible. It does not roll back the deployed canister version on the Internet Computer network.
+                </AlertDescription>
+              </Alert>
+
+              <div className="flex items-center justify-between p-4 border rounded-lg bg-background">
+                <div className="flex items-center gap-3">
+                  <Power className={`h-5 w-5 ${isSiteLive ? 'text-green-600' : 'text-orange-600'}`} />
+                  <div>
+                    <p className="font-medium">
+                      {isSiteLive ? 'Site is Live' : 'Site is Offline (Maintenance Mode)'}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {isSiteLive ? 'Public visitors can access all pages' : 'Public visitors see maintenance screen'}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium">
+                    {isSiteLive ? 'Live' : 'Offline'}
+                  </span>
+                  <Switch
+                    checked={isSiteLive ?? true}
+                    onCheckedChange={(checked) => {
+                      if (checked) {
+                        handleBringSiteOnline();
+                      } else {
+                        handleTakeSiteOffline();
+                      }
+                    }}
+                    disabled={isSiteLiveLoading || setSiteLive.isPending}
+                  />
+                </div>
+              </div>
+
+              {isSiteLive ? (
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="outline" className="w-full" disabled={setSiteLive.isPending}>
+                      <Power className="h-4 w-4 mr-2" />
+                      Take Site Offline / Unpublish
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Take Site Offline?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This will enable maintenance mode. Public visitors will see a maintenance screen instead of the site content. Admin routes will remain accessible.
+                        <br /><br />
+                        <strong>Note:</strong> This does not roll back your deployed canister version. It only controls public access to the site.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleTakeSiteOffline}>
+                        Take Offline
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              ) : (
+                <Button 
+                  variant="default" 
+                  className="w-full"
+                  onClick={handleBringSiteOnline}
+                  disabled={setSiteLive.isPending}
+                >
+                  <Power className="h-4 w-4 mr-2" />
+                  {setSiteLive.isPending ? 'Bringing Online...' : 'Bring Site Online / Publish'}
+                </Button>
+              )}
+            </CardContent>
+          </Card>
+        )}
 
         <div className="mb-6">
           <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
@@ -274,7 +393,7 @@ export default function AdminBlogsPage() {
                 disabled={editBlog.isPending}
                 className="w-full"
               >
-                {editBlog.isPending ? 'Updating...' : 'Update Post'}
+                {editBlog.isPending ? 'Saving...' : 'Save Changes'}
               </Button>
             </div>
           </DialogContent>
