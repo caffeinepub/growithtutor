@@ -5,8 +5,10 @@ import Iter "mo:core/Iter";
 import List "mo:core/List";
 import Time "mo:core/Time";
 import Principal "mo:core/Principal";
+
 import AccessControl "authorization/access-control";
 import MixinAuthorization "authorization/MixinAuthorization";
+
 
 actor {
   type Blog = {
@@ -28,6 +30,84 @@ actor {
   include MixinAuthorization(accessControlState);
 
   let userProfiles = Map.empty<Principal, UserProfile>();
+  let principalEmails = Map.empty<Principal, Text>();
+  let allowedAdminEmails = Map.empty<Text, Bool>();
+
+  public query ({ caller }) func getCallerEmail() : async ?Text {
+    // Users can view their own email
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only authenticated users can view their email");
+    };
+    principalEmails.get(caller);
+  };
+
+  public query ({ caller }) func getUserEmail(user : Principal) : async ?Text {
+    // Only admins can view other users' emails
+    if (caller != user and not AccessControl.isAdmin(accessControlState, caller)) {
+      Runtime.trap("Unauthorized: Only admins can view other users' emails");
+    };
+    principalEmails.get(user);
+  };
+
+  public shared ({ caller }) func setEmail(email : Text) : async () {
+    // Only authenticated users can set their email
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only authenticated users can set their email");
+    };
+    principalEmails.add(caller, email);
+  };
+
+  public shared ({ caller }) func performDefaultAdminBootstrap(secret : Text) : async () {
+    // Currently just a placeholder, could implement default admin promotion logic here
+  };
+
+  public shared ({ caller }) func performAllowListAdminBootstrap(secret : Text) : async () {
+    let email = switch (principalEmails.get(caller)) {
+      case (null) {
+        Runtime.trap("Unauthorized: No email registered for this principal");
+      };
+      case (?email) {
+        email;
+      };
+    };
+
+    switch (allowedAdminEmails.get(email)) {
+      case (null) {
+        Runtime.trap("Unauthorized: Email not in allowed admin list");
+      };
+      case (?true) {
+        // Verified to be an allowed admin email
+      };
+      case (?false) {
+        Runtime.trap("Unauthorized: Email not in allowed admin list");
+      };
+    };
+  };
+
+  public shared ({ caller }) func addAllowedAdminEmail(email : Text) : async () {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
+      Runtime.trap("Unauthorized: Only admins can add allowed admin emails");
+    };
+    allowedAdminEmails.add(email, true);
+  };
+
+  public shared ({ caller }) func removeAllowedAdminEmail(email : Text) : async () {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
+      Runtime.trap("Unauthorized: Only admins can remove allowed admin emails");
+    };
+    allowedAdminEmails.remove(email);
+  };
+
+  public query ({ caller }) func getAllowedAdminEmails() : async [Text] {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
+      Runtime.trap("Unauthorized: Only admins can view allowed admin emails");
+    };
+    let emailList = List.empty<Text>();
+    for (email in allowedAdminEmails.keys()) {
+      emailList.add(email);
+    };
+    emailList.toArray();
+  };
 
   public query ({ caller }) func getCallerUserProfile() : async ?UserProfile {
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {

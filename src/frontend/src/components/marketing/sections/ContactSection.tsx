@@ -2,11 +2,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { MessageCircle, Phone, MessageSquare, Mail } from 'lucide-react';
 import { contactNumbers, optionalContactInfo } from '../../../content/siteContent';
-import { getGenericWhatsAppLink, getPhoneLink, getGenericSMSLink, getGenericEmailLink } from '../../../lib/whatsapp';
+import { getGenericWhatsAppLink, getPhoneLink, getGenericSMSLink, openEmailCompose } from '../../../lib/whatsapp';
 import { useNavigate } from '@tanstack/react-router';
 
 export default function ContactSection() {
   const navigate = useNavigate();
+
+  const handleEmailClick = () => {
+    openEmailCompose(
+      optionalContactInfo.email,
+      'Enquiry about Tuition Services',
+      'Hello, I am interested in tuition services. Please share course details, fees, and demo class information.'
+    );
+  };
 
   return (
     <section id="contact" className="py-16 md:py-24 bg-muted/30">
@@ -148,7 +156,7 @@ export default function ContactSection() {
                   <Button
                     variant="outline"
                     className="w-full"
-                    onClick={() => window.open(getGenericEmailLink(), '_self')}
+                    onClick={handleEmailClick}
                   >
                     <Mail className="h-4 w-4 mr-2" />
                     Send Email

@@ -2,12 +2,47 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-an-admin-setup-ui-that-lets-a-logged-in-user-view-their-principal-id-see-whether-they-are-currently-an-admin-and-when-not-admin-enter-provide-the-admin-bootstrap-secret-and-trigger-the-backend-initialization-so-they-can-gain-admin-access-and-then-navigate-to-the-admin-pages",
-      "featureTitle": "Add an admin setup UI that lets a logged-in user view their Principal ID, see whether they are currently an admin, and (when not admin) enter/provide the admin bootstrap secret and trigger the backend initialization so they can gain admin access and then navigate to the admin pages.",
+      "featureId": "feature-update-the-react-marketing-header-brand-mark-to-render-the-provided-logo-image-from-the-url-https-growithtutor-com-wp-content-uploads-2025-08-cropped-cropped-growithtutor-3d-new-logo-150x150-png-instead-of-text-only-while-keeping-the-existing-click-to-navigate-home-behavior-and-accessible-labeling",
+      "featureTitle": "Update the React marketing header brand mark to render the provided logo image from the URL \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\" (instead of text-only), while keeping the existing click-to-navigate-home behavior and accessible labeling.",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/auth/AdminRouteGuard.tsx",
-        "frontend/src/pages/AdminSetupPage.tsx",
+        "frontend/src/components/marketing/MarketingHeader.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-react-marketing-footer-brand-mark-to-render-the-provided-logo-image-from-the-url-https-growithtutor-com-wp-content-uploads-2025-08-cropped-cropped-growithtutor-3d-new-logo-150x150-png-instead-of-text-only-without-changing-the-footer-s-existing-links-and-content",
+      "featureTitle": "Update the React marketing footer brand mark to render the provided logo image from the URL \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\" (instead of text-only), without changing the footer’s existing links and content.",
+      "files": [
+        "frontend/src/components/marketing/MarketingFooter.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-setup-checklist-page-so-the-logo-checklist-item-reflects-that-the-logo-is-now-configured-via-the-provided-external-url",
+      "featureTitle": "Update the Setup Checklist page so the \"Logo\" checklist item reflects that the logo is now configured via the provided external URL.",
+      "files": [
         "frontend/src/pages/SetupChecklistPage.tsx"
       ],
       "components": [
@@ -19,7 +54,26 @@
         "authorization@4.0.0"
       ],
       "testIds": [
-        "REQ-2"
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-standalone-static-marketing-page-frontend-static-growwithtutor-standalone-index-html-so-its-header-and-footer-brand-marks-also-use-the-provided-logo-image-url-instead-of-text-only-keeping-the-rest-of-the-static-page-intact",
+      "featureTitle": "Update the standalone static marketing page (frontend/static/growwithtutor-standalone/index.html) so its header and footer brand marks also use the provided logo image URL instead of text-only, keeping the rest of the static page intact.",
+      "files": [
+        "frontend/static/growwithtutor-standalone/index.html"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
       ],
       "confidence": "high"
     }

@@ -3,13 +3,21 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Phone, MessageCircle, MessageSquare, Mail } from 'lucide-react';
 import { contactNumbers, optionalContactInfo } from '../content/siteContent';
-import { getGenericWhatsAppLink, getPhoneLink, getGenericSMSLink, getGenericEmailLink } from '../lib/whatsapp';
+import { getGenericWhatsAppLink, getPhoneLink, getGenericSMSLink, openEmailCompose } from '../lib/whatsapp';
 
 export default function ContactPage() {
   usePageMeta({
     title: 'Contact Us',
     description: 'Get in touch with GrowWithTutor via WhatsApp, SMS, email, or phone. We are here to help you with your tutoring needs.',
   });
+
+  const handleEmailClick = () => {
+    openEmailCompose(
+      optionalContactInfo.email,
+      'Enquiry about Tuition Services',
+      'Hello, I am interested in tuition services. Please share course details, fees, and demo class information.'
+    );
+  };
 
   return (
     <div className="container py-12 md:py-16">
@@ -148,7 +156,7 @@ export default function ContactPage() {
                   <Button
                     variant="outline"
                     className="w-full"
-                    onClick={() => window.open(getGenericEmailLink(), '_self')}
+                    onClick={handleEmailClick}
                   >
                     <Mail className="h-4 w-4 mr-2" />
                     Send Email

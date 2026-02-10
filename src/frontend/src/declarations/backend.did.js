@@ -25,21 +25,29 @@ export const UserProfile = IDL.Record({ 'name' : IDL.Text });
 
 export const idlService = IDL.Service({
   '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+  'addAllowedAdminEmail' : IDL.Func([IDL.Text], [], []),
   'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
   'createBlog' : IDL.Func([IDL.Text, IDL.Text], [IDL.Nat], []),
   'deleteBlog' : IDL.Func([IDL.Nat], [], []),
   'editBlog' : IDL.Func([IDL.Nat, IDL.Text, IDL.Text], [], []),
   'getAllBlogs' : IDL.Func([], [IDL.Vec(Blog)], ['query']),
+  'getAllowedAdminEmails' : IDL.Func([], [IDL.Vec(IDL.Text)], ['query']),
   'getBlog' : IDL.Func([IDL.Nat], [IDL.Opt(Blog)], ['query']),
+  'getCallerEmail' : IDL.Func([], [IDL.Opt(IDL.Text)], ['query']),
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getUserEmail' : IDL.Func([IDL.Principal], [IDL.Opt(IDL.Text)], ['query']),
   'getUserProfile' : IDL.Func(
       [IDL.Principal],
       [IDL.Opt(UserProfile)],
       ['query'],
     ),
   'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'performAllowListAdminBootstrap' : IDL.Func([IDL.Text], [], []),
+  'performDefaultAdminBootstrap' : IDL.Func([IDL.Text], [], []),
+  'removeAllowedAdminEmail' : IDL.Func([IDL.Text], [], []),
   'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+  'setEmail' : IDL.Func([IDL.Text], [], []),
   'setPublishedStatus' : IDL.Func([IDL.Nat, IDL.Bool], [], []),
 });
 
@@ -63,21 +71,29 @@ export const idlFactory = ({ IDL }) => {
   
   return IDL.Service({
     '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+    'addAllowedAdminEmail' : IDL.Func([IDL.Text], [], []),
     'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
     'createBlog' : IDL.Func([IDL.Text, IDL.Text], [IDL.Nat], []),
     'deleteBlog' : IDL.Func([IDL.Nat], [], []),
     'editBlog' : IDL.Func([IDL.Nat, IDL.Text, IDL.Text], [], []),
     'getAllBlogs' : IDL.Func([], [IDL.Vec(Blog)], ['query']),
+    'getAllowedAdminEmails' : IDL.Func([], [IDL.Vec(IDL.Text)], ['query']),
     'getBlog' : IDL.Func([IDL.Nat], [IDL.Opt(Blog)], ['query']),
+    'getCallerEmail' : IDL.Func([], [IDL.Opt(IDL.Text)], ['query']),
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getUserEmail' : IDL.Func([IDL.Principal], [IDL.Opt(IDL.Text)], ['query']),
     'getUserProfile' : IDL.Func(
         [IDL.Principal],
         [IDL.Opt(UserProfile)],
         ['query'],
       ),
     'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'performAllowListAdminBootstrap' : IDL.Func([IDL.Text], [], []),
+    'performDefaultAdminBootstrap' : IDL.Func([IDL.Text], [], []),
+    'removeAllowedAdminEmail' : IDL.Func([IDL.Text], [], []),
     'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+    'setEmail' : IDL.Func([IDL.Text], [], []),
     'setPublishedStatus' : IDL.Func([IDL.Nat, IDL.Bool], [], []),
   });
 };

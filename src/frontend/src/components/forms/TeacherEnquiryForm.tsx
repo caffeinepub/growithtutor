@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { subjects, classes, boards, languages, modes, contactNumbers, optionalContactInfo } from '../../content/siteContent';
-import { generateTeacherWhatsAppMessage, generateTeacherEmailContent, getWhatsAppLink, getPhoneLink, getSMSLink, getEmailLink } from '../../lib/whatsapp';
+import { generateTeacherWhatsAppMessage, generateTeacherEmailContent, getWhatsAppLink, getPhoneLink, getSMSLink, openEmailCompose } from '../../lib/whatsapp';
 import { MessageCircle, Phone, CheckCircle, MessageSquare, Mail } from 'lucide-react';
 
 export default function TeacherEnquiryForm() {
@@ -59,7 +59,10 @@ export default function TeacherEnquiryForm() {
     const smsMessage = generateTeacherWhatsAppMessage(formData);
     const smsLink = getSMSLink(smsMessage, contactNumbers.phone1);
     const emailContent = generateTeacherEmailContent(formData);
-    const emailLink = getEmailLink(emailContent.subject, emailContent.body, optionalContactInfo.email);
+
+    const handleEmailClick = () => {
+      openEmailCompose(optionalContactInfo.email, emailContent.subject, emailContent.body);
+    };
 
     return (
       <Card className="border-primary">
@@ -108,7 +111,7 @@ export default function TeacherEnquiryForm() {
               {optionalContactInfo.email && (
                 <Button
                   variant="outline"
-                  onClick={() => window.open(emailLink, '_self')}
+                  onClick={handleEmailClick}
                 >
                   <Mail className="h-4 w-4 mr-2" />
                   Send Email

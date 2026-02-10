@@ -14,12 +14,14 @@ export default function SetupChecklistPage() {
     description: 'Complete setup guide for GrowWithTutor website configuration.',
   });
 
+  const logoUrl = 'https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png';
+
   const checklistItems = [
     {
       title: 'Logo',
-      description: 'The GrowWithTutor logo is already configured and displayed in the header and footer.',
+      description: 'Logo is configured and displayed in the header and footer.',
       status: 'complete',
-      details: 'Using: /assets/generated/growwithtutor-logo.dim_512x192.png',
+      details: `Logo configured via external URL: ${logoUrl}`,
     },
     {
       title: 'Contact Numbers (WhatsApp & Phone)',
@@ -114,7 +116,7 @@ export default function SetupChecklistPage() {
               </CardHeader>
               <CardContent>
                 <div className="bg-muted p-4 rounded-md">
-                  <p className="text-sm font-mono">{item.details}</p>
+                  <p className="text-sm font-mono break-all">{item.details}</p>
                 </div>
               </CardContent>
             </Card>

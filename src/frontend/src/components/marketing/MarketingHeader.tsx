@@ -5,6 +5,7 @@ import { useNavigate } from '@tanstack/react-router';
 
 export default function MarketingHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const navigate = useNavigate();
 
   const handleNavigation = (path: string) => {
@@ -20,24 +21,26 @@ export default function MarketingHeader() {
     { label: 'Contact', path: '/contact' },
   ];
 
+  const logoUrl = 'https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png';
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <button
           onClick={() => handleNavigation('/')}
-          className="flex items-center space-x-3 focus-ring rounded-md"
+          className="flex items-center focus-ring rounded-md px-2 py-1"
           aria-label="Go to home"
         >
-          <img
-            src="/assets/generated/growwithtutor-uploaded-logo.dim_1024x1024.png"
-            alt="Growithtutor emblem"
-            className="h-8 w-auto"
-          />
-          <img
-            src="/assets/generated/growwithtutor-logo.dim_512x192.png"
-            alt="Growithtutor"
-            className="h-8 w-auto"
-          />
+          {!imageError ? (
+            <img
+              src={logoUrl}
+              alt="Growithtutor logo"
+              className="h-10 w-auto object-contain"
+              onError={() => setImageError(true)}
+            />
+          ) : (
+            <span className="text-xl font-bold text-foreground">Growithtutor</span>
+          )}
         </button>
 
         {/* Desktop Navigation */}

@@ -101,6 +101,29 @@ export function getGenericEmailLink(email: string = optionalContactInfo.email): 
   );
 }
 
+// Gmail compose link helper
+export function getGmailComposeLink(to: string, subject: string = '', body: string = ''): string {
+  const params = new URLSearchParams();
+  params.append('to', to);
+  if (subject) params.append('su', subject);
+  if (body) params.append('body', body);
+  return `https://mail.google.com/mail/?view=cm&fs=1&${params.toString()}`;
+}
+
+// Open Gmail compose with fallback to mailto
+export function openEmailCompose(to: string, subject: string = '', body: string = ''): void {
+  const gmailLink = getGmailComposeLink(to, subject, body);
+  const mailtoLink = getEmailLink(subject, body, to);
+  
+  // Try to open Gmail compose
+  const gmailWindow = window.open(gmailLink, '_blank');
+  
+  // If popup was blocked or failed, fall back to mailto
+  if (!gmailWindow || gmailWindow.closed || typeof gmailWindow.closed === 'undefined') {
+    window.location.href = mailtoLink;
+  }
+}
+
 export function generateStudentEmailContent(data: StudentFormData): { subject: string; body: string } {
   const subject = `Student Enquiry - ${data.name}`;
   const body = `Hello,

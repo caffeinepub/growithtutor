@@ -13,7 +13,13 @@
     <div class="container">
       <div class="header-content">
         <div class="logo">
-          <img src="../../public/assets/generated/growwithtutor-logo.dim_512x192.png" alt="Growithtutor" class="logo-img">
+          <img 
+            src="https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png" 
+            alt="Growithtutor logo" 
+            class="logo-image"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';"
+          />
+          <span class="logo-text" style="display: none;">Growithtutor</span>
         </div>
         <nav class="nav">
           <a href="#hero" class="nav-link">Home</a>
@@ -23,54 +29,134 @@
           <a href="#faq" class="nav-link">FAQ</a>
           <a href="#contact" class="nav-link">Contact</a>
         </nav>
-        <button class="mobile-menu-btn" aria-label="Toggle menu">
-          <span class="hamburger"></span>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main>
-    <!-- Hero Section -->
-    <section id="hero" class="hero">
-      <!-- Content rendered by JavaScript -->
-    </section>
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#hero" class="mobile-menu-link">Home</a>
+    <a href="#services" class="mobile-menu-link">Services</a>
+    <a href="#how-it-works" class="mobile-menu-link">How It Works</a>
+    <a href="#testimonials" class="mobile-menu-link">Testimonials</a>
+    <a href="#faq" class="mobile-menu-link">FAQ</a>
+    <a href="#contact" class="mobile-menu-link">Contact</a>
+  </div>
 
-    <!-- Value Proposition -->
-    <section id="value-proposition" class="value-proposition">
-      <!-- Content rendered by JavaScript -->
-    </section>
+  <!-- Hero Section -->
+  <section id="hero" class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title" id="heroTitle"></h1>
+          <p class="hero-subtitle" id="heroSubtitle"></p>
+          <div class="hero-buttons">
+            <a href="#contact" class="btn btn-primary">Get Started</a>
+            <a href="#contact" class="btn btn-secondary">Join as Teacher</a>
+          </div>
+          <ul class="hero-features" id="heroFeatures"></ul>
+        </div>
+        <div class="hero-image">
+          <img src="/assets/generated/tutoring-hero.dim_1600x900.png" alt="Online tutoring illustration">
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Services -->
-    <section id="services" class="services">
-      <!-- Content rendered by JavaScript -->
-    </section>
+  <!-- Value Proposition Section -->
+  <section id="value-proposition" class="section">
+    <div class="container">
+      <h2 class="section-title" id="valuePropositionTitle"></h2>
+      <div class="grid" id="valuePropositionGrid"></div>
+    </div>
+  </section>
 
-    <!-- How It Works -->
-    <section id="how-it-works" class="how-it-works">
-      <!-- Content rendered by JavaScript -->
-    </section>
+  <!-- Services Section -->
+  <section id="services" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">Our Tutoring Services</h2>
+      <div class="grid" id="servicesGrid"></div>
+    </div>
+  </section>
 
-    <!-- Testimonials -->
-    <section id="testimonials" class="testimonials">
-      <!-- Content rendered by JavaScript -->
-    </section>
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="section">
+    <div class="container">
+      <h2 class="section-title">How It Works</h2>
+      <div class="grid" id="howItWorksGrid"></div>
+    </div>
+  </section>
 
-    <!-- FAQ -->
-    <section id="faq" class="faq">
-      <!-- Content rendered by JavaScript -->
-    </section>
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">What Our Students Say</h2>
+      <div class="grid" id="testimonialsGrid"></div>
+    </div>
+  </section>
 
-    <!-- Contact -->
-    <section id="contact" class="contact">
-      <!-- Content rendered by JavaScript -->
-    </section>
-  </main>
+  <!-- FAQ Section -->
+  <section id="faq" class="section">
+    <div class="container">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="faq-container" id="faqContainer"></div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">Get in Touch</h2>
+      <div class="grid" id="contactGrid"></div>
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer class="footer">
-    <!-- Content rendered by JavaScript -->
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <img 
+              src="https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png" 
+              alt="Growithtutor logo" 
+              class="footer-logo-image"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';"
+            />
+            <span class="footer-logo-text" style="display: none;">Growithtutor</span>
+          </div>
+          <p class="footer-about" id="footerAbout"></p>
+        </div>
+        <div class="footer-section">
+          <h3 class="footer-title">Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3 class="footer-title">Contact</h3>
+          <ul class="footer-contact" id="footerContact"></ul>
+        </div>
+        <div class="footer-section">
+          <h3 class="footer-title">Follow Us</h3>
+          <div class="footer-social" id="footerSocial"></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p id="footerCopyright"></p>
+        <p>Built with ❤️ using <a href="https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=growithtutor" target="_blank" rel="noopener noreferrer">caffeine.ai</a></p>
+      </div>
+    </div>
   </footer>
 
   <script src="script.js"></script>

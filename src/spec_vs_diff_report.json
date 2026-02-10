@@ -1,42 +1,51 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T13:35:14.873Z",
-  "summary": "Frontend adds a new /admin/setup page to display the user’s principal, show admin status, accept a bootstrap token via the existing caffeineAdminToken session parameter convention, and reinitialize/refetch admin status with navigation to /admin/blogs. However, no backend changes are shown for the required secure admin-bootstrap path, and additional frontend allowlist-based admin access behavior appears to be introduced without being requested.",
-  "missing_requirements": [
-    {
-      "id": "REQ-1",
-      "requirement": "Implement a secure admin-bootstrap path in the backend so the currently authenticated Internet Identity principal can be promoted to admin using the existing secret-token initialization mechanism.",
-      "reason": "The diff summary contains no backend file changes (e.g., backend/main.mo or migration.mo), so there is no evidence the required secure token-gated initialization/admin promotion flow was implemented server-side.",
-      "evidence": []
-    }
-  ],
+  "generatedAt": "2026-02-10T14:34:53.030Z",
+  "summary": "REQ-5/6/7 appear implemented: MarketingHeader/MarketingFooter now render the provided external logo URL with alt text and a text fallback on load error; header brand remains a button navigating to '/'. SetupChecklistPage marks the Logo item as complete and references the exact URL. REQ-8 likely implemented for the standalone static page (header/footer logo image + text fallback), but the footer portion is not fully visible due to truncation.",
+  "missing_requirements": [],
   "hallucinated_features": [
     {
-      "description": "Allowlist-based admin access bypass in AdminRouteGuard (treating principals in adminAllowlist as allowed even when isAdmin is false).",
-      "reason": "REQ-2 asks for an admin setup UI using backend admin-status and bootstrap token flow; it does not request adding or relying on a frontend allowlist to grant/bypass admin access checks.",
+      "description": "Added/changed application routing including a new /admin/setup route (navigation structure change not requested).",
+      "reason": "BuildRequest explicitly scoped changes to placing the provided logo; it also lists as non-goals not to change navigation structure or add new pages/routes beyond placing the logo.",
       "evidence": [
-        "frontend/src/components/auth/AdminRouteGuard.tsx",
-        "frontend/src/pages/SetupChecklistPage.tsx"
+        "frontend-file-summaries.txt (entry for \"frontend/src/App.tsx\": \"route definitions for all pages including the new /admin/setup route\")"
       ]
     },
     {
-      "description": "Setup checklist item instructing configuration of 'Admin Principal IDs' via frontend content (adminAllowlist) to enable blog management access.",
-      "reason": "Non-goals/REQs focus on promoting the logged-in user via a secure backend token initialization mechanism, not configuring admin principals via static frontend content guidance.",
+      "description": "Updated/rewrote marketing copy/content broadly to use \"Growithtutor\" across marketing content.",
+      "reason": "BuildRequest non-goal: \"Do not change site copy\" beyond placing the logo.",
       "evidence": [
-        "frontend/src/pages/SetupChecklistPage.tsx"
+        "frontend-file-summaries.txt (entry for \"frontend/src/content/marketingContent.ts\": \"...all updated to use \\\"Growithtutor\\\"\")",
+        "frontend-file-summaries.txt (entry for \"frontend/src/pages/MarketingLandingPage.tsx\": \"...sets document metadata using \\\"Growithtutor\\\"\")",
+        "frontend-file-summaries.txt (entry for \"frontend/index.html\": \"updated title and meta description using \\\"Growithtutor\\\"\")"
+      ]
+    },
+    {
+      "description": "Implemented/changed email composing behavior to use a Gmail compose helper with fallback.",
+      "reason": "Not requested by the BuildRequest; scope was limited to logo URL rendering updates.",
+      "evidence": [
+        "frontend/src/components/marketing/MarketingFooter.tsx (imports and uses openEmailCompose; handleEmailClick added/changed)",
+        "frontend-file-summaries.txt (entry for \"frontend/src/components/marketing/sections/ContactSection.tsx\": \"...now using openEmailCompose for Gmail integration with fallback\")"
+      ]
+    },
+    {
+      "description": "Modified global styles/Tailwind configuration unrelated to logo placement (e.g., OKLCH color system, theme extensions).",
+      "reason": "Not requested; the BuildRequest focused on adding a provided logo URL to header/footer and related checklist/static page updates.",
+      "evidence": [
+        "frontend-file-summaries.txt (entry for \"frontend/src/index.css\": \"Global styles with OKLCH color system...\")",
+        "frontend-file-summaries.txt (entry for \"frontend/tailwind.config.js\": \"Tailwind configuration extending the theme...\")"
       ]
     }
   ],
-  "confidence": 0.72,
+  "confidence": 0.68,
   "changed_files": [
     "frontend-file-summaries.txt",
-    "frontend/src/App.tsx",
-    "frontend/src/components/auth/AdminRouteGuard.tsx",
-    "frontend/src/pages/AdminSetupPage.tsx",
-    "frontend/src/pages/BlogPostPage.tsx",
-    "frontend/src/pages/BlogsPage.tsx",
+    "frontend/src/components/marketing/MarketingFooter.tsx",
+    "frontend/src/components/marketing/MarketingHeader.tsx",
     "frontend/src/pages/SetupChecklistPage.tsx",
+    "frontend/static/growwithtutor-standalone/index.html",
+    "frontend/static/growwithtutor-standalone/styles.css",
     "project_state.json"
   ]
 }

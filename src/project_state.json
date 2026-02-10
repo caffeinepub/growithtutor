@@ -1,16 +1,42 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "Project involves deploying a system with SMS/Gmail enquiry options and needs admin access so the user can make changes.",
+  "summary": "Project involves deploying an app and updating it to include a provided logo image link.",
   "architectural_notes": [],
-  "known_issues": [],
-  "isFixRequest": false,
+  "known_issues": [
+    "Build/deploy process encountered an internal configuration issue requiring Caffeine team support."
+  ],
+  "isFixRequest": true,
   "existing_features": [
     {
-      "id": "feature-add-an-admin-setup-ui-that-lets-a-logged-in-user-view-their-principal-id-see-whether-they-are-currently-an-admin-and-when-not-admin-enter-provide-the-admin-bootstrap-secret-and-trigger-the-backend-initialization-so-they-can-gain-admin-access-and-then-navigate-to-the-admin-pages",
-      "title": "Add an admin setup UI that lets a logged-in user view their Principal ID, see whether they are currently an admin, and (when not admin) enter/provide the admin bootstrap secret and trigger the backend initialization so they can gain admin access and then navigate to the admin pages.",
+      "id": "feature-update-the-react-marketing-header-brand-mark-to-render-the-provided-logo-image-from-the-url-https-growithtutor-com-wp-content-uploads-2025-08-cropped-cropped-growithtutor-3d-new-logo-150x150-png-instead-of-text-only-while-keeping-the-existing-click-to-navigate-home-behavior-and-accessible-labeling",
+      "title": "Update the React marketing header brand mark to render the provided logo image from the URL \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\" (instead of text-only), while keeping the existing click-to-navigate-home behavior and accessible labeling.",
       "reqIds": [
-        "REQ-2"
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-react-marketing-footer-brand-mark-to-render-the-provided-logo-image-from-the-url-https-growithtutor-com-wp-content-uploads-2025-08-cropped-cropped-growithtutor-3d-new-logo-150x150-png-instead-of-text-only-without-changing-the-footer-s-existing-links-and-content",
+      "title": "Update the React marketing footer brand mark to render the provided logo image from the URL \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\" (instead of text-only), without changing the footer’s existing links and content.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-setup-checklist-page-so-the-logo-checklist-item-reflects-that-the-logo-is-now-configured-via-the-provided-external-url",
+      "title": "Update the Setup Checklist page so the \"Logo\" checklist item reflects that the logo is now configured via the provided external URL.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-standalone-static-marketing-page-frontend-static-growwithtutor-standalone-index-html-so-its-header-and-footer-brand-marks-also-use-the-provided-logo-image-url-instead-of-text-only-keeping-the-rest-of-the-static-page-intact",
+      "title": "Update the standalone static marketing page (frontend/static/growwithtutor-standalone/index.html) so its header and footer brand marks also use the provided logo image URL instead of text-only, keeping the rest of the static page intact.",
+      "reqIds": [
+        "REQ-8"
       ],
       "version": 1
     }
@@ -18,20 +44,12 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Grant the user admin role/access so they can make changes (admin/role management).",
+      "summary": "Add/update the app to include the provided logo image link in the code during deployment",
       "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-2",
-      "summary": "Implement a secure admin-bootstrap path in the backend so the currently authenticated Internet Identity principal can be promoted to admin using the existing secret-token initialization mechanism.",
-      "reqIds": [
-        "REQ-1"
-      ],
       "status": "pending"
     }
   ],
-  "projectName": "Grant the logged-in user admin access to manage site content",
+  "projectName": "Add provided logo image URL to marketing header/footer branding",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

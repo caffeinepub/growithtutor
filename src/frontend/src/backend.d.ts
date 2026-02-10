@@ -24,16 +24,24 @@ export enum UserRole {
     guest = "guest"
 }
 export interface backendInterface {
+    addAllowedAdminEmail(email: string): Promise<void>;
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     createBlog(title: string, content: string): Promise<bigint>;
     deleteBlog(blogId: bigint): Promise<void>;
     editBlog(blogId: bigint, title: string, content: string): Promise<void>;
     getAllBlogs(): Promise<Array<Blog>>;
+    getAllowedAdminEmails(): Promise<Array<string>>;
     getBlog(blogId: bigint): Promise<Blog | null>;
+    getCallerEmail(): Promise<string | null>;
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
+    getUserEmail(user: Principal): Promise<string | null>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
+    performAllowListAdminBootstrap(secret: string): Promise<void>;
+    performDefaultAdminBootstrap(secret: string): Promise<void>;
+    removeAllowedAdminEmail(email: string): Promise<void>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
+    setEmail(email: string): Promise<void>;
     setPublishedStatus(blogId: bigint, published: boolean): Promise<void>;
 }

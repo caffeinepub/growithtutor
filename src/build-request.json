@@ -1,60 +1,103 @@
 {
   "kind": "build_request",
-  "title": "Grant the logged-in user admin access to manage site content",
+  "title": "Add provided logo image URL to marketing header/footer branding",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-1",
-      "text": "Implement a secure admin-bootstrap path in the backend so the currently authenticated Internet Identity principal can be promoted to admin using the existing secret-token initialization mechanism.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-4"
-        ],
-        "quotes": [
-          "now make me the admin so i can make changes"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Backend exposes/uses an initialization flow that (a) requires a secret token and (b) can set the caller as the first admin when no admins exist yet.",
-        "After successful initialization, backend admin authorization checks used by blog CRUD (create/edit/publish/delete) pass for the newly promoted admin principal.",
-        "If the token is missing/invalid, the backend must not grant admin and must return a clear error (trap or rejected call).",
-        "If an admin already exists, the initialization flow must not allow arbitrary promotion without appropriate authorization (e.g., must fail or require existing admin privileges)."
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "text": "Add an admin setup UI that lets a logged-in user view their Principal ID, see whether they are currently an admin, and (when not admin) enter/provide the admin bootstrap secret and trigger the backend initialization so they can gain admin access and then navigate to the admin pages.",
+      "id": "REQ-5",
+      "text": "Update the React marketing header brand mark to render the provided logo image from the URL \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\" (instead of text-only), while keeping the existing click-to-navigate-home behavior and accessible labeling.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-11"
         ],
         "quotes": [
-          "now make me the admin so i can make changes"
+          "why didnt you put the image link in the code wait i am giving you it again"
         ]
       },
       "acceptanceCriteria": [
-        "A logged-in user can see their Principal ID in the UI (copyable/readable).",
-        "The UI shows current admin status using the existing admin-status query hook(s).",
-        "The UI provides a way to set/provide the bootstrap secret token (using the existing `caffeineAdminToken` parameter convention already used by the actor initialization logic) and trigger re-initialization so the backend is called with that token.",
-        "On success, the UI updates to show the user is an admin and provides a working navigation path to `/admin/blogs`.",
-        "All user-facing text is in English."
+        "In MarketingHeader, the brand area displays an <img> using src exactly \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\".",
+        "Clicking/tapping the brand area still navigates to '/'.",
+        "The logo image includes meaningful alt text in English and does not break the header layout on mobile/desktop (logo is constrained to the header height).",
+        "If the image fails to load, a text fallback brand name (\"Growithtutor\") is still visible."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Update the React marketing footer brand mark to render the provided logo image from the URL \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\" (instead of text-only), without changing the footer’s existing links and content.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-11"
+        ],
+        "quotes": [
+          "why didnt you put the image link in the code wait i am giving you it again"
+        ]
+      },
+      "acceptanceCriteria": [
+        "In MarketingFooter, the brand area displays an <img> using src exactly \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\".",
+        "The logo image includes meaningful alt text in English and is visually sized appropriately for the footer (does not overflow or distort).",
+        "If the image fails to load, a text fallback brand name (\"Growithtutor\") is still visible."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Update the Setup Checklist page so the \"Logo\" checklist item reflects that the logo is now configured via the provided external URL.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-11"
+        ],
+        "quotes": [
+          "why didnt you put the image link in the code wait i am giving you it again"
+        ]
+      },
+      "acceptanceCriteria": [
+        "On SetupChecklistPage, the \"Logo\" item status is set to \"complete\".",
+        "The \"Logo\" item details/reference clearly indicate the configured logo source URL is \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\" (English text)."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Update the standalone static marketing page (frontend/static/growwithtutor-standalone/index.html) so its header and footer brand marks also use the provided logo image URL instead of text-only, keeping the rest of the static page intact.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-11"
+        ],
+        "quotes": [
+          "why didnt you put the image link in the code wait i am giving you it again"
+        ]
+      },
+      "acceptanceCriteria": [
+        "In frontend/static/growwithtutor-standalone/index.html, the header logo area includes an <img> using src exactly \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\".",
+        "In frontend/static/growwithtutor-standalone/index.html, the footer logo area includes an <img> using src exactly \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growwithtutor-3d-new-logo-150x150.png\".",
+        "Both images include meaningful alt text in English and are sized so they do not break the header/footer layout."
       ]
     }
   ],
   "constraints": [
-    "Do not edit files under frontend/src/components/ui (compose with existing components only).",
-    "Do not edit immutable hook entrypoints listed in SYSTEM_CONTEXT (e.g., frontend/src/hooks/useInternetIdentity.ts(x), frontend/src/hooks/useActor.ts, frontend/src/main.tsx).",
-    "Backend must remain a single Motoko actor in backend/main.mo; only add migration.mo if a stable-state upgrade is required."
+    "Do not edit files under frontend/src/components/ui (read-only).",
+    "Do not edit the immutable auth/actor bootstrap hooks and entrypoints: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx.",
+    "Backend remains single-actor; no backend changes are required for a logo URL UI update."
   ],
   "nonGoals": [
-    "Building a full admin user management UI (e.g., listing users, role editor) beyond enabling the requesting user to become admin.",
-    "Adding third-party authentication providers (only Internet Identity is supported).",
-    "Adding real-time role updates via websockets/push notifications."
+    "Do not implement image upload, storage, or admin-configurable branding management.",
+    "Do not change site copy, navigation structure, or add new pages/routes beyond placing the logo.",
+    "Do not generate new logo image assets; use the provided external URL as-is."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useInternetIdentity } from '../hooks/useInternetIdentity';
-import { useIsCallerAdmin } from '../hooks/useQueries';
+import { useIsCallerAdmin, useGetCallerEmail, useSetEmail } from '../hooks/useQueries';
 import { useQueryClient } from '@tanstack/react-query';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
-import { CheckCircle2, Copy, ShieldCheck, AlertCircle, Loader2 } from 'lucide-react';
+import { CheckCircle2, Copy, ShieldCheck, AlertCircle, Loader2, Mail } from 'lucide-react';
 import { storeSessionParameter, clearSessionParameter } from '../utils/urlParams';
 import LoginButton from '../components/auth/LoginButton';
 
@@ -24,7 +24,11 @@ export default function AdminSetupPage() {
   const queryClient = useQueryClient();
   const { identity, isInitializing } = useInternetIdentity();
   const { data: isAdmin, isLoading: isAdminLoading, refetch: refetchAdminStatus } = useIsCallerAdmin();
+  const { data: callerEmail, isLoading: emailLoading } = useGetCallerEmail();
+  const setEmailMutation = useSetEmail();
 
+  const [email, setEmail] = useState('');
+  const [emailSaved, setEmailSaved] = useState(false);
   const [token, setToken] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -34,11 +38,48 @@ export default function AdminSetupPage() {
   const isAuthenticated = !!identity;
   const principalId = identity?.getPrincipal().toString();
 
+  // Sync email field with fetched email
+  useEffect(() => {
+    if (callerEmail && !email) {
+      setEmail(callerEmail);
+    }
+  }, [callerEmail, email]);
+
   const handleCopyPrincipal = async () => {
     if (principalId) {
       await navigator.clipboard.writeText(principalId);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email.trim());
+  };
+
+  const handleSaveEmail = async () => {
+    setError(null);
+    setEmailSaved(false);
+
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) {
+      setError('Please enter your Gmail address.');
+      return;
+    }
+
+    if (!validateEmail(trimmedEmail)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+
+    try {
+      await setEmailMutation.mutateAsync(trimmedEmail);
+      setEmailSaved(true);
+      setTimeout(() => setEmailSaved(false), 3000);
+    } catch (err: any) {
+      console.error('Email save error:', err);
+      setError(err.message || 'Failed to save email. Please try again.');
     }
   };
 
@@ -73,12 +114,24 @@ export default function AdminSetupPage() {
         // Clear the token from session storage after successful promotion
         clearSessionParameter('caffeineAdminToken');
       } else {
-        setError('Invalid token or you are not authorized to become an admin. Please check the token and try again.');
+        setError('Invalid token or you are not authorized to become an admin. Please ensure you have saved your Gmail address above and that it matches the authorized email.');
         clearSessionParameter('caffeineAdminToken');
       }
     } catch (err: any) {
       console.error('Admin setup error:', err);
-      setError(err.message || 'Failed to initialize admin access. Please try again.');
+      const errorMessage = err.message || String(err);
+      
+      // Parse backend error messages for better user feedback
+      if (errorMessage.includes('No email registered') || errorMessage.includes('email')) {
+        setError('Please save your Gmail address above before submitting the token.');
+      } else if (errorMessage.includes('Email not in allowed admin list') || errorMessage.includes('not in allowed')) {
+        setError('Your Gmail address is not authorized for admin access. Please contact the system administrator.');
+      } else if (errorMessage.includes('Unauthorized')) {
+        setError('Authorization failed. Please check that your Gmail address is saved and matches the authorized email, then try again.');
+      } else {
+        setError('Failed to initialize admin access. Please try again.');
+      }
+      
       clearSessionParameter('caffeineAdminToken');
     } finally {
       setIsProcessing(false);
@@ -89,7 +142,7 @@ export default function AdminSetupPage() {
     navigate({ to: '/admin/blogs' });
   };
 
-  if (isInitializing || isAdminLoading) {
+  if (isInitializing || isAdminLoading || emailLoading) {
     return (
       <div className="container py-12 md:py-16">
         <div className="max-w-2xl mx-auto space-y-4">
@@ -178,10 +231,20 @@ export default function AdminSetupPage() {
             </div>
             <CardTitle>Admin Setup</CardTitle>
             <CardDescription>
-              Enter the bootstrap secret token to gain admin access.
+              Configure your Gmail address and enter the bootstrap secret token to gain admin access.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
+            {/* Helper Text */}
+            <Alert>
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription className="text-sm">
+                <strong>Important:</strong> Admin access is tied to your Internet Identity Principal, not your Gmail address. 
+                Your Gmail is used only as a configured match check for authorization. You log in with Internet Identity, 
+                not with Gmail.
+              </AlertDescription>
+            </Alert>
+
             {/* Principal ID Display */}
             <div className="bg-muted p-4 rounded-lg">
               <p className="text-sm text-muted-foreground mb-2">
@@ -199,6 +262,63 @@ export default function AdminSetupPage() {
                 >
                   {copied ? <CheckCircle2 className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                 </Button>
+              </div>
+            </div>
+
+            {/* Gmail Address Section */}
+            <div className="space-y-4 border rounded-lg p-4 bg-background">
+              <div className="flex items-center gap-2 mb-2">
+                <Mail className="h-5 w-5 text-primary" />
+                <h3 className="font-semibold">Gmail Address</h3>
+              </div>
+              
+              {callerEmail && !emailSaved && (
+                <Alert className="border-blue-600 bg-blue-50 dark:bg-blue-900/20">
+                  <CheckCircle2 className="h-4 w-4 text-blue-600" />
+                  <AlertDescription className="text-blue-800 dark:text-blue-200">
+                    Your saved Gmail: <strong>{callerEmail}</strong>
+                  </AlertDescription>
+                </Alert>
+              )}
+
+              {emailSaved && (
+                <Alert className="border-green-600 bg-green-50 dark:bg-green-900/20">
+                  <CheckCircle2 className="h-4 w-4 text-green-600" />
+                  <AlertDescription className="text-green-800 dark:text-green-200">
+                    Gmail address saved successfully!
+                  </AlertDescription>
+                </Alert>
+              )}
+
+              <div className="space-y-2">
+                <Label htmlFor="email">Gmail Address</Label>
+                <div className="flex gap-2">
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="your.email@gmail.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={setEmailMutation.isPending}
+                  />
+                  <Button
+                    onClick={handleSaveEmail}
+                    disabled={setEmailMutation.isPending || !email.trim()}
+                    variant="outline"
+                  >
+                    {setEmailMutation.isPending ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Saving...
+                      </>
+                    ) : (
+                      'Save'
+                    )}
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Enter the Gmail address that has been authorized for admin access.
+                </p>
               </div>
             </div>
 
@@ -254,7 +374,8 @@ export default function AdminSetupPage() {
                     disabled={isProcessing}
                   />
                   <p className="text-xs text-muted-foreground">
-                    This token is provided during deployment and is used to initialize the first admin.
+                    This token is provided during deployment and is used to initialize the first admin. 
+                    Make sure you have saved your Gmail address above before submitting.
                   </p>
                 </div>
                 <Button type="submit" className="w-full" disabled={isProcessing}>

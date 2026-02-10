@@ -5,7 +5,8 @@ import { useIsCallerAdmin } from '../../hooks/useQueries';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ShieldAlert, Copy, CheckCircle2 } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { ShieldAlert, Copy, CheckCircle2, Info } from 'lucide-react';
 import LoginButton from './LoginButton';
 import { adminAllowlist } from '../../content/siteContent';
 import { useState } from 'react';
@@ -85,6 +86,15 @@ export default function AdminRouteGuard({ children }: AdminRouteGuardProps) {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
+              <Alert>
+                <Info className="h-4 w-4" />
+                <AlertDescription className="text-sm">
+                  <strong>How Admin Access Works:</strong> Admin access is tied to your Internet Identity Principal (shown below), 
+                  not a Gmail address. Internet Identity does not authenticate via Gmail directly. 
+                  If you have a bootstrap token and an authorized Gmail address, use the Admin Setup page to gain access.
+                </AlertDescription>
+              </Alert>
+
               <div className="bg-muted p-4 rounded-lg">
                 <p className="text-sm text-muted-foreground mb-2">
                   <strong>Your Principal ID:</strong>
@@ -104,7 +114,7 @@ export default function AdminRouteGuard({ children }: AdminRouteGuardProps) {
                 </div>
               </div>
               <p className="text-sm text-center text-muted-foreground">
-                To gain admin access, use the admin setup flow to enter your bootstrap secret token.
+                To gain admin access, use the admin setup flow to configure your Gmail and enter your bootstrap secret token.
               </p>
               <div className="flex flex-col gap-2">
                 <Button onClick={handleNavigateToSetup} className="w-full">

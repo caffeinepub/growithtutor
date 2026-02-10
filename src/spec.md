@@ -1,14 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Allow the currently logged-in Internet Identity user to securely bootstrap themselves as the first admin (using the existing secret-token mechanism) so they can access content management.
+**Goal:** Replace text-only “Growithtutor” branding in marketing header/footer (and the standalone static marketing page) with the provided external logo image URL, while keeping navigation, accessibility, and layout intact.
 
 **Planned changes:**
-- Backend: Add/enable a secure admin initialization flow that, when no admins exist, accepts a secret token and promotes the caller’s principal to admin; reject missing/invalid tokens.
-- Backend: Ensure existing admin authorization checks used by blog CRUD recognize the newly promoted admin principal.
-- Backend: Prevent arbitrary promotion once an admin exists (fail or require existing admin privileges).
-- Frontend: Add an admin setup screen that shows the logged-in user’s Principal ID and current admin status.
-- Frontend: Provide an input for the bootstrap secret token using the existing `caffeineAdminToken` parameter convention, trigger actor re-initialization, and refresh admin status.
-- Frontend: On successful bootstrap, show updated admin status and provide navigation to `/admin/blogs`.
+- Update `MarketingHeader` brand mark to render an `<img>` with `src="https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png"`, preserve click-to-home behavior, add meaningful English alt text, constrain sizing, and show a visible “Growithtutor” text fallback if the image fails to load.
+- Update `MarketingFooter` brand mark to render the same `<img>` (same exact `src`), with meaningful English alt text, appropriate sizing, and a visible “Growithtutor” text fallback if the image fails to load; keep existing footer links/content unchanged.
+- Update `SetupChecklistPage` so the “Logo” checklist item is marked complete and its details reference the configured logo source URL in English.
+- Update `frontend/static/growwithtutor-standalone/index.html` so both the header and footer brand marks use the provided logo image URL (exact `src`), with meaningful English alt text and sizing that does not break layout, keeping the rest of the page intact.
 
-**User-visible outcome:** A logged-in user can view/copy their Principal ID, see whether they are an admin, enter the bootstrap secret to become the first admin (when allowed), and then navigate to the admin blog management page.
+**User-visible outcome:** The marketing header, marketing footer, and standalone static marketing page display the Growithtutor logo image (with accessible alt text and safe sizing), while still showing “Growithtutor” if the image can’t be loaded; the setup checklist reflects that the logo is configured via the provided URL.

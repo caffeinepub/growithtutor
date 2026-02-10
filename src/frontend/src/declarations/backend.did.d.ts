@@ -24,17 +24,25 @@ export type UserRole = { 'admin' : null } |
   { 'guest' : null };
 export interface _SERVICE {
   '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
+  'addAllowedAdminEmail' : ActorMethod<[string], undefined>,
   'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
   'createBlog' : ActorMethod<[string, string], bigint>,
   'deleteBlog' : ActorMethod<[bigint], undefined>,
   'editBlog' : ActorMethod<[bigint, string, string], undefined>,
   'getAllBlogs' : ActorMethod<[], Array<Blog>>,
+  'getAllowedAdminEmails' : ActorMethod<[], Array<string>>,
   'getBlog' : ActorMethod<[bigint], [] | [Blog]>,
+  'getCallerEmail' : ActorMethod<[], [] | [string]>,
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
+  'getUserEmail' : ActorMethod<[Principal], [] | [string]>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
+  'performAllowListAdminBootstrap' : ActorMethod<[string], undefined>,
+  'performDefaultAdminBootstrap' : ActorMethod<[string], undefined>,
+  'removeAllowedAdminEmail' : ActorMethod<[string], undefined>,
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
+  'setEmail' : ActorMethod<[string], undefined>,
   'setPublishedStatus' : ActorMethod<[bigint, boolean], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;

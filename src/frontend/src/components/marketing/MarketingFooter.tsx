@@ -1,10 +1,12 @@
+import { useState } from 'react';
 import { SiFacebook, SiInstagram } from 'react-icons/si';
 import { Heart } from 'lucide-react';
 import { contactNumbers, socialLinks, optionalContactInfo } from '../../content/siteContent';
 import { useNavigate } from '@tanstack/react-router';
-import { getGenericWhatsAppLink, getGenericEmailLink } from '../../lib/whatsapp';
+import { getGenericWhatsAppLink, openEmailCompose } from '../../lib/whatsapp';
 
 export default function MarketingFooter() {
+  const [imageError, setImageError] = useState(false);
   const currentYear = new Date().getFullYear();
   const appIdentifier = encodeURIComponent(
     typeof window !== 'undefined' ? window.location.hostname : 'growithtutor'
@@ -16,23 +18,34 @@ export default function MarketingFooter() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleEmailClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    openEmailCompose(
+      optionalContactInfo.email,
+      'Enquiry about Tuition Services',
+      'Hello, I am interested in tuition services. Please share course details, fees, and demo class information.'
+    );
+  };
+
+  const logoUrl = 'https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png';
+
   return (
     <footer className="border-t bg-muted/30">
       <div className="container py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-3">
-              <img
-                src="/assets/generated/growwithtutor-uploaded-logo.dim_1024x1024.png"
-                alt="Growithtutor emblem"
-                className="h-8 w-auto"
-              />
-              <img
-                src="/assets/generated/growwithtutor-logo.dim_512x192.png"
-                alt="Growithtutor"
-                className="h-8 w-auto"
-              />
+            <div className="flex items-center">
+              {!imageError ? (
+                <img
+                  src={logoUrl}
+                  alt="Growithtutor logo"
+                  className="h-12 w-auto object-contain"
+                  onError={() => setImageError(true)}
+                />
+              ) : (
+                <span className="text-xl font-bold text-foreground">Growithtutor</span>
+              )}
             </div>
             <p className="text-sm text-muted-foreground">
               Empowering students to achieve their academic goals through personalized tutoring.
@@ -106,7 +119,8 @@ export default function MarketingFooter() {
               {optionalContactInfo.email && (
                 <li>
                   <a
-                    href={getGenericEmailLink()}
+                    href="#"
+                    onClick={handleEmailClick}
                     className="hover:text-foreground transition-colors focus-ring rounded-sm"
                   >
                     {optionalContactInfo.email}
@@ -150,9 +164,11 @@ export default function MarketingFooter() {
         </div>
 
         <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
-          <p>© {currentYear} Growithtutor. All rights reserved.</p>
-          <p className="mt-2 flex items-center justify-center gap-1">
-            Built with <Heart className="h-4 w-4 text-red-500 fill-red-500" /> using{' '}
+          <p>
+            © {currentYear} Growithtutor. All rights reserved.
+          </p>
+          <p className="mt-2">
+            Built with <Heart className="inline h-4 w-4 text-red-500 fill-red-500" /> using{' '}
             <a
               href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${appIdentifier}`}
               target="_blank"
