@@ -1,103 +1,71 @@
 {
   "kind": "build_request",
-  "title": "Add provided logo image URL to marketing header/footer branding",
+  "title": "Prefix all phone numbers with +91",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-5",
-      "text": "Update the React marketing header brand mark to render the provided logo image from the URL \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\" (instead of text-only), while keeping the existing click-to-navigate-home behavior and accessible labeling.",
+      "id": "REQ-1",
+      "text": "Update the central contact phone numbers to include the India country code prefix so all UI locations that render these numbers show them in the format \"+91 7011090796\" and \"+91 9212374300\" (including WhatsApp primary/secondary and phone1/phone2).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-11"
+          "msg-1"
         ],
         "quotes": [
-          "why didnt you put the image link in the code wait i am giving you it again"
+          "now add +91 in front of all the phone numbers for example +91 7011090796 and +91 9212374300"
         ]
       },
       "acceptanceCriteria": [
-        "In MarketingHeader, the brand area displays an <img> using src exactly \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\".",
-        "Clicking/tapping the brand area still navigates to '/'.",
-        "The logo image includes meaningful alt text in English and does not break the header layout on mobile/desktop (logo is constrained to the header height).",
-        "If the image fails to load, a text fallback brand name (\"Growithtutor\") is still visible."
+        "In frontend/src/content/siteContent.ts, contactNumbers values are updated to include the \"+91 \" prefix for whatsapp, whatsappSecondary, phone1, and phone2.",
+        "ContactPage, ContactSection, and MarketingFooter (and any other React pages/components that display contactNumbers) display the phone numbers with the \"+91 \" prefix."
       ]
     },
     {
-      "id": "REQ-6",
-      "text": "Update the React marketing footer brand mark to render the provided logo image from the URL \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\" (instead of text-only), without changing the footer’s existing links and content.",
+      "id": "REQ-2",
+      "text": "Update the standalone (non-React) landing page contact numbers to include the \"+91 \" prefix everywhere they are displayed.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-11"
+          "msg-1"
         ],
         "quotes": [
-          "why didnt you put the image link in the code wait i am giving you it again"
+          "now add +91 in front of all the phone numbers for example +91 7011090796 and +91 9212374300"
         ]
       },
       "acceptanceCriteria": [
-        "In MarketingFooter, the brand area displays an <img> using src exactly \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\".",
-        "The logo image includes meaningful alt text in English and is visually sized appropriately for the footer (does not overflow or distort).",
-        "If the image fails to load, a text fallback brand name (\"Growithtutor\") is still visible."
+        "In frontend/static/growwithtutor-standalone/script.js, CONTENT.contact.whatsapp and CONTENT.contact.phone include the \"+91 \" prefix.",
+        "The standalone page still generates a valid wa.me link by stripping non-digits (resulting in a number like \"917011090796\")."
       ]
     },
     {
-      "id": "REQ-7",
-      "text": "Update the Setup Checklist page so the \"Logo\" checklist item reflects that the logo is now configured via the provided external URL.",
+      "id": "REQ-3",
+      "text": "Ensure phone/WhatsApp/SMS deep links continue to work correctly after adding the \"+91 \" prefix to stored numbers (tel:, sms:, and https://wa.me/...).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-11"
+          "msg-1"
         ],
         "quotes": [
-          "why didnt you put the image link in the code wait i am giving you it again"
+          "now add +91 in front of all the phone numbers for example +91 7011090796 and +91 9212374300"
         ]
       },
       "acceptanceCriteria": [
-        "On SetupChecklistPage, the \"Logo\" item status is set to \"complete\".",
-        "The \"Logo\" item details/reference clearly indicate the configured logo source URL is \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\" (English text)."
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "text": "Update the standalone static marketing page (frontend/static/growwithtutor-standalone/index.html) so its header and footer brand marks also use the provided logo image URL instead of text-only, keeping the rest of the static page intact.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-11"
-        ],
-        "quotes": [
-          "why didnt you put the image link in the code wait i am giving you it again"
-        ]
-      },
-      "acceptanceCriteria": [
-        "In frontend/static/growwithtutor-standalone/index.html, the header logo area includes an <img> using src exactly \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\".",
-        "In frontend/static/growwithtutor-standalone/index.html, the footer logo area includes an <img> using src exactly \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growwithtutor-3d-new-logo-150x150.png\".",
-        "Both images include meaningful alt text in English and are sized so they do not break the header/footer layout."
+        "Clicking \"Call Now\" uses a tel: link that contains only digits (e.g., tel:917011090796).",
+        "Clicking \"Send SMS\" uses an sms: link that contains only digits (e.g., sms:917011090796...).",
+        "Clicking WhatsApp CTAs opens a wa.me link containing only digits (e.g., https://wa.me/917011090796...)."
       ]
     }
   ],
   "constraints": [
-    "Do not edit files under frontend/src/components/ui (read-only).",
-    "Do not edit the immutable auth/actor bootstrap hooks and entrypoints: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx.",
-    "Backend remains single-actor; no backend changes are required for a logo URL UI update."
+    "Do not modify any files under frontend/src/components/ui.",
+    "Do not introduce any new backend canisters or external services."
   ],
   "nonGoals": [
-    "Do not implement image upload, storage, or admin-configurable branding management.",
-    "Do not change site copy, navigation structure, or add new pages/routes beyond placing the logo.",
-    "Do not generate new logo image assets; use the provided external URL as-is."
+    "Changing user-entered phone numbers in enquiry forms (only the app’s displayed contact numbers are in scope).",
+    "Any backend changes or data migrations."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

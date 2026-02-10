@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { getPageTitle } from '../config/siteConfig';
 
 interface PageMetaOptions {
   title: string;
@@ -7,7 +8,7 @@ interface PageMetaOptions {
 
 export function usePageMeta({ title, description }: PageMetaOptions) {
   useEffect(() => {
-    document.title = `${title} | Growithtutor`;
+    document.title = getPageTitle(title);
     
     if (description) {
       let metaDescription = document.querySelector('meta[name="description"]');

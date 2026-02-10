@@ -7,11 +7,12 @@ import HowItWorksSection from '../components/marketing/sections/HowItWorksSectio
 import TestimonialsSection from '../components/marketing/sections/TestimonialsSection';
 import FaqSection from '../components/marketing/sections/FaqSection';
 import ContactSection from '../components/marketing/sections/ContactSection';
+import { SITE_NAME } from '../config/siteConfig';
 
 export default function HomePage() {
   usePageMeta({
     title: 'Home',
-    description: 'Growithtutor - Expert online and offline tutoring for all subjects and classes. 20+ years experience, 1500+ students, 500+ qualified teachers.',
+    description: `${SITE_NAME} - Expert online and offline tutoring for all subjects and classes. 20+ years experience, 1500+ students, 500+ qualified teachers.`,
   });
 
   return (

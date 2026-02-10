@@ -4,11 +4,12 @@ import { Button } from '@/components/ui/button';
 import { Phone, MessageCircle, MessageSquare, Mail } from 'lucide-react';
 import { contactNumbers, optionalContactInfo } from '../content/siteContent';
 import { getGenericWhatsAppLink, getPhoneLink, getGenericSMSLink, openEmailCompose } from '../lib/whatsapp';
+import { SITE_NAME } from '../config/siteConfig';
 
 export default function ContactPage() {
   usePageMeta({
     title: 'Contact Us',
-    description: 'Get in touch with GrowWithTutor via WhatsApp, SMS, email, or phone. We are here to help you with your tutoring needs.',
+    description: `Get in touch with ${SITE_NAME} via WhatsApp, SMS, email, or phone. We are here to help you with your tutoring needs.`,
   });
 
   const handleEmailClick = () => {

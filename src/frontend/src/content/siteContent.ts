@@ -1,8 +1,8 @@
 export const contactNumbers = {
-  whatsapp: '7011090796',
-  whatsappSecondary: '9212374300',
-  phone1: '7011090796',
-  phone2: '9212374300',
+  whatsapp: '+91 7011090796',
+  whatsappSecondary: '+91 9212374300',
+  phone1: '+91 7011090796',
+  phone2: '+91 9212374300',
 };
 
 export const optionalContactInfo = {
@@ -11,8 +11,8 @@ export const optionalContactInfo = {
 };
 
 export const socialLinks = {
-  facebook: '',
-  instagram: '',
+  facebook: 'https://www.facebook.com/share/16pFZUt359/',
+  instagram: 'https://www.instagram.com/growithtutor?igsh=aWFiMm50cXhxdWh1',
   twitter: '',
   linkedin: '',
   youtube: '',

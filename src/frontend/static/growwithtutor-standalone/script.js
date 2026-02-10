@@ -161,8 +161,8 @@ const CONTENT = {
   contact: {
     title: "Get in Touch",
     subtitle: "Ready to start your learning journey? Contact us today!",
-    whatsapp: "7011090796",
-    phone: "9212374300"
+    whatsapp: "+91 7011090796",
+    phone: "+91 9212374300"
   },
   footer: {
     about: "Growithtutor is dedicated to providing quality education through personalized tutoring services.",

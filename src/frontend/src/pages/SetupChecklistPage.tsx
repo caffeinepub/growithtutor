@@ -5,18 +5,25 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { CheckCircle2, Circle } from 'lucide-react';
 import { contactNumbers, socialLinks, adminAllowlist } from '../content/siteContent';
+import { SITE_NAME } from '../config/siteConfig';
 
 export default function SetupChecklistPage() {
   const navigate = useNavigate();
 
   usePageMeta({
     title: 'Setup Checklist',
-    description: 'Complete setup guide for GrowWithTutor website configuration.',
+    description: `Complete setup guide for ${SITE_NAME} website configuration.`,
   });
 
   const logoUrl = 'https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png';
 
   const checklistItems = [
+    {
+      title: 'Site Name',
+      description: 'Configure your site/hosting name in one place to update it throughout the application.',
+      status: 'complete',
+      details: `Current site name: "${SITE_NAME}". Edit frontend/src/config/siteConfig.ts to change the SITE_NAME constant.`,
+    },
     {
       title: 'Logo',
       description: 'Logo is configured and displayed in the header and footer.',
@@ -81,7 +88,7 @@ export default function SetupChecklistPage() {
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Setup Checklist</h1>
           <p className="text-lg text-muted-foreground">
-            Follow this checklist to complete your GrowWithTutor website configuration.
+            Follow this checklist to complete your {SITE_NAME} website configuration.
           </p>
         </div>
 

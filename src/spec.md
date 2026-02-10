@@ -1,12 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Replace text-only “Growithtutor” branding in marketing header/footer (and the standalone static marketing page) with the provided external logo image URL, while keeping navigation, accessibility, and layout intact.
+**Goal:** Display all central contact phone numbers with the India country code prefix “+91 ” across the React app and the standalone landing page, while keeping call/SMS/WhatsApp links working.
 
 **Planned changes:**
-- Update `MarketingHeader` brand mark to render an `<img>` with `src="https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png"`, preserve click-to-home behavior, add meaningful English alt text, constrain sizing, and show a visible “Growithtutor” text fallback if the image fails to load.
-- Update `MarketingFooter` brand mark to render the same `<img>` (same exact `src`), with meaningful English alt text, appropriate sizing, and a visible “Growithtutor” text fallback if the image fails to load; keep existing footer links/content unchanged.
-- Update `SetupChecklistPage` so the “Logo” checklist item is marked complete and its details reference the configured logo source URL in English.
-- Update `frontend/static/growwithtutor-standalone/index.html` so both the header and footer brand marks use the provided logo image URL (exact `src`), with meaningful English alt text and sizing that does not break layout, keeping the rest of the page intact.
+- Update `frontend/src/content/siteContent.ts` contact numbers to include the “+91 ” prefix for `whatsapp`, `whatsappSecondary`, `phone1`, and `phone2`.
+- Ensure all React components/pages that render these central contact numbers (including ContactPage, ContactSection, MarketingFooter) display the updated “+91 ” prefixed values.
+- Update `frontend/static/growwithtutor-standalone/script.js` contact numbers to include the “+91 ” prefix for `CONTENT.contact.whatsapp` and `CONTENT.contact.phone`.
+- Adjust/verify tel:, sms:, and wa.me deep link generation so links use digits-only versions of the numbers (e.g., `917011090796`) even though the displayed text includes “+91 ”.
 
-**User-visible outcome:** The marketing header, marketing footer, and standalone static marketing page display the Growithtutor logo image (with accessible alt text and safe sizing), while still showing “Growithtutor” if the image can’t be loaded; the setup checklist reflects that the logo is configured via the provided URL.
+**User-visible outcome:** All displayed contact phone numbers show “+91 ” in front, and “Call Now”, “Send SMS”, and WhatsApp buttons still open the correct destinations.

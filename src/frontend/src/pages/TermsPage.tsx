@@ -1,10 +1,11 @@
 import { usePageMeta } from '../hooks/usePageMeta';
 import { legalContent } from '../content/legalContent';
+import { SITE_NAME } from '../config/siteConfig';
 
 export default function TermsPage() {
   usePageMeta({
     title: 'Terms & Conditions',
-    description: 'Terms and conditions for using Growithtutor tutoring services.',
+    description: `Terms and conditions for using ${SITE_NAME} tutoring services.`,
   });
 
   return (

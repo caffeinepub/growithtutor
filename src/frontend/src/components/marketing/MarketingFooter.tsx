@@ -4,6 +4,7 @@ import { Heart } from 'lucide-react';
 import { contactNumbers, socialLinks, optionalContactInfo } from '../../content/siteContent';
 import { useNavigate } from '@tanstack/react-router';
 import { getGenericWhatsAppLink, openEmailCompose } from '../../lib/whatsapp';
+import { SITE_NAME } from '../../config/siteConfig';
 
 export default function MarketingFooter() {
   const [imageError, setImageError] = useState(false);
@@ -35,16 +36,15 @@ export default function MarketingFooter() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center">
-              {!imageError ? (
+            <div className="flex items-center gap-2">
+              <span className="text-xl font-bold text-foreground">{SITE_NAME}</span>
+              {!imageError && (
                 <img
                   src={logoUrl}
-                  alt="Growithtutor logo"
+                  alt={`${SITE_NAME} logo`}
                   className="h-12 w-auto object-contain"
                   onError={() => setImageError(true)}
                 />
-              ) : (
-                <span className="text-xl font-bold text-foreground">Growithtutor</span>
               )}
             </div>
             <p className="text-sm text-muted-foreground">
@@ -165,7 +165,7 @@ export default function MarketingFooter() {
 
         <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
           <p>
-            © {currentYear} Growithtutor. All rights reserved.
+            © {currentYear} {SITE_NAME}. All rights reserved.
           </p>
           <p className="mt-2">
             Built with <Heart className="inline h-4 w-4 text-red-500 fill-red-500" /> using{' '}

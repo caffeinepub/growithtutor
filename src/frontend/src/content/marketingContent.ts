@@ -1,12 +1,14 @@
+import { SITE_NAME } from '../config/siteConfig';
+
 export const marketingContent = {
   hero: {
-    headline: "Unlock Your Academic Potential with Growithtutor",
+    headline: `Unlock Your Academic Potential with ${SITE_NAME}`,
     subheadline: "Expert online and offline tutoring for all subjects and classes. Personalized learning that delivers results.",
     ctaPrimary: "Get Started",
     ctaSecondary: "Join as Teacher",
   },
   valueProposition: {
-    title: "Why Choose Growithtutor?",
+    title: `Why Choose ${SITE_NAME}?`,
     subtitle: "We provide comprehensive tutoring solutions tailored to your needs",
     values: [
       {
@@ -113,7 +115,7 @@ export const marketingContent = {
       },
       {
         rating: 5,
-        content: "Thanks to Growithtutor, I scored 95% in my board exams!",
+        content: `Thanks to ${SITE_NAME}, I scored 95% in my board exams!`,
         author: "Sneha Reddy",
         role: "Class 10 Graduate",
       },

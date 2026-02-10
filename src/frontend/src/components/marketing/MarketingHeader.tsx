@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from '@tanstack/react-router';
+import { SITE_NAME } from '../../config/siteConfig';
 
 export default function MarketingHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -28,18 +29,17 @@ export default function MarketingHeader() {
       <div className="container flex h-16 items-center justify-between">
         <button
           onClick={() => handleNavigation('/')}
-          className="flex items-center focus-ring rounded-md px-2 py-1"
+          className="flex items-center gap-2 focus-ring rounded-md px-2 py-1"
           aria-label="Go to home"
         >
-          {!imageError ? (
+          <span className="text-xl font-bold text-foreground">{SITE_NAME}</span>
+          {!imageError && (
             <img
               src={logoUrl}
-              alt="Growithtutor logo"
+              alt={`${SITE_NAME} logo`}
               className="h-10 w-auto object-contain"
               onError={() => setImageError(true)}
             />
-          ) : (
-            <span className="text-xl font-bold text-foreground">Growithtutor</span>
           )}
         </button>
 

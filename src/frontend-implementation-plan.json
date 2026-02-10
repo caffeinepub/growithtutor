@@ -1,69 +1,56 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Replace marketing header/footer brand text with provided external logo URL (with fallback)",
+  "title": "Prefix displayed contact numbers with +91 while preserving working deep links",
   "requirements": [
     {
-      "id": "REQ-5",
-      "summary": "Render the provided external logo image in MarketingHeader while preserving home navigation, accessibility labeling, layout constraints, and a visible text fallback on image failure.",
+      "id": "REQ-1",
+      "summary": "Update central (React) contactNumbers to store/display numbers with the \"+91 \" prefix across the UI.",
       "acceptanceCriteria": [
-        "In MarketingHeader, the brand area displays an <img> using src exactly \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\".",
-        "Clicking/tapping the brand area still navigates to '/'.",
-        "The logo image includes meaningful alt text in English and does not break the header layout on mobile/desktop (logo is constrained to the header height).",
-        "If the image fails to load, a text fallback brand name (\"Growithtutor\") is still visible."
+        "In frontend/src/content/siteContent.ts, contactNumbers values are updated to include the \"+91 \" prefix for whatsapp, whatsappSecondary, phone1, and phone2.",
+        "ContactPage, ContactSection, and MarketingFooter (and any other React pages/components that display contactNumbers) display the phone numbers with the \"+91 \" prefix."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/marketing/MarketingHeader.tsx",
+          "path": "frontend/src/content/siteContent.ts",
           "operation": "modify",
-          "description": "Replace the text-only brand mark with an <img> using src exactly \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\"; keep the existing button click-to-navigate-home behavior and accessible labeling, constrain the image height to fit the header, and implement an onError-driven visible text fallback (\"Growithtutor\") when the image fails to load."
+          "description": "Update contactNumbers.whatsapp, contactNumbers.whatsappSecondary, contactNumbers.phone1, and contactNumbers.phone2 to include the \"+91 \" prefix (e.g., \"+91 7011090796\", \"+91 9212374300\") so all React-rendered UI locations that display these values show the prefixed format."
         }
       ]
     },
     {
-      "id": "REQ-6",
-      "summary": "Render the provided external logo image in MarketingFooter without altering existing footer links/content, including accessible alt text, appropriate sizing, and a visible text fallback on image failure.",
+      "id": "REQ-2",
+      "summary": "Update the standalone non-React landing page contact numbers to include the \"+91 \" prefix while keeping WhatsApp link generation valid.",
       "acceptanceCriteria": [
-        "In MarketingFooter, the brand area displays an <img> using src exactly \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\".",
-        "The logo image includes meaningful alt text in English and is visually sized appropriately for the footer (does not overflow or distort).",
-        "If the image fails to load, a text fallback brand name (\"Growithtutor\") is still visible."
+        "In frontend/static/growwithtutor-standalone/script.js, CONTENT.contact.whatsapp and CONTENT.contact.phone include the \"+91 \" prefix.",
+        "The standalone page still generates a valid wa.me link by stripping non-digits (resulting in a number like \"917011090796\")."
       ],
       "file_operations": [
+        {
+          "path": "frontend/static/growwithtutor-standalone/script.js",
+          "operation": "modify",
+          "description": "Change CONTENT.contact.whatsapp and CONTENT.contact.phone to store/display values with the \"+91 \" prefix, and confirm the existing non-digit stripping logic used for the wa.me link still produces digit-only numbers (e.g., \"917011090796\")."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Ensure tel:, sms:, and wa.me deep links continue to use digit-only numbers even after adding the \"+91 \" prefix to stored contact numbers.",
+      "acceptanceCriteria": [
+        "Clicking \"Call Now\" uses a tel: link that contains only digits (e.g., tel:917011090796).",
+        "Clicking \"Send SMS\" uses an sms: link that contains only digits (e.g., sms:917011090796...).",
+        "Clicking WhatsApp CTAs opens a wa.me link containing only digits (e.g., https://wa.me/917011090796...)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/lib/whatsapp.ts",
+          "operation": "modify",
+          "description": "Harden link-generation helpers (WhatsApp, phone, SMS) to consistently derive digit-only phone numbers from stored values (including those with a \"+91 \" prefix), ensuring all generated tel:, sms:, and wa.me URLs contain only digits."
+        },
         {
           "path": "frontend/src/components/marketing/MarketingFooter.tsx",
           "operation": "modify",
-          "description": "Replace the text-only footer brand mark with an <img> using src exactly \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\"; keep all existing footer links/content unchanged, constrain the logo sizing to prevent overflow/distortion, and add an onError-driven visible text fallback (\"Growithtutor\") when the image fails to load."
-        }
-      ]
-    },
-    {
-      "id": "REQ-7",
-      "summary": "Mark the Setup Checklist 'Logo' item as complete and explicitly reference the configured external logo URL in its details.",
-      "acceptanceCriteria": [
-        "On SetupChecklistPage, the \"Logo\" item status is set to \"complete\".",
-        "The \"Logo\" item details/reference clearly indicate the configured logo source URL is \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\" (English text)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/SetupChecklistPage.tsx",
-          "operation": "modify",
-          "description": "Update the 'Logo' checklist item to status \"complete\" and revise its description/details text to clearly state that the logo is configured via the external URL \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\"."
-        }
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "summary": "Update the standalone static marketing page header and footer brand marks to use the provided external logo URL while preserving the rest of the page.",
-      "acceptanceCriteria": [
-        "In frontend/static/growwithtutor-standalone/index.html, the header logo area includes an <img> using src exactly \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\".",
-        "In frontend/static/growwithtutor-standalone/index.html, the footer logo area includes an <img> using src exactly \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growwithtutor-3d-new-logo-150x150.png\".",
-        "Both images include meaningful alt text in English and are sized so they do not break the header/footer layout."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/static/growwithtutor-standalone/index.html",
-          "operation": "modify",
-          "description": "In the static standalone page, replace the header and footer text-only brand marks with <img> tags: header <img> src exactly \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png\" and footer <img> src exactly \"https://growithtutor.com/wp-content/uploads/2025/08/cropped-cropped-growwithtutor-3d-new-logo-150x150.png\"; add meaningful English alt text, ensure images are sized using existing CSS conventions (e.g., the logo image class) so layout does not break, and preserve the rest of the HTML unchanged."
+          "description": "Align any manually-constructed tel: links with the shared digit-only phone link generation approach (so that when contactNumbers include \"+91 \", tel: links still resolve to digit-only values)."
         }
       ]
     }
