@@ -1,150 +1,164 @@
-export const heroContent = {
-  headline: "Unlock Your Academic Potential",
-  subheadline: "Connect with expert tutors who make learning engaging, personalized, and effective. Achieve your goals with GrowWithTutor.",
-  primaryCta: "Get Started",
-  secondaryCta: "Learn More"
-};
-
-export const valuePropositions = [
-  {
-    title: "Expert Tutors",
-    description: "Learn from qualified educators with proven track records in their subjects."
+export const marketingContent = {
+  hero: {
+    headline: "Unlock Your Academic Potential with Growithtutor",
+    subheadline: "Expert online and offline tutoring for all subjects and classes. Personalized learning that delivers results.",
+    ctaPrimary: "Get Started",
+    ctaSecondary: "Join as Teacher",
   },
-  {
-    title: "Personalized Learning",
-    description: "Customized lesson plans tailored to your unique learning style and pace."
+  valueProposition: {
+    title: "Why Choose Growithtutor?",
+    subtitle: "We provide comprehensive tutoring solutions tailored to your needs",
+    values: [
+      {
+        title: "Expert Tutors",
+        description: "Learn from 20+ years experienced educators with proven track records in their subjects.",
+      },
+      {
+        title: "Personalized Learning",
+        description: "Customized lesson plans tailored to your unique learning style and academic goals.",
+      },
+      {
+        title: "Flexible Scheduling",
+        description: "Choose online or offline classes at times that fit your busy schedule.",
+      },
+      {
+        title: "Proven Results",
+        description: "Track record of helping 1500+ students achieve their academic goals and excel in exams.",
+      },
+    ],
   },
-  {
-    title: "Flexible Scheduling",
-    description: "Book sessions that fit your schedule, with options for online or in-person learning."
+  services: {
+    title: "Our Tutoring Services",
+    subtitle: "Comprehensive support across all subjects",
+    services: [
+      {
+        icon: "📐",
+        title: "Mathematics",
+        description: "From basic arithmetic to advanced calculus, algebra, geometry, and statistics.",
+      },
+      {
+        icon: "🔬",
+        title: "Science",
+        description: "Physics, Chemistry, and Biology with practical concepts and exam preparation.",
+      },
+      {
+        icon: "📚",
+        title: "Languages",
+        description: "English, Hindi, and regional languages with focus on grammar and literature.",
+      },
+      {
+        icon: "🌍",
+        title: "Social Studies",
+        description: "History, Geography, Civics, and Economics for comprehensive understanding.",
+      },
+      {
+        icon: "💻",
+        title: "Computer Science",
+        description: "Programming, coding, and digital literacy for the modern world.",
+      },
+      {
+        icon: "📝",
+        title: "Exam Preparation",
+        description: "Specialized coaching for board exams, competitive tests, and entrance exams.",
+      },
+    ],
   },
-  {
-    title: "Proven Results",
-    description: "Join thousands of students who have improved their grades and confidence."
-  }
-];
-
-export const services = [
-  {
-    id: "math",
-    title: "Mathematics",
-    description: "From basic arithmetic to advanced calculus, our math tutors make numbers make sense.",
-    icon: "📐"
+  howItWorks: {
+    title: "How It Works",
+    subtitle: "Get started in four simple steps",
+    steps: [
+      {
+        number: "1",
+        title: "Fill the Form",
+        description: "Share your requirements, preferred subjects, and learning goals with us.",
+      },
+      {
+        number: "2",
+        title: "Get Matched",
+        description: "We carefully match you with the perfect tutor based on your needs.",
+      },
+      {
+        number: "3",
+        title: "Schedule Classes",
+        description: "Choose convenient time slots that work with your schedule.",
+      },
+      {
+        number: "4",
+        title: "Start Learning",
+        description: "Begin your personalized learning journey and achieve your goals.",
+      },
+    ],
   },
-  {
-    id: "science",
-    title: "Science",
-    description: "Explore biology, chemistry, physics, and more with hands-on learning approaches.",
-    icon: "🔬"
+  testimonials: {
+    title: "What Our Students Say",
+    subtitle: "Real experiences from our learning community",
+    testimonials: [
+      {
+        rating: 5,
+        content: "The personalized attention helped my daughter improve her math grades significantly!",
+        author: "Priya Sharma",
+        role: "Parent of Class 10 Student",
+      },
+      {
+        rating: 5,
+        content: "Excellent tutors who make learning fun and engaging. Highly recommended!",
+        author: "Rahul Verma",
+        role: "Class 12 Student",
+      },
+      {
+        rating: 5,
+        content: "Flexible scheduling and quality teaching. My son loves his science tutor!",
+        author: "Anjali Patel",
+        role: "Parent of Class 8 Student",
+      },
+      {
+        rating: 5,
+        content: "Thanks to Growithtutor, I scored 95% in my board exams!",
+        author: "Sneha Reddy",
+        role: "Class 10 Graduate",
+      },
+    ],
   },
-  {
-    id: "languages",
-    title: "Languages",
-    description: "Master English, Spanish, French, and other languages with native speakers.",
-    icon: "🗣️"
+  faq: {
+    title: "Frequently Asked Questions",
+    subtitle: "Find answers to common questions",
+    faqs: [
+      {
+        question: "What classes do you provide tutoring for?",
+        answer: "We provide tutoring for students from Class 1 to Class 12 across all major boards including CBSE, ICSE, and State boards.",
+      },
+      {
+        question: "Are the tutors qualified?",
+        answer: "Yes, all our tutors are qualified professionals with relevant teaching experience and subject expertise. We carefully vet each tutor to ensure quality education.",
+      },
+      {
+        question: "Do you offer online and offline classes?",
+        answer: "Yes, we offer both online and offline tutoring options based on your preference and location. You can choose what works best for you.",
+      },
+      {
+        question: "How are the tutors matched with students?",
+        answer: "We carefully match tutors based on the student's requirements, learning style, preferred subjects, and the tutor's expertise and teaching approach.",
+      },
+      {
+        question: "What subjects do you cover?",
+        answer: "We cover all major subjects including Mathematics, Science (Physics, Chemistry, Biology), Languages (English, Hindi), Social Studies, and Computer Science.",
+      },
+      {
+        question: "Can I change my tutor if needed?",
+        answer: "Yes, if you're not satisfied with your current tutor, we can arrange for a replacement to ensure you get the best learning experience.",
+      },
+      {
+        question: "What are your fees?",
+        answer: "Our fees vary based on class, subject, and tutoring mode (online/offline). Please contact us for detailed pricing information.",
+      },
+      {
+        question: "Do you provide study materials?",
+        answer: "Yes, our tutors provide relevant study materials, practice exercises, and resources as part of the tutoring program.",
+      },
+    ],
   },
-  {
-    id: "test-prep",
-    title: "Test Preparation",
-    description: "Ace your SAT, ACT, GRE, or other standardized tests with targeted strategies.",
-    icon: "📝"
+  contact: {
+    title: "Get in Touch",
+    subtitle: "Ready to start your learning journey? Contact us today!",
   },
-  {
-    id: "homework",
-    title: "Homework Help",
-    description: "Get assistance with daily assignments and projects across all subjects.",
-    icon: "📚"
-  },
-  {
-    id: "college",
-    title: "College Counseling",
-    description: "Navigate applications, essays, and admissions with expert guidance.",
-    icon: "🎓"
-  }
-];
-
-export const howItWorksSteps = [
-  {
-    step: 1,
-    title: "Create Your Profile",
-    description: "Tell us about your learning goals, subjects of interest, and preferred schedule."
-  },
-  {
-    step: 2,
-    title: "Match with a Tutor",
-    description: "We'll connect you with qualified tutors who specialize in your subject areas."
-  },
-  {
-    step: 3,
-    title: "Schedule Sessions",
-    description: "Book convenient times for one-on-one or group tutoring sessions."
-  },
-  {
-    step: 4,
-    title: "Start Learning",
-    description: "Engage in personalized lessons and track your progress toward your goals."
-  }
-];
-
-export const testimonials = [
-  {
-    id: 1,
-    name: "Sarah Johnson",
-    role: "High School Student",
-    content: "GrowWithTutor helped me raise my math grade from a C to an A! My tutor was patient and explained concepts in ways that finally clicked.",
-    rating: 5
-  },
-  {
-    id: 2,
-    name: "Michael Chen",
-    role: "College Freshman",
-    content: "The test prep sessions were invaluable. I improved my SAT score by 200 points and got into my dream school!",
-    rating: 5
-  },
-  {
-    id: 3,
-    name: "Emily Rodriguez",
-    role: "Parent",
-    content: "My daughter's confidence has soared since working with her tutor. The flexible scheduling makes it easy to fit into our busy lives.",
-    rating: 5
-  }
-];
-
-export const faqs = [
-  {
-    id: "pricing",
-    question: "How much does tutoring cost?",
-    answer: "Our pricing varies based on subject, tutor experience, and session length. Most sessions range from $30-$80 per hour. We offer package discounts for multiple sessions and financial assistance for qualifying families."
-  },
-  {
-    id: "online",
-    question: "Are sessions online or in-person?",
-    answer: "We offer both! You can choose online video sessions for maximum flexibility or in-person meetings if you prefer face-to-face interaction. Many students find a hybrid approach works best."
-  },
-  {
-    id: "subjects",
-    question: "What subjects do you cover?",
-    answer: "We cover all major academic subjects including math, science, English, social studies, foreign languages, and test preparation. We also offer specialized support for AP courses, college admissions, and study skills."
-  },
-  {
-    id: "qualifications",
-    question: "How are tutors vetted?",
-    answer: "All our tutors undergo a rigorous screening process including background checks, credential verification, and teaching demonstrations. We only accept tutors with proven expertise and excellent communication skills."
-  },
-  {
-    id: "cancellation",
-    question: "What is your cancellation policy?",
-    answer: "You can cancel or reschedule sessions up to 24 hours in advance without penalty. Cancellations with less notice may be subject to a fee, though we're always flexible in case of emergencies."
-  },
-  {
-    id: "guarantee",
-    question: "Do you offer any guarantees?",
-    answer: "We're confident in our tutors' abilities. If you're not satisfied with your first session, we'll match you with a different tutor or provide a full refund. Your success is our priority."
-  }
-];
-
-export const contactInfo = {
-  email: "hello@growithtutor.com",
-  phone: "(555) 123-4567",
-  address: "123 Education Lane, Learning City, LC 12345"
 };

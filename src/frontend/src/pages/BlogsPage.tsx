@@ -67,7 +67,7 @@ export default function BlogsPage() {
                     {blog.content.substring(0, 200)}...
                   </p>
                   <Button
-                    onClick={() => navigate({ to: '/blogs/$id', params: { id: blog.id.toString() } })}
+                    onClick={() => navigate({ to: '/blogs/$blogId', params: { blogId: blog.id.toString() } })}
                   >
                     Read More
                   </Button>

@@ -1,12 +1,14 @@
 # Specification
 
 ## Summary
-**Goal:** Remove the custom flame-sword cursor and restore the normal system cursor across the React app and the standalone landing page.
+**Goal:** Allow the currently logged-in Internet Identity user to securely bootstrap themselves as the first admin (using the existing secret-token mechanism) so they can access content management.
 
 **Planned changes:**
-- Remove the `CustomCursor` component from the global React layout so no custom cursor overlay elements are mounted.
-- Update global frontend CSS to stop forcing `cursor: none` and restore standard cursor behavior (including pointer cursors on interactive elements).
-- Remove/disable any mousemove-based cursor-follow animation logic and ensure no ring/glow artifacts remain on any route.
-- Update the standalone landing page to remove CSS and JS that creates/animates custom cursor elements, while keeping existing standalone interactions working (mobile menu, FAQ accordion, smooth scrolling, contact-form success state).
+- Backend: Add/enable a secure admin initialization flow that, when no admins exist, accepts a secret token and promotes the caller’s principal to admin; reject missing/invalid tokens.
+- Backend: Ensure existing admin authorization checks used by blog CRUD recognize the newly promoted admin principal.
+- Backend: Prevent arbitrary promotion once an admin exists (fail or require existing admin privileges).
+- Frontend: Add an admin setup screen that shows the logged-in user’s Principal ID and current admin status.
+- Frontend: Provide an input for the bootstrap secret token using the existing `caffeineAdminToken` parameter convention, trigger actor re-initialization, and refresh admin status.
+- Frontend: On successful bootstrap, show updated admin status and provide navigation to `/admin/blogs`.
 
-**User-visible outcome:** The site uses the standard system cursor everywhere, with no custom cursor animation or visual overlay, and all existing page interactions continue to work.
+**User-visible outcome:** A logged-in user can view/copy their Principal ID, see whether they are an admin, enter the bootstrap secret to become the first admin (when allowed), and then navigate to the admin blog management page.

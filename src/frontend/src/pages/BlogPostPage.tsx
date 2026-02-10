@@ -7,10 +7,10 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Calendar, ArrowLeft } from 'lucide-react';
 
 export default function BlogPostPage() {
-  const { id } = useParams({ from: '/blogs/$id' });
+  const { blogId } = useParams({ from: '/blogs/$blogId' });
   const navigate = useNavigate();
-  const blogId = id ? BigInt(id) : null;
-  const { data: blog, isLoading } = useGetBlog(blogId);
+  const blogIdBigInt = blogId ? BigInt(blogId) : null;
+  const { data: blog, isLoading } = useGetBlog(blogIdBigInt);
 
   usePageMeta({
     title: blog?.title || 'Blog Post',

@@ -1,7 +1,10 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { RouterProvider, createRouter, createRoute, createRootRoute, Outlet } from '@tanstack/react-router';
-import MarketingHeader from './components/marketing/MarketingHeader';
-import MarketingFooter from './components/marketing/MarketingFooter';
+import { RouterProvider, createRouter, createRootRoute, createRoute, Outlet } from '@tanstack/react-router';
+import { ThemeProvider } from 'next-themes';
+import { Toaster } from '@/components/ui/sonner';
+
+// Pages
+import MarketingLandingPage from './pages/MarketingLandingPage';
 import HomePage from './pages/HomePage';
 import StudentFormPage from './pages/StudentFormPage';
 import TeacherFormPage from './pages/TeacherFormPage';
@@ -11,9 +14,12 @@ import AdminBlogsPage from './pages/AdminBlogsPage';
 import TermsPage from './pages/TermsPage';
 import ContactPage from './pages/ContactPage';
 import SetupChecklistPage from './pages/SetupChecklistPage';
+import AdminSetupPage from './pages/AdminSetupPage';
+
+// Components
+import MarketingHeader from './components/marketing/MarketingHeader';
+import MarketingFooter from './components/marketing/MarketingFooter';
 import AdminRouteGuard from './components/auth/AdminRouteGuard';
-import { Toaster } from '@/components/ui/sonner';
-import { ThemeProvider } from 'next-themes';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,7 +32,7 @@ const queryClient = new QueryClient({
 
 function Layout() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex flex-col min-h-screen">
       <MarketingHeader />
       <main className="flex-1">
         <Outlet />
@@ -44,6 +50,12 @@ const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
   component: HomePage,
+});
+
+const marketingRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/marketing',
+  component: MarketingLandingPage,
 });
 
 const studentFormRoute = createRoute({
@@ -66,7 +78,7 @@ const blogsRoute = createRoute({
 
 const blogPostRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/blogs/$id',
+  path: '/blogs/$blogId',
   component: BlogPostPage,
 });
 
@@ -78,6 +90,12 @@ const adminBlogsRoute = createRoute({
       <AdminBlogsPage />
     </AdminRouteGuard>
   ),
+});
+
+const adminSetupRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin/setup',
+  component: AdminSetupPage,
 });
 
 const termsRoute = createRoute({
@@ -92,25 +110,30 @@ const contactRoute = createRoute({
   component: ContactPage,
 });
 
-const setupRoute = createRoute({
+const setupChecklistRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/setup',
+  path: '/setup-checklist',
   component: SetupChecklistPage,
 });
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
+  marketingRoute,
   studentFormRoute,
   teacherFormRoute,
   blogsRoute,
   blogPostRoute,
   adminBlogsRoute,
+  adminSetupRoute,
   termsRoute,
   contactRoute,
-  setupRoute,
+  setupChecklistRoute,
 ]);
 
-const router = createRouter({ routeTree });
+const router = createRouter({
+  routeTree,
+  defaultPreload: 'intent',
+});
 
 declare module '@tanstack/react-router' {
   interface Register {
@@ -118,7 +141,7 @@ declare module '@tanstack/react-router' {
   }
 }
 
-function App() {
+export default function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <QueryClientProvider client={queryClient}>
@@ -128,5 +151,3 @@ function App() {
     </ThemeProvider>
   );
 }
-
-export default App;

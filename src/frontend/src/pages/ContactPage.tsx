@@ -1,23 +1,23 @@
 import { usePageMeta } from '../hooks/usePageMeta';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Phone, MessageCircle } from 'lucide-react';
-import { contactNumbers } from '../content/siteContent';
-import { getWhatsAppLink, getPhoneLink } from '../lib/whatsapp';
+import { Phone, MessageCircle, MessageSquare, Mail } from 'lucide-react';
+import { contactNumbers, optionalContactInfo } from '../content/siteContent';
+import { getGenericWhatsAppLink, getPhoneLink, getGenericSMSLink, getGenericEmailLink } from '../lib/whatsapp';
 
 export default function ContactPage() {
   usePageMeta({
     title: 'Contact Us',
-    description: 'Get in touch with GrowWithTutor via WhatsApp or phone. We are here to help you with your tutoring needs.',
+    description: 'Get in touch with GrowWithTutor via WhatsApp, SMS, email, or phone. We are here to help you with your tutoring needs.',
   });
 
   return (
     <div className="container py-12 md:py-16">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
           <p className="text-lg text-muted-foreground">
-            Have questions? We're here to help! Reach out to us via WhatsApp or phone.
+            Have questions? We're here to help! Reach out to us via WhatsApp, SMS, email, or phone.
           </p>
         </div>
 
@@ -33,14 +33,29 @@ export default function ContactPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-2xl font-semibold">{contactNumbers.whatsapp}</p>
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">Primary</p>
+                <p className="text-2xl font-semibold">{contactNumbers.whatsapp}</p>
+              </div>
               <Button
                 className="w-full"
-                onClick={() => window.open(getWhatsAppLink('Hello! I would like to know more about GrowWithTutor services.'), '_blank')}
+                onClick={() => window.open(getGenericWhatsAppLink(), '_blank')}
               >
                 <MessageCircle className="h-4 w-4 mr-2" />
                 Chat on WhatsApp
               </Button>
+              <div className="pt-2 border-t">
+                <p className="text-sm text-muted-foreground mb-2">Alternate WhatsApp</p>
+                <p className="text-lg font-semibold mb-2">{contactNumbers.whatsappSecondary}</p>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => window.open(getGenericWhatsAppLink(contactNumbers.whatsappSecondary), '_blank')}
+                >
+                  <MessageCircle className="h-4 w-4 mr-2" />
+                  Chat on Alternate WhatsApp
+                </Button>
+              </div>
             </CardContent>
           </Card>
 
@@ -79,6 +94,69 @@ export default function ContactPage() {
               </div>
             </CardContent>
           </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <MessageSquare className="h-5 w-5 text-primary" />
+                SMS
+              </CardTitle>
+              <CardDescription>
+                Send us a text message
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <p className="text-lg font-semibold mb-2">{contactNumbers.phone1}</p>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => window.open(getGenericSMSLink(contactNumbers.phone1), '_self')}
+                >
+                  <MessageSquare className="h-4 w-4 mr-2" />
+                  Send SMS
+                </Button>
+              </div>
+              <div>
+                <p className="text-lg font-semibold mb-2">{contactNumbers.phone2}</p>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => window.open(getGenericSMSLink(contactNumbers.phone2), '_self')}
+                >
+                  <MessageSquare className="h-4 w-4 mr-2" />
+                  Send SMS
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {optionalContactInfo.email && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Mail className="h-5 w-5 text-primary" />
+                  Email
+                </CardTitle>
+                <CardDescription>
+                  Send us an email enquiry
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <p className="text-lg font-semibold mb-2 break-all">{optionalContactInfo.email}</p>
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => window.open(getGenericEmailLink(), '_self')}
+                  >
+                    <Mail className="h-4 w-4 mr-2" />
+                    Send Email
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
 
         <Card className="mt-8">

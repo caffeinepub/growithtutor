@@ -7,7 +7,7 @@ interface PageMetaOptions {
 
 export function usePageMeta({ title, description }: PageMetaOptions) {
   useEffect(() => {
-    document.title = `${title} | GrowWithTutor`;
+    document.title = `${title} | Growithtutor`;
     
     if (description) {
       let metaDescription = document.querySelector('meta[name="description"]');

@@ -1,8 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { MessageCircle, Phone } from 'lucide-react';
-import { contactNumbers } from '../../../content/siteContent';
-import { getWhatsAppLink, getPhoneLink } from '../../../lib/whatsapp';
+import { MessageCircle, Phone, MessageSquare, Mail } from 'lucide-react';
+import { contactNumbers, optionalContactInfo } from '../../../content/siteContent';
+import { getGenericWhatsAppLink, getPhoneLink, getGenericSMSLink, getGenericEmailLink } from '../../../lib/whatsapp';
 import { useNavigate } from '@tanstack/react-router';
 
 export default function ContactSection() {
@@ -28,12 +28,15 @@ export default function ContactSection() {
               <CardDescription>Get instant responses on WhatsApp</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-2xl font-semibold">{contactNumbers.whatsapp}</p>
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">Primary</p>
+                <p className="text-2xl font-semibold">{contactNumbers.whatsapp}</p>
+              </div>
               <Button
                 className="w-full"
                 onClick={() =>
                   window.open(
-                    getWhatsAppLink('Hello! I would like to know more about GrowWithTutor services.'),
+                    getGenericWhatsAppLink(),
                     '_blank'
                   )
                 }
@@ -41,6 +44,24 @@ export default function ContactSection() {
                 <MessageCircle className="h-4 w-4 mr-2" />
                 Chat on WhatsApp
               </Button>
+              <div className="pt-2 border-t">
+                <p className="text-xs text-muted-foreground mb-1">Alternate WhatsApp</p>
+                <p className="text-sm font-medium mb-2">{contactNumbers.whatsappSecondary}</p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full"
+                  onClick={() =>
+                    window.open(
+                      getGenericWhatsAppLink(contactNumbers.whatsappSecondary),
+                      '_blank'
+                    )
+                  }
+                >
+                  <MessageCircle className="h-3 w-3 mr-2" />
+                  Chat on Alternate
+                </Button>
+              </div>
             </CardContent>
           </Card>
 
@@ -77,6 +98,65 @@ export default function ContactSection() {
               </div>
             </CardContent>
           </Card>
+
+          <Card className="hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <MessageSquare className="h-5 w-5 text-primary" />
+                Send SMS
+              </CardTitle>
+              <CardDescription>Text us your enquiry</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <p className="text-lg font-semibold mb-2">{contactNumbers.phone1}</p>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => window.open(getGenericSMSLink(contactNumbers.phone1), '_self')}
+                >
+                  <MessageSquare className="h-4 w-4 mr-2" />
+                  Send SMS
+                </Button>
+              </div>
+              <div>
+                <p className="text-lg font-semibold mb-2">{contactNumbers.phone2}</p>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => window.open(getGenericSMSLink(contactNumbers.phone2), '_self')}
+                >
+                  <MessageSquare className="h-4 w-4 mr-2" />
+                  Send SMS
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {optionalContactInfo.email && (
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Mail className="h-5 w-5 text-primary" />
+                  Email Us
+                </CardTitle>
+                <CardDescription>Send us an email enquiry</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <p className="text-lg font-semibold mb-2 break-all">{optionalContactInfo.email}</p>
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => window.open(getGenericEmailLink(), '_self')}
+                  >
+                    <Mail className="h-4 w-4 mr-2" />
+                    Send Email
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
 
         <div className="text-center mt-8">

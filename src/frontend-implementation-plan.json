@@ -1,57 +1,43 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Restore normal system cursor across React app and standalone landing page",
+  "title": "Admin bootstrap setup UI for promoting the logged-in user to admin",
   "requirements": [
     {
-      "id": "REQ-29",
-      "summary": "Remove the React app custom flame-sword cursor overlay and restore normal system cursor behavior across all routes.",
+      "id": "REQ-2",
+      "summary": "Create an admin setup page that shows the logged-in user’s Principal ID and admin status, allows entering the bootstrap secret (caffeineAdminToken), triggers actor re-initialization, and then provides navigation to /admin/blogs.",
       "acceptanceCriteria": [
-        "`CustomCursor` is no longer rendered in the global React layout (no custom cursor overlay elements are mounted).",
-        "Global CSS no longer forces `cursor: none` for desktop devices; standard cursor behavior is restored (e.g., pointer cursor on links/buttons).",
-        "No cursor-follow animation runs on mousemove in the React app, and there are no leftover visual artifacts (ring/glow) on any page."
+        "A logged-in user can see their Principal ID in the UI (copyable/readable).",
+        "The UI shows current admin status using the existing admin-status query hook(s).",
+        "The UI provides a way to set/provide the bootstrap secret token (using the existing `caffeineAdminToken` parameter convention already used by the actor initialization logic) and trigger re-initialization so the backend is called with that token.",
+        "On success, the UI updates to show the user is an admin and provides a working navigation path to `/admin/blogs`.",
+        "All user-facing text is in English."
       ],
       "file_operations": [
+        {
+          "path": "frontend/src/pages/AdminSetupPage.tsx",
+          "operation": "create",
+          "description": "Add an Admin Setup page UI for logged-in users that: displays the current Internet Identity Principal (with a copy action), shows current admin status via the existing useIsCallerAdmin hook, accepts a bootstrap secret token input, stores it under the `caffeineAdminToken` session key (so useActor picks it up via getSecretParameter), triggers React Query to recreate/refetch the actor, and on success shows a button/link that navigates to /admin/blogs. Use existing shadcn/ui composed components (e.g., Card, Button, Input, Label) without editing anything under frontend/src/components/ui. Verify the component's usage instructions before implementing."
+        },
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Remove the global CustomCursor import and rendering from the Layout so no custom cursor overlay mounts on any route."
+          "description": "Wire the new Admin Setup page into routing by registering a route (e.g., /admin/setup) in the TanStack router tree so it is reachable. Ensure the route is not wrapped by AdminRouteGuard (since it must be accessible to non-admin logged-in users who are bootstrapping)."
         },
         {
-          "path": "frontend/src/index.css",
+          "path": "frontend/src/components/auth/AdminRouteGuard.tsx",
           "operation": "modify",
-          "description": "Remove the global custom cursor CSS block (including any `cursor: none !important` rules and `.custom-cursor-*` styles) to restore default system cursor and pointer behavior."
+          "description": "Update the unauthorized (authenticated but not admin) state to guide users to the new admin setup flow instead of requiring manual allowlist edits: keep showing the Principal ID, but add a clear call-to-action navigation to /admin/setup and update the English copy accordingly. Continue using existing shadcn/ui composed components (Card, Button, etc.) without editing UI component source. Verify the component's usage instructions before implementing."
         },
         {
-          "path": "frontend/src/components/cursor/CustomCursor.tsx",
-          "operation": "delete",
-          "description": "Delete the CustomCursor component to prevent accidental reintroduction and ensure no overlay elements can be mounted."
-        },
-        {
-          "path": "frontend/src/hooks/useCustomCursor.ts",
-          "operation": "delete",
-          "description": "Delete the custom cursor hook to ensure no mousemove-driven animation logic remains in the React app."
-        }
-      ]
-    },
-    {
-      "id": "REQ-30",
-      "summary": "Remove the standalone landing page custom cursor CSS/JS while preserving existing standalone interactions.",
-      "acceptanceCriteria": [
-        "Standalone CSS no longer forces `cursor: none` and no longer defines/depends on `.custom-cursor-dot` / `.custom-cursor-ring` for cursor behavior.",
-        "Standalone JS no longer creates or animates custom cursor elements (the `initCustomCursor()` behavior is removed/disabled).",
-        "Mobile menu toggle, FAQ accordion, smooth scrolling, and contact-form success state continue to work when opening `frontend/static/growwithtutor-standalone/index.html` directly in a browser."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/static/growwithtutor-standalone/styles.css",
+          "path": "frontend/src/pages/SetupChecklistPage.tsx",
           "operation": "modify",
-          "description": "Remove the standalone custom cursor styling section (including `cursor: none !important` and `.custom-cursor-dot` / `.custom-cursor-ring` rules) so the system cursor is used."
+          "description": "Revise the 'How to Get Admin Access' checklist section to reference the new /admin/setup flow (enter bootstrap secret, confirm admin status, then go to /admin/blogs) and remove/soften instructions that require rebuilding to edit adminAllowlist, keeping all text in English."
         },
         {
-          "path": "frontend/static/growwithtutor-standalone/script.js",
+          "path": "frontend/src/utils/urlParams.ts",
           "operation": "modify",
-          "description": "Remove/disable `initCustomCursor()` (and its initialization call) so no custom cursor elements are created/animated, while keeping smooth scrolling, mobile menu, FAQ accordion, and contact form success behavior unchanged."
+          "description": "If needed to support the Admin Setup page, add/adjust a small utility to persist and clear the `caffeineAdminToken` in sessionStorage (reusing existing storeSessionParameter/clearSessionParameter) so the token can be applied for actor initialization and then removed after successful promotion."
         }
       ]
     }

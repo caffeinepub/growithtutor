@@ -2,12 +2,12 @@
 const CONTENT = {
   hero: {
     headline: "Transform Your Learning Journey with Expert Tutors",
-    subheadline: "Personalized one-on-one tutoring for students from Class 1 to 12. Excel in every subject with GrowWithTutor.",
+    subheadline: "Personalized one-on-one tutoring for students from Class 1 to 12. Excel in every subject with Growithtutor.",
     ctaPrimary: "Get Started",
     ctaSecondary: "Join as Teacher"
   },
   valueProposition: {
-    title: "Why Choose GrowWithTutor?",
+    title: "Why Choose Growithtutor?",
     subtitle: "We provide comprehensive tutoring solutions tailored to your needs",
     values: [
       {
@@ -114,7 +114,7 @@ const CONTENT = {
       },
       {
         rating: 5,
-        content: "Thanks to GrowWithTutor, I scored 95% in my board exams!",
+        content: "Thanks to Growithtutor, I scored 95% in my board exams!",
         author: "Sneha Reddy",
         role: "Class 10 Graduate"
       }
@@ -161,18 +161,18 @@ const CONTENT = {
   contact: {
     title: "Get in Touch",
     subtitle: "Ready to start your learning journey? Contact us today!",
-    whatsapp: "+91 98765 43210",
-    phone: "+91 98765 43211"
+    whatsapp: "7011090796",
+    phone: "9212374300"
   },
   footer: {
-    about: "GrowWithTutor is dedicated to providing quality education through personalized tutoring services.",
+    about: "Growithtutor is dedicated to providing quality education through personalized tutoring services.",
     quickLinks: [
       { text: "Home", href: "#hero" },
       { text: "Services", href: "#services" },
       { text: "How It Works", href: "#how-it-works" },
       { text: "Contact", href: "#contact" }
     ],
-    copyright: "© 2026 GrowWithTutor. All rights reserved."
+    copyright: "© 2026 Growithtutor. All rights reserved."
   }
 };
 
@@ -326,6 +326,9 @@ function renderContact() {
   const section = document.getElementById('contact');
   if (!section) return;
 
+  // Strip non-digit characters for wa.me link
+  const whatsappNumber = CONTENT.contact.whatsapp.replace(/\D/g, '');
+
   section.innerHTML = `
     <div class="container">
       <h2 class="section-title">${CONTENT.contact.title}</h2>
@@ -340,7 +343,7 @@ function renderContact() {
             <span class="contact-info-label">Phone:</span>
             <span class="contact-info-value">${CONTENT.contact.phone}</span>
           </div>
-          <a href="https://wa.me/${CONTENT.contact.whatsapp.replace(/\s/g, '')}" class="btn btn-primary" style="margin-top: 1rem;">Contact via WhatsApp</a>
+          <a href="https://wa.me/${whatsappNumber}" class="btn btn-primary" style="margin-top: 1rem;">Contact via WhatsApp</a>
         </div>
         <form class="contact-form" id="contact-form">
           <div class="form-group">

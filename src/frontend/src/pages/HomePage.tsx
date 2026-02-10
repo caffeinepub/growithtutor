@@ -11,7 +11,7 @@ import ContactSection from '../components/marketing/sections/ContactSection';
 export default function HomePage() {
   usePageMeta({
     title: 'Home',
-    description: 'GrowWithTutor - Expert online and offline tutoring for all subjects and classes. 20+ years experience, 1500+ students, 500+ qualified teachers.',
+    description: 'Growithtutor - Expert online and offline tutoring for all subjects and classes. 20+ years experience, 1500+ students, 500+ qualified teachers.',
   });
 
   return (

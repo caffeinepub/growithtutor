@@ -128,7 +128,7 @@ actor {
   public query ({ caller }) func getAllBlogs() : async [Blog] {
     let blogList = List.empty<Blog>();
     let isAdminUser = AccessControl.isAdmin(accessControlState, caller);
-    
+
     for (blog in blogs.values()) {
       // Admins can see all blogs, public users can only see published blogs
       if (blog.published or isAdminUser) {

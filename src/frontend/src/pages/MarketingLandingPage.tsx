@@ -11,15 +11,15 @@ import ContactSection from '../components/marketing/sections/ContactSection';
 
 export default function MarketingLandingPage() {
   useEffect(() => {
-    document.title = "GrowWithTutor - Expert Tutoring for Academic Success";
+    document.title = "Growithtutor - Expert Tutoring for Academic Success";
     
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Connect with expert tutors for personalized learning. Improve grades, ace tests, and unlock your academic potential with GrowWithTutor.');
+      metaDescription.setAttribute('content', 'Connect with expert tutors for personalized learning. Improve grades, ace tests, and unlock your academic potential with Growithtutor.');
     } else {
       const meta = document.createElement('meta');
       meta.name = 'description';
-      meta.content = 'Connect with expert tutors for personalized learning. Improve grades, ace tests, and unlock your academic potential with GrowWithTutor.';
+      meta.content = 'Connect with expert tutors for personalized learning. Improve grades, ace tests, and unlock your academic potential with Growithtutor.';
       document.head.appendChild(meta);
     }
   }, []);

@@ -1,65 +1,60 @@
 {
   "kind": "build_request",
-  "title": "Remove custom flame-sword cursor and restore a normal elegant cursor",
+  "title": "Grant the logged-in user admin access to manage site content",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-29",
-      "text": "Remove the custom interactive cursor from the React app and restore the normal system cursor across all routes.",
-      "target": "frontend",
+      "id": "REQ-1",
+      "text": "Implement a secure admin-bootstrap path in the backend so the currently authenticated Internet Identity principal can be promoted to admin using the existing secret-token initialization mechanism.",
+      "target": "backend",
       "source": {
         "messageIds": [
           "msg-4"
         ],
         "quotes": [
-          "remove it keep a normal asthetic and elegant cursor"
+          "now make me the admin so i can make changes"
         ]
       },
       "acceptanceCriteria": [
-        "`CustomCursor` is no longer rendered in the global React layout (no custom cursor overlay elements are mounted).",
-        "Global CSS no longer forces `cursor: none` for desktop devices; standard cursor behavior is restored (e.g., pointer cursor on links/buttons).",
-        "No cursor-follow animation runs on mousemove in the React app, and there are no leftover visual artifacts (ring/glow) on any page."
+        "Backend exposes/uses an initialization flow that (a) requires a secret token and (b) can set the caller as the first admin when no admins exist yet.",
+        "After successful initialization, backend admin authorization checks used by blog CRUD (create/edit/publish/delete) pass for the newly promoted admin principal.",
+        "If the token is missing/invalid, the backend must not grant admin and must return a clear error (trap or rejected call).",
+        "If an admin already exists, the initialization flow must not allow arbitrary promotion without appropriate authorization (e.g., must fail or require existing admin privileges)."
       ]
     },
     {
-      "id": "REQ-30",
-      "text": "Remove the custom interactive cursor from the standalone landing page and restore the normal system cursor without breaking existing standalone interactions.",
+      "id": "REQ-2",
+      "text": "Add an admin setup UI that lets a logged-in user view their Principal ID, see whether they are currently an admin, and (when not admin) enter/provide the admin bootstrap secret and trigger the backend initialization so they can gain admin access and then navigate to the admin pages.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-4"
         ],
         "quotes": [
-          "remove it keep a normal asthetic and elegant cursor"
+          "now make me the admin so i can make changes"
         ]
       },
       "acceptanceCriteria": [
-        "Standalone CSS no longer forces `cursor: none` and no longer defines/depends on `.custom-cursor-dot` / `.custom-cursor-ring` for cursor behavior.",
-        "Standalone JS no longer creates or animates custom cursor elements (the `initCustomCursor()` behavior is removed/disabled).",
-        "Mobile menu toggle, FAQ accordion, smooth scrolling, and contact-form success state continue to work when opening `frontend/static/growwithtutor-standalone/index.html` directly in a browser."
+        "A logged-in user can see their Principal ID in the UI (copyable/readable).",
+        "The UI shows current admin status using the existing admin-status query hook(s).",
+        "The UI provides a way to set/provide the bootstrap secret token (using the existing `caffeineAdminToken` parameter convention already used by the actor initialization logic) and trigger re-initialization so the backend is called with that token.",
+        "On success, the UI updates to show the user is an admin and provides a working navigation path to `/admin/blogs`.",
+        "All user-facing text is in English."
       ]
     }
   ],
   "constraints": [
-    "Frontend immutable paths must not be edited: `frontend/src/hooks/useInternetIdentity.ts`, `frontend/src/hooks/useInternetIdentity.tsx`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, and `frontend/src/components/ui`.",
-    "Keep backend as single-actor Motoko; no backend changes are required for this request."
+    "Do not edit files under frontend/src/components/ui (compose with existing components only).",
+    "Do not edit immutable hook entrypoints listed in SYSTEM_CONTEXT (e.g., frontend/src/hooks/useInternetIdentity.ts(x), frontend/src/hooks/useActor.ts, frontend/src/main.tsx).",
+    "Backend must remain a single Motoko actor in backend/main.mo; only add migration.mo if a stable-state upgrade is required."
   ],
   "nonGoals": [
-    "Do not introduce a new custom cursor design or cursor image assets; revert to standard system cursor behavior.",
-    "Do not redesign the marketing site UI/branding beyond cursor behavior changes."
+    "Building a full admin user management UI (e.g., listing users, role editor) beyond enabling the requesting user to become admin.",
+    "Adding third-party authentication providers (only Internet Identity is supported).",
+    "Adding real-time role updates via websockets/push notifications."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

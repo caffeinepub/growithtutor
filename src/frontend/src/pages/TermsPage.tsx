@@ -1,33 +1,32 @@
 import { usePageMeta } from '../hooks/usePageMeta';
-import { termsAndConditions } from '../content/legalContent';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { legalContent } from '../content/legalContent';
 
 export default function TermsPage() {
   usePageMeta({
     title: 'Terms & Conditions',
-    description: 'Read our terms and conditions for using GrowWithTutor services.',
+    description: 'Terms and conditions for using Growithtutor tutoring services.',
   });
 
   return (
     <div className="container py-12 md:py-16">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">{termsAndConditions.title}</h1>
-          <p className="text-muted-foreground">
-            Last Updated: {termsAndConditions.lastUpdated}
-          </p>
-        </div>
+        <h1 className="text-4xl font-bold mb-8">{legalContent.title}</h1>
+        <p className="text-muted-foreground mb-8">
+          Last Updated: {legalContent.lastUpdated}
+        </p>
 
-        <Card>
-          <CardContent className="prose prose-lg max-w-none pt-6">
-            {termsAndConditions.sections.map((section, index) => (
-              <section key={index} className="mb-8">
-                <h2 className="text-2xl font-semibold mb-3">{section.heading}</h2>
-                <p className="text-muted-foreground leading-relaxed">{section.content}</p>
-              </section>
-            ))}
-          </CardContent>
-        </Card>
+        <div className="space-y-8">
+          {legalContent.sections.map((section, index) => (
+            <section key={index} className="space-y-4">
+              <h2 className="text-2xl font-semibold">{section.title}</h2>
+              <div className="prose prose-neutral dark:prose-invert max-w-none">
+                <p className="text-muted-foreground whitespace-pre-line">
+                  {section.content}
+                </p>
+              </div>
+            </section>
+          ))}
+        </div>
       </div>
     </div>
   );

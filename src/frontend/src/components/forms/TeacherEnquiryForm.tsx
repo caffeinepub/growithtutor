@@ -6,9 +6,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
-import { subjects, classes, boards, languages, modes, contactNumbers } from '../../content/siteContent';
-import { generateTeacherWhatsAppMessage, getWhatsAppLink, getPhoneLink } from '../../lib/whatsapp';
-import { MessageCircle, Phone, CheckCircle } from 'lucide-react';
+import { subjects, classes, boards, languages, modes, contactNumbers, optionalContactInfo } from '../../content/siteContent';
+import { generateTeacherWhatsAppMessage, generateTeacherEmailContent, getWhatsAppLink, getPhoneLink, getSMSLink, getEmailLink } from '../../lib/whatsapp';
+import { MessageCircle, Phone, CheckCircle, MessageSquare, Mail } from 'lucide-react';
 
 export default function TeacherEnquiryForm() {
   const [formData, setFormData] = useState({
@@ -56,6 +56,10 @@ export default function TeacherEnquiryForm() {
   if (submitted) {
     const whatsappMessage = generateTeacherWhatsAppMessage(formData);
     const whatsappLink = getWhatsAppLink(whatsappMessage);
+    const smsMessage = generateTeacherWhatsAppMessage(formData);
+    const smsLink = getSMSLink(smsMessage, contactNumbers.phone1);
+    const emailContent = generateTeacherEmailContent(formData);
+    const emailLink = getEmailLink(emailContent.subject, emailContent.body, optionalContactInfo.email);
 
     return (
       <Card className="border-primary">
@@ -65,7 +69,7 @@ export default function TeacherEnquiryForm() {
           </div>
           <CardTitle className="text-2xl">Thank You!</CardTitle>
           <CardDescription>
-            Your application has been received. Please contact us via WhatsApp or phone to discuss opportunities.
+            Your application has been received. Please contact us via WhatsApp, SMS, email, or phone to discuss opportunities.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -92,6 +96,25 @@ export default function TeacherEnquiryForm() {
               <MessageCircle className="h-5 w-5 mr-2" />
               Continue on WhatsApp
             </Button>
+
+            <div className="grid grid-cols-2 gap-3">
+              <Button
+                variant="outline"
+                onClick={() => window.open(smsLink, '_self')}
+              >
+                <MessageSquare className="h-4 w-4 mr-2" />
+                Send SMS
+              </Button>
+              {optionalContactInfo.email && (
+                <Button
+                  variant="outline"
+                  onClick={() => window.open(emailLink, '_self')}
+                >
+                  <Mail className="h-4 w-4 mr-2" />
+                  Send Email
+                </Button>
+              )}
+            </div>
 
             <div className="text-center text-sm text-muted-foreground">or call us directly</div>
 
@@ -143,7 +166,7 @@ export default function TeacherEnquiryForm() {
       <CardHeader>
         <CardTitle>Teacher Information</CardTitle>
         <CardDescription>
-          Please provide your details and teaching preferences to join our team.
+          Please provide your details and we'll get in touch with you about teaching opportunities.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -179,14 +202,14 @@ export default function TeacherEnquiryForm() {
               id="experience"
               value={formData.experience}
               onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
-              placeholder="e.g., 5 years teaching Mathematics"
+              placeholder="e.g., 5 years"
               required
             />
           </div>
 
           <div className="space-y-2">
-            <Label>Subjects You Can Teach * (Select one or more)</Label>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 p-4 border rounded-lg max-h-60 overflow-y-auto">
+            <Label>Subjects * (Select one or more)</Label>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 p-4 border rounded-lg max-h-48 overflow-y-auto">
               {subjects.map((subject) => (
                 <div key={subject} className="flex items-center space-x-2">
                   <Checkbox
@@ -206,8 +229,8 @@ export default function TeacherEnquiryForm() {
           </div>
 
           <div className="space-y-2">
-            <Label>Classes/Levels * (Select one or more)</Label>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 p-4 border rounded-lg max-h-60 overflow-y-auto">
+            <Label>Classes * (Select one or more)</Label>
+            <div className="grid grid-cols-3 md:grid-cols-4 gap-3 p-4 border rounded-lg max-h-48 overflow-y-auto">
               {classes.map((cls) => (
                 <div key={cls} className="flex items-center space-x-2">
                   <Checkbox
@@ -247,55 +270,57 @@ export default function TeacherEnquiryForm() {
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label>Languages * (Select one or more)</Label>
-            <div className="grid grid-cols-2 gap-3 p-4 border rounded-lg">
-              {languages.map((lang) => (
-                <div key={lang} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`lang-${lang}`}
-                    checked={formData.languages.includes(lang)}
-                    onCheckedChange={() => handleArrayToggle('languages', lang)}
-                  />
-                  <Label
-                    htmlFor={`lang-${lang}`}
-                    className="text-sm font-normal cursor-pointer"
-                  >
-                    {lang}
-                  </Label>
-                </div>
-              ))}
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Languages * (Select one or more)</Label>
+              <div className="grid gap-3 p-4 border rounded-lg">
+                {languages.map((lang) => (
+                  <div key={lang} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`language-${lang}`}
+                      checked={formData.languages.includes(lang)}
+                      onCheckedChange={() => handleArrayToggle('languages', lang)}
+                    />
+                    <Label
+                      htmlFor={`language-${lang}`}
+                      className="text-sm font-normal cursor-pointer"
+                    >
+                      {lang}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Modes * (Select one or more)</Label>
+              <div className="grid gap-3 p-4 border rounded-lg">
+                {modes.map((mode) => (
+                  <div key={mode} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`mode-${mode}`}
+                      checked={formData.modes.includes(mode)}
+                      onCheckedChange={() => handleArrayToggle('modes', mode)}
+                    />
+                    <Label
+                      htmlFor={`mode-${mode}`}
+                      className="text-sm font-normal cursor-pointer"
+                    >
+                      {mode}
+                    </Label>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label>Teaching Mode * (Select one or more)</Label>
-            <div className="grid grid-cols-2 gap-3 p-4 border rounded-lg">
-              {modes.map((mode) => (
-                <div key={mode} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`mode-${mode}`}
-                    checked={formData.modes.includes(mode)}
-                    onCheckedChange={() => handleArrayToggle('modes', mode)}
-                  />
-                  <Label
-                    htmlFor={`mode-${mode}`}
-                    className="text-sm font-normal cursor-pointer"
-                  >
-                    {mode}
-                  </Label>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="message">Additional Information (Optional)</Label>
+            <Label htmlFor="message">Additional Message (Optional)</Label>
             <Textarea
               id="message"
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              placeholder="Tell us more about your teaching experience and approach..."
+              placeholder="Tell us more about your teaching experience and approach"
               rows={4}
             />
           </div>

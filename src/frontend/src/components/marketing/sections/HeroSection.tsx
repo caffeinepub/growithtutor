@@ -14,7 +14,7 @@ export default function HeroSection() {
             <div className="space-y-4">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                 Unlock Your Academic Potential with{' '}
-                <span className="text-primary">GrowWithTutor</span>
+                <span className="text-primary">Growithtutor</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground">
                 Expert online and offline tutoring for all subjects and classes. Personalized learning that delivers results.

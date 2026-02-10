@@ -6,9 +6,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
-import { subjects, classes, boards, languages, modes, contactNumbers } from '../../content/siteContent';
-import { generateStudentWhatsAppMessage, getWhatsAppLink, getPhoneLink } from '../../lib/whatsapp';
-import { MessageCircle, Phone, CheckCircle } from 'lucide-react';
+import { subjects, classes, boards, languages, modes, contactNumbers, optionalContactInfo } from '../../content/siteContent';
+import { generateStudentWhatsAppMessage, generateStudentEmailContent, getWhatsAppLink, getPhoneLink, getSMSLink, getEmailLink } from '../../lib/whatsapp';
+import { MessageCircle, Phone, CheckCircle, MessageSquare, Mail } from 'lucide-react';
 
 export default function StudentEnquiryForm() {
   const [formData, setFormData] = useState({
@@ -46,6 +46,10 @@ export default function StudentEnquiryForm() {
   if (submitted) {
     const whatsappMessage = generateStudentWhatsAppMessage(formData);
     const whatsappLink = getWhatsAppLink(whatsappMessage);
+    const smsMessage = generateStudentWhatsAppMessage(formData);
+    const smsLink = getSMSLink(smsMessage, contactNumbers.phone1);
+    const emailContent = generateStudentEmailContent(formData);
+    const emailLink = getEmailLink(emailContent.subject, emailContent.body, optionalContactInfo.email);
 
     return (
       <Card className="border-primary">
@@ -55,7 +59,7 @@ export default function StudentEnquiryForm() {
           </div>
           <CardTitle className="text-2xl">Thank You!</CardTitle>
           <CardDescription>
-            Your enquiry has been received. Please contact us via WhatsApp or phone to complete your registration.
+            Your enquiry has been received. Please contact us via WhatsApp, SMS, email, or phone to complete your registration.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -81,6 +85,25 @@ export default function StudentEnquiryForm() {
               <MessageCircle className="h-5 w-5 mr-2" />
               Continue on WhatsApp
             </Button>
+
+            <div className="grid grid-cols-2 gap-3">
+              <Button
+                variant="outline"
+                onClick={() => window.open(smsLink, '_self')}
+              >
+                <MessageSquare className="h-4 w-4 mr-2" />
+                Send SMS
+              </Button>
+              {optionalContactInfo.email && (
+                <Button
+                  variant="outline"
+                  onClick={() => window.open(emailLink, '_self')}
+                >
+                  <Mail className="h-4 w-4 mr-2" />
+                  Send Email
+                </Button>
+              )}
+            </div>
 
             <div className="text-center text-sm text-muted-foreground">or call us directly</div>
 

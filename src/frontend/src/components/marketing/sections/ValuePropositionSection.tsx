@@ -21,17 +21,19 @@ export default function ValuePropositionSection() {
     {
       icon: TrendingUp,
       title: 'Proven Results',
-      description: 'Join 1500+ students who have improved their grades and confidence with us.',
+      description: 'Track record of helping 1500+ students achieve their academic goals and excel in exams.',
     },
   ];
 
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-20 md:py-32 bg-muted/30">
       <div className="container">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose GrowWithTutor?</h2>
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Why Choose Growithtutor?
+          </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            We provide comprehensive tutoring solutions designed to help every student succeed
+            We provide comprehensive tutoring solutions tailored to your needs
           </p>
         </div>
 
@@ -39,15 +41,17 @@ export default function ValuePropositionSection() {
           {values.map((value, index) => {
             const Icon = value.icon;
             return (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
+              <Card key={index} className="border-2 hover:border-primary/50 transition-colors">
                 <CardHeader>
-                  <div className="mb-4 h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                     <Icon className="h-6 w-6 text-primary" />
                   </div>
-                  <CardTitle className="text-xl">{value.title}</CardTitle>
+                  <CardTitle>{value.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="text-base">{value.description}</CardDescription>
+                  <CardDescription className="text-base">
+                    {value.description}
+                  </CardDescription>
                 </CardContent>
               </Card>
             );

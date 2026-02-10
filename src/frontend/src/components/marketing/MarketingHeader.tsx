@@ -25,12 +25,17 @@ export default function MarketingHeader() {
       <div className="container flex h-16 items-center justify-between">
         <button
           onClick={() => handleNavigation('/')}
-          className="flex items-center space-x-2 focus-ring rounded-md"
+          className="flex items-center space-x-3 focus-ring rounded-md"
           aria-label="Go to home"
         >
           <img
+            src="/assets/generated/growwithtutor-uploaded-logo.dim_1024x1024.png"
+            alt="Growithtutor emblem"
+            className="h-8 w-auto"
+          />
+          <img
             src="/assets/generated/growwithtutor-logo.dim_512x192.png"
-            alt="GrowWithTutor"
+            alt="Growithtutor"
             className="h-8 w-auto"
           />
         </button>

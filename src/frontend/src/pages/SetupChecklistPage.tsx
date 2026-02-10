@@ -1,10 +1,14 @@
+import { useNavigate } from '@tanstack/react-router';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { CheckCircle2, Circle } from 'lucide-react';
 import { contactNumbers, socialLinks, adminAllowlist } from '../content/siteContent';
 
 export default function SetupChecklistPage() {
+  const navigate = useNavigate();
+
   usePageMeta({
     title: 'Setup Checklist',
     description: 'Complete setup guide for GrowWithTutor website configuration.',
@@ -120,16 +124,49 @@ export default function SetupChecklistPage() {
         <Card className="mt-8 border-primary">
           <CardHeader>
             <CardTitle>How to Get Admin Access</CardTitle>
+            <CardDescription>
+              Follow these steps to gain admin privileges and manage blog posts.
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-              <li>Navigate to <strong>/admin/blogs</strong> in your browser</li>
-              <li>Click the "Login" button and authenticate with Internet Identity</li>
-              <li>After login, copy your Principal ID from the browser console or UI</li>
-              <li>Add your Principal ID to the <code className="bg-muted px-2 py-1 rounded">adminAllowlist</code> array in <code className="bg-muted px-2 py-1 rounded">frontend/src/content/siteContent.ts</code></li>
-              <li>Rebuild and redeploy the application</li>
-              <li>You will now have full admin access to manage blog posts</li>
+            <ol className="list-decimal list-inside space-y-3 text-muted-foreground">
+              <li>
+                <strong>Log in with Internet Identity</strong> - Click the Login button and authenticate.
+              </li>
+              <li>
+                <strong>Navigate to Admin Setup</strong> - Go to the{' '}
+                <button
+                  type="button"
+                  onClick={() => navigate({ to: '/admin/setup' })}
+                  className="text-primary hover:underline font-medium"
+                >
+                  Admin Setup page
+                </button>
+                .
+              </li>
+              <li>
+                <strong>Enter Bootstrap Secret</strong> - Input the bootstrap secret token provided during deployment.
+              </li>
+              <li>
+                <strong>Confirm Admin Status</strong> - The system will verify your token and grant admin access.
+              </li>
+              <li>
+                <strong>Access Admin Panel</strong> - Navigate to{' '}
+                <button
+                  type="button"
+                  onClick={() => navigate({ to: '/admin/blogs' })}
+                  className="text-primary hover:underline font-medium"
+                >
+                  /admin/blogs
+                </button>{' '}
+                to manage blog posts.
+              </li>
             </ol>
+            <div className="pt-4 border-t">
+              <Button onClick={() => navigate({ to: '/admin/setup' })} className="w-full">
+                Go to Admin Setup
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
