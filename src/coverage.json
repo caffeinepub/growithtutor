@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T16:20:45.934Z",
+  "generatedAt": "2026-02-10T16:34:05.752Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -12,43 +12,35 @@
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Provide a clear, admin-only “Unpublish / Take site offline” action that immediately puts the site into maintenance mode (sets backend siteLive=false) and clearly explains that this hides the public site without rolling back the deployed canister version.",
+        "summary": "Configure the React app to use the public domain \"growithtutor.com\" for public-domain-based URL generation (PUBLIC_DOMAIN / getPublicUrl / getPublicAssetUrl), ensuring production builds resolve to growithtutor.com rather than a different environment-provided value.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/AdminBlogsPage.tsx",
-          "frontend/src/components/maintenance/SiteLiveGate.tsx"
+          "frontend/src/config/publicDomain.ts"
         ],
         "matchedFiles": [
-          "frontend/src/pages/AdminBlogsPage.tsx",
-          "frontend/src/components/maintenance/SiteLiveGate.tsx"
+          "frontend/src/config/publicDomain.ts"
         ]
       },
       {
         "id": "REQ-2",
-        "summary": "Improve domain change support by making the public domain configuration steps explicit and discoverable in-app and in documentation, including the VITE_PUBLIC_DOMAIN environment variable and the standalone landing page domain note.",
+        "summary": "Ensure the standalone landing page domain configuration uses \"growithtutor.com\" consistently (the standalone public domain constant must be set to growithtutor.com).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/SetupChecklistPage.tsx",
-          "frontend/DEPLOYMENT.md"
+          "frontend/static/growwithtutor-standalone/index.html"
         ],
         "matchedFiles": [
-          "frontend/src/pages/SetupChecklistPage.tsx",
-          "frontend/DEPLOYMENT.md"
+          "frontend/static/growwithtutor-standalone/index.html"
         ]
       }
     ]
   },
   "changedFiles": [
-    "backend/main.mo",
-    "backend/migration.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/DEPLOYMENT.md",
-    "frontend/src/components/maintenance/SiteLiveGate.tsx",
-    "frontend/src/pages/AdminBlogsPage.tsx",
-    "frontend/src/pages/SetupChecklistPage.tsx",
+    "frontend/src/config/publicDomain.ts",
+    "frontend/static/growwithtutor-standalone/index.html",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

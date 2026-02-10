@@ -7,9 +7,9 @@ import Time "mo:core/Time";
 import Principal "mo:core/Principal";
 import AccessControl "authorization/access-control";
 import MixinAuthorization "authorization/MixinAuthorization";
-import Migration "migration";
 
-(with migration = Migration.run)
+
+
 actor {
   type Blog = {
     id : Nat;

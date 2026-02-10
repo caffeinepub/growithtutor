@@ -1,48 +1,36 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Admin maintenance-mode unpublish control and domain-change guidance",
+  "title": "Set public domain to growithtutor.com",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Add an explicit admin-only Unpublish/Take-offline control in /admin/blogs and ensure maintenance mode behavior and messaging are clear.",
+      "summary": "Force production public-domain URL generation to resolve to growithtutor.com via PUBLIC_DOMAIN/getPublicUrl/getPublicAssetUrl while avoiding edits to immutable paths.",
       "acceptanceCriteria": [
-        "When an authenticated admin visits /admin/blogs, they can perform an explicit action labeled in English as an unpublish/take-offline control (not just a generic toggle).",
-        "Triggering the action sets backend siteLive to false and shows a success confirmation in the UI.",
-        "After siteLive is false, all non-/admin routes render the maintenance screen, while /admin routes remain accessible.",
-        "The admin UI includes explanatory English text that this is an application-level maintenance mode and does not roll back the deployed version."
+        "When the app is built for production with the project’s default configuration, `PUBLIC_DOMAIN` evaluates to `growithtutor.com`.",
+        "Any code paths that generate public URLs via `getPublicUrl(...)` / `getPublicAssetUrl(...)` produce `https://growithtutor.com/...` URLs.",
+        "No changes are made to read-only paths listed in `frontend.immutablePaths`."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/AdminBlogsPage.tsx",
+          "path": "frontend/src/config/publicDomain.ts",
           "operation": "modify",
-          "description": "Replace/augment the existing generic site-live switch with a clearly labeled admin-only action (e.g., \"Unpublish / Take site offline\") that calls the existing maintenance-mode backend capability via the existing React Query hook, shows a success confirmation, and includes explicit English explanatory text that this hides the public site without rolling back the deployed canister version. Use existing shadcn-ui components already imported (Button/Card/Alert/Dialog/etc.) for the control and any confirmation UI; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/maintenance/SiteLiveGate.tsx",
-          "operation": "modify",
-          "description": "Confirm/adjust gating so that when siteLive is false, all non-/admin routes render the maintenance screen while /admin routes bypass the gate and remain accessible. Keep all user-facing text in English. Use existing shadcn-ui components already used in this file; verify the component's usage instructions before implementing."
+          "description": "Adjust getPublicDomain() resolution order so production builds default to the fixed domain growithtutor.com (not window.location.hostname or other environment-provided host), while still allowing an explicit override only when intentionally set; keep getPublicUrl/getPublicAssetUrl consistent with https://growithtutor.com/ URL generation."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Make domain-change steps explicit and discoverable in-app and in documentation, including VITE_PUBLIC_DOMAIN and the standalone landing page domain note.",
+      "summary": "Ensure the standalone landing page constant and helper generate asset URLs using https://growithtutor.com consistently.",
       "acceptanceCriteria": [
-        "Setup Checklist page shows the currently detected public domain and provides clear English instructions to change it via VITE_PUBLIC_DOMAIN or by editing the fallback in frontend/src/config/publicDomain.ts, and references frontend/DEPLOYMENT.md for full steps.",
-        "frontend/DEPLOYMENT.md includes a complete, step-by-step section for changing the domain, explicitly mentioning VITE_PUBLIC_DOMAIN and calling out the standalone landing page domain configuration location (frontend/static/growwithtutor-standalone/index.html).",
-        "No user-facing text related to domain change or unpublishing appears in a non-English language."
+        "`frontend/static/growwithtutor-standalone/index.html` has `STANDALONE_PUBLIC_DOMAIN` set to `growithtutor.com`.",
+        "Standalone landing page asset URLs constructed by the helper function resolve to `https://growithtutor.com/...`."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/SetupChecklistPage.tsx",
+          "path": "frontend/static/growwithtutor-standalone/index.html",
           "operation": "modify",
-          "description": "Update the \"Public Domain\" checklist item to be more explicit and discoverable: show the currently detected domain, provide clear English instructions for changing it via VITE_PUBLIC_DOMAIN or by editing the fallback value in frontend/src/config/publicDomain.ts, and explicitly reference frontend/DEPLOYMENT.md for the full step-by-step guide (including a note that the standalone landing page domain is configured separately in frontend/static/growwithtutor-standalone/index.html). Use existing shadcn-ui components already used in this page; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/DEPLOYMENT.md",
-          "operation": "modify",
-          "description": "Complete and expand the \"Changing the Domain\" section into a clear step-by-step guide that explicitly mentions setting VITE_PUBLIC_DOMAIN, editing the fallback in frontend/src/config/publicDomain.ts, and calls out the standalone landing page domain configuration location at frontend/static/growwithtutor-standalone/index.html. Ensure all text is English-only."
+          "description": "Keep STANDALONE_PUBLIC_DOMAIN set to growithtutor.com and update the standalone helper/related link construction so any URLs derived from the standalone domain configuration consistently resolve to https://growithtutor.com/... (including ensuring no remaining hardcoded mismatching domain values are used for URL construction)."
         }
       ]
     }

@@ -1,68 +1,37 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T16:20:45.931Z",
-  "summary": "Diff adds backend maintenance-mode state (siteLive) with admin-only setter and a frontend gate that shows a maintenance screen for non-/admin routes when the site is offline. It also adds in-app domain configuration guidance on the Setup Checklist page and updates DEPLOYMENT.md with maintenance mode documentation. Several additional unrelated frontend styling/marketing changes are present in the diff summary.",
-  "missing_requirements": [
-    {
-      "id": "REQ-1",
-      "requirement": "Admin-only /admin/blogs page provides an explicit English-labeled “Unpublish / Take site offline” control (not just a generic toggle), shows a success confirmation, and includes explanatory English text that this is application-level maintenance mode and does not roll back the deployed canister version.",
-      "reason": "The /admin/blogs implementation is truncated right where the offline action handler begins, so the diff summary does not provide enough evidence that the UI includes (a) an explicit unpublish/take-offline labeled action (as opposed to only a Switch), (b) a success confirmation for the take-offline action, and (c) the required explanatory text in the admin UI.",
-      "evidence": [
-        "frontend/src/pages/AdminBlogsPage.tsx (truncated)"
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "requirement": "DEPLOYMENT.md includes a complete step-by-step domain change section explicitly mentioning VITE_PUBLIC_DOMAIN and calling out the standalone landing page domain configuration location (frontend/static/growwithtutor-standalone/index.html).",
-      "reason": "DEPLOYMENT.md is truncated partway through the “Changing the Domain” section; the provided excerpt does not show explicit mention of VITE_PUBLIC_DOMAIN or the standalone landing page configuration path, so completeness cannot be verified from the diff summary.",
-      "evidence": [
-        "frontend/DEPLOYMENT.md (truncated)"
-      ]
-    }
-  ],
+  "generatedAt": "2026-02-10T16:34:05.750Z",
+  "summary": "REQ-1 and REQ-2 appear to be implemented: the React app’s public domain helpers default to `growithtutor.com` in production and the standalone landing page sets `STANDALONE_PUBLIC_DOMAIN` to `growithtutor.com`. The diff does not show edits to the listed immutable paths. Some extra functionality (UTM/link handling, logo URL injection, project state tracking) was added that is not explicitly requested.",
+  "missing_requirements": [],
   "hallucinated_features": [
     {
-      "description": "Broad marketing site content and section rewrites/additions (hero copy, value props, services, how-it-works, testimonials, FAQ, etc.) beyond domain-change guidance and maintenance-mode workflow.",
-      "reason": "BuildRequest only asks for maintenance mode/unpublish workflow and domain-change guidance; marketing page content expansion is not requested.",
+      "description": "Standalone landing page adds runtime DOM manipulation to inject logo URLs and modify the caffeine.ai link with UTM parameters (beyond simply setting the domain constant and ensuring helper-built asset URLs resolve correctly).",
+      "reason": "REQ-2 only asks to set `STANDALONE_PUBLIC_DOMAIN` and ensure helper-constructed asset URLs resolve to `https://growithtutor.com/...`; additional behaviors (logo injection, UTM rewriting) are not requested.",
       "evidence": [
-        "frontend-file-summaries.txt (frontend/src/content/marketingContent.ts)",
-        "frontend-file-summaries.txt (frontend/src/pages/MarketingLandingPage.tsx)",
-        "frontend-file-summaries.txt (frontend/src/components/marketing/sections/HeroSection.tsx)",
-        "frontend-file-summaries.txt (frontend/src/components/marketing/sections/ValuePropositionSection.tsx)",
-        "frontend-file-summaries.txt (frontend/src/components/marketing/sections/ServicesSection.tsx)",
-        "frontend-file-summaries.txt (frontend/src/components/marketing/sections/HowItWorksSection.tsx)",
-        "frontend-file-summaries.txt (frontend/src/components/marketing/sections/TestimonialsSection.tsx)",
-        "frontend-file-summaries.txt (frontend/src/components/marketing/sections/FaqSection.tsx)",
-        "frontend-file-summaries.txt (frontend/src/components/marketing/sections/ContactSection.tsx)",
-        "frontend-file-summaries.txt (frontend/src/components/marketing/ContactForm.tsx)"
+        "frontend/static/growwithtutor-standalone/index.html"
       ]
     },
     {
-      "description": "Global styling and Tailwind theme changes unrelated to the requested maintenance-mode and domain-change guidance.",
-      "reason": "No styling overhaul is requested in the BuildRequest.",
+      "description": "Added/updated a project tracking/state file with new feature request entries (AR-1/AR-2/AR-3) and status metadata.",
+      "reason": "BuildRequest does not mention maintaining or changing `project_state.json`; this is extra scope.",
       "evidence": [
-        "frontend-file-summaries.txt (frontend/src/index.css)",
-        "frontend-file-summaries.txt (frontend/tailwind.config.js)"
+        "project_state.json"
       ]
     },
     {
-      "description": "Standalone landing page refactor to inject runtime logo URL and define STANDALONE_PUBLIC_DOMAIN constant (beyond simply documenting the standalone domain configuration location).",
-      "reason": "REQ-2 requires documentation/guidance and a note pointing to the standalone landing page domain configuration location; implementing additional standalone runtime injection behavior is not explicitly requested.",
+      "description": "Introduced/expanded centralized public-domain configuration module including environment-variable override behavior and extra exported constants (`PUBLIC_URL`).",
+      "reason": "REQ-1 requires configuring public-domain-based URL generation and `PUBLIC_DOMAIN` defaulting to `growithtutor.com` for production; extra exports/behaviors (e.g., `PUBLIC_URL`) are not explicitly requested.",
       "evidence": [
-        "frontend-file-summaries.txt (frontend/static/growwithtutor-standalone/index.html)"
+        "frontend/src/config/publicDomain.ts"
       ]
     }
   ],
-  "confidence": 0.62,
+  "confidence": 0.74,
   "changed_files": [
-    "backend/main.mo",
-    "backend/migration.mo",
     "frontend-file-summaries.txt",
-    "frontend/DEPLOYMENT.md",
-    "frontend/src/components/maintenance/SiteLiveGate.tsx",
-    "frontend/src/pages/AdminBlogsPage.tsx",
-    "frontend/src/pages/SetupChecklistPage.tsx",
+    "frontend/src/config/publicDomain.ts",
+    "frontend/static/growwithtutor-standalone/index.html",
     "project_state.json"
   ]
 }

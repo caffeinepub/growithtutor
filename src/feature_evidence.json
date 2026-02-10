@@ -2,11 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-provide-a-clear-admin-only-unpublish-take-site-offline-action-that-immediately-puts-the-site-into-maintenance-mode-sets-backend-sitelive-false-and-clearly-explains-that-this-hides-the-public-site-without-rolling-back-the-deployed-canister-version",
-      "featureTitle": "Provide a clear, admin-only “Unpublish / Take site offline” action that immediately puts the site into maintenance mode (sets backend siteLive=false) and clearly explains that this hides the public site without rolling back the deployed canister version.",
+      "featureId": "feature-configure-the-react-app-to-use-the-public-domain-growithtutor-com-for-public-domain-based-url-generation-public-domain-getpublicurl-getpublicasseturl-ensuring-production-builds-resolve-to-growithtutor-com-rather-than-a-different-environment-provided-value",
+      "featureTitle": "Configure the React app to use the public domain \"growithtutor.com\" for public-domain-based URL generation (PUBLIC_DOMAIN / getPublicUrl / getPublicAssetUrl), ensuring production builds resolve to growithtutor.com rather than a different environment-provided value.",
       "files": [
-        "frontend/src/components/maintenance/SiteLiveGate.tsx",
-        "frontend/src/pages/AdminBlogsPage.tsx"
+        "frontend/src/config/publicDomain.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -22,11 +21,10 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-improve-domain-change-support-by-making-the-public-domain-configuration-steps-explicit-and-discoverable-in-app-and-in-documentation-including-the-vite-public-domain-environment-variable-and-the-standalone-landing-page-domain-note",
-      "featureTitle": "Improve domain change support by making the public domain configuration steps explicit and discoverable in-app and in documentation, including the VITE_PUBLIC_DOMAIN environment variable and the standalone landing page domain note.",
+      "featureId": "feature-ensure-the-standalone-landing-page-domain-configuration-uses-growithtutor-com-consistently-the-standalone-public-domain-constant-must-be-set-to-growithtutor-com",
+      "featureTitle": "Ensure the standalone landing page domain configuration uses \"growithtutor.com\" consistently (the standalone public domain constant must be set to growithtutor.com).",
       "files": [
-        "frontend/DEPLOYMENT.md",
-        "frontend/src/pages/SetupChecklistPage.tsx"
+        "frontend/static/growwithtutor-standalone/index.html"
       ],
       "components": [
         "core-infrastructure@1.0.2",

@@ -1,22 +1,24 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "New project",
-  "architectural_notes": [],
+  "summary": "New project with a planned custom domain setup for growithtutor.com.",
+  "architectural_notes": [
+    "Planned custom domain: growithtutor.com"
+  ],
   "known_issues": [],
   "isFixRequest": false,
   "existing_features": [
     {
-      "id": "feature-provide-a-clear-admin-only-unpublish-take-site-offline-action-that-immediately-puts-the-site-into-maintenance-mode-sets-backend-sitelive-false-and-clearly-explains-that-this-hides-the-public-site-without-rolling-back-the-deployed-canister-version",
-      "title": "Provide a clear, admin-only “Unpublish / Take site offline” action that immediately puts the site into maintenance mode (sets backend siteLive=false) and clearly explains that this hides the public site without rolling back the deployed canister version.",
+      "id": "feature-configure-the-react-app-to-use-the-public-domain-growithtutor-com-for-public-domain-based-url-generation-public-domain-getpublicurl-getpublicasseturl-ensuring-production-builds-resolve-to-growithtutor-com-rather-than-a-different-environment-provided-value",
+      "title": "Configure the React app to use the public domain \"growithtutor.com\" for public-domain-based URL generation (PUBLIC_DOMAIN / getPublicUrl / getPublicAssetUrl), ensuring production builds resolve to growithtutor.com rather than a different environment-provided value.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-improve-domain-change-support-by-making-the-public-domain-configuration-steps-explicit-and-discoverable-in-app-and-in-documentation-including-the-vite-public-domain-environment-variable-and-the-standalone-landing-page-domain-note",
-      "title": "Improve domain change support by making the public domain configuration steps explicit and discoverable in-app and in documentation, including the VITE_PUBLIC_DOMAIN environment variable and the standalone landing page domain note.",
+      "id": "feature-ensure-the-standalone-landing-page-domain-configuration-uses-growithtutor-com-consistently-the-standalone-public-domain-constant-must-be-set-to-growithtutor-com",
+      "title": "Ensure the standalone landing page domain configuration uses \"growithtutor.com\" consistently (the standalone public domain constant must be set to growithtutor.com).",
       "reqIds": [
         "REQ-2"
       ],
@@ -26,18 +28,12 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Change the domain name for the deployed site/app",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-2",
-      "summary": "Unpublish/revert the recently deployed changes (take Version 27 offline or roll back)",
+      "summary": "Change/set the project domain to \"growithtutor.com\"",
       "reqIds": [],
       "status": "pending"
     }
   ],
-  "projectName": "Support domain name change guidance and unpublish (maintenance mode) workflow",
+  "projectName": "Set public domain to growithtutor.com",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

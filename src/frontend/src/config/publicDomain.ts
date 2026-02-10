@@ -19,22 +19,30 @@
  * Get the public domain/hostname for this application.
  * Priority:
  * 1. VITE_PUBLIC_DOMAIN environment variable
- * 2. window.location.hostname (runtime fallback)
- * 3. Default fallback value
+ * 2. Default production domain (growithtutor.com)
+ * 3. window.location.hostname (runtime fallback for development)
  */
 export function getPublicDomain(): string {
-  // Check for environment variable first
+  // Check for environment variable first (explicit override)
   if (import.meta.env.VITE_PUBLIC_DOMAIN) {
     return import.meta.env.VITE_PUBLIC_DOMAIN;
   }
   
-  // Runtime fallback to current hostname
+  // Production default domain
+  const productionDomain = 'growithtutor.com';
+  
+  // In production builds, always use the production domain
+  if (import.meta.env.PROD) {
+    return productionDomain;
+  }
+  
+  // Development fallback to current hostname
   if (typeof window !== 'undefined') {
     return window.location.hostname;
   }
   
-  // Default fallback (update this if needed)
-  return 'growithtutor.com';
+  // Final fallback
+  return productionDomain;
 }
 
 /**
