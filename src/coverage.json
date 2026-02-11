@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T16:34:05.752Z",
+  "generatedAt": "2026-02-11T01:42:46.597Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -12,35 +12,39 @@
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Configure the React app to use the public domain \"growithtutor.com\" for public-domain-based URL generation (PUBLIC_DOMAIN / getPublicUrl / getPublicAssetUrl), ensuring production builds resolve to growithtutor.com rather than a different environment-provided value.",
+        "summary": "Prepare and execute a production deployment for Version 30 to the Internet Computer mainnet, ensuring the deployed production canisters (backend + frontend) are accessible via the mainnet canister URLs and are not subject to draft expiration.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/config/publicDomain.ts"
+          "frontend/src/config/publicDomain.ts",
+          "frontend/DEPLOYMENT.md"
         ],
         "matchedFiles": [
-          "frontend/src/config/publicDomain.ts"
+          "frontend/src/config/publicDomain.ts",
+          "frontend/DEPLOYMENT.md"
         ]
       },
       {
         "id": "REQ-2",
-        "summary": "Ensure the standalone landing page domain configuration uses \"growithtutor.com\" consistently (the standalone public domain constant must be set to growithtutor.com).",
+        "summary": "Update `frontend/DEPLOYMENT.md` to include a clear, end-to-end section for promoting an already-working version (Version 30) to production, including prerequisites (cycles), the exact command(s) to deploy to `--network ic`, and a brief note explaining that production deployments do not expire unlike drafts.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/static/growwithtutor-standalone/index.html"
+          "frontend/DEPLOYMENT.md"
         ],
         "matchedFiles": [
-          "frontend/static/growwithtutor-standalone/index.html"
+          "frontend/DEPLOYMENT.md"
         ]
       }
     ]
   },
   "changedFiles": [
+    "backend/main.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
+    "frontend/DEPLOYMENT.md",
+    "frontend/src/config/logoConfig.ts",
     "frontend/src/config/publicDomain.ts",
-    "frontend/static/growwithtutor-standalone/index.html",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

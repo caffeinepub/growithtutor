@@ -3,7 +3,7 @@ import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from '@tanstack/react-router';
 import { SITE_NAME } from '../../config/siteConfig';
-import { getPublicAssetUrl } from '../../config/publicDomain';
+import { LOGO_URL } from '../../config/logoConfig';
 
 export default function MarketingHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -23,8 +23,6 @@ export default function MarketingHeader() {
     { label: 'Contact', path: '/contact' },
   ];
 
-  const logoUrl = getPublicAssetUrl('/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png');
-
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
@@ -36,8 +34,8 @@ export default function MarketingHeader() {
           <span className="text-xl font-bold text-foreground">{SITE_NAME}</span>
           {!imageError && (
             <img
-              src={logoUrl}
-              alt={`${SITE_NAME} logo`}
+              src={LOGO_URL}
+              alt="Logo"
               className="h-10 w-auto object-contain"
               onError={() => setImageError(true)}
             />

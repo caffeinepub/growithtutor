@@ -1,53 +1,64 @@
 {
   "kind": "build_request",
-  "title": "Set public domain to growithtutor.com",
+  "title": "Deploy Version 30 to production",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Configure the React app to use the public domain \"growithtutor.com\" for public-domain-based URL generation (PUBLIC_DOMAIN / getPublicUrl / getPublicAssetUrl), ensuring production builds resolve to growithtutor.com rather than a different environment-provided value.",
-      "target": "frontend",
+      "text": "Prepare and execute a production deployment for Version 30 to the Internet Computer mainnet, ensuring the deployed production canisters (backend + frontend) are accessible via the mainnet canister URLs and are not subject to draft expiration.",
+      "target": "both",
       "source": {
         "messageIds": [
-          "msg-8"
+          "msg-1"
         ],
         "quotes": [
-          "change the domain to \"growithtutor.com\""
+          "I want to give my version 30 for production"
         ]
       },
       "acceptanceCriteria": [
-        "When the app is built for production with the project’s default configuration, `PUBLIC_DOMAIN` evaluates to `growithtutor.com`.",
-        "Any code paths that generate public URLs via `getPublicUrl(...)` / `getPublicAssetUrl(...)` produce `https://growithtutor.com/...` URLs.",
-        "No changes are made to read-only paths listed in `frontend.immutablePaths`."
+        "Running a mainnet deployment (e.g., via `dfx deploy --network ic`) completes successfully for both backend and frontend canisters.",
+        "The app is reachable via the mainnet canister URL(s) after deployment and loads without errors.",
+        "A short post-deploy verification is performed: load the home page, navigate to /blogs, and confirm admin routes remain gated behind Internet Identity as before."
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Ensure the standalone landing page domain configuration uses \"growithtutor.com\" consistently (the standalone public domain constant must be set to growithtutor.com).",
+      "text": "Update `frontend/DEPLOYMENT.md` to include a clear, end-to-end section for promoting an already-working version (Version 30) to production, including prerequisites (cycles), the exact command(s) to deploy to `--network ic`, and a brief note explaining that production deployments do not expire unlike drafts.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-8"
+          "msg-1"
         ],
         "quotes": [
-          "change the domain to \"growithtutor.com\""
+          "I want to give my version 30 for production"
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/static/growwithtutor-standalone/index.html` has `STANDALONE_PUBLIC_DOMAIN` set to `growithtutor.com`.",
-        "Standalone landing page asset URLs constructed by the helper function resolve to `https://growithtutor.com/...`."
+        "`frontend/DEPLOYMENT.md` contains a dedicated, easy-to-follow section describing how to deploy to production (mainnet) and how to verify success.",
+        "The documentation explicitly distinguishes draft expiration behavior from production (production does not expire)."
       ]
     }
   ],
   "constraints": [
-    "Frontend immutable paths must not be edited: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui."
+    "Backend must remain a single Motoko actor in `backend/main.mo` (no additional backend services).",
+    "Do not edit files under `frontend/src/components/ui` or any paths listed as immutable in SYSTEM_CONTEXT."
   ],
   "nonGoals": [
-    "Configuring external DNS records for growithtutor.com.",
-    "Internet Computer custom domain/certificate setup steps outside the codebase."
+    "Adding new product features unrelated to deployment (e.g., new pages, new content, new auth providers).",
+    "Changing the backend data model or requiring a state migration unless strictly necessary for deployment."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

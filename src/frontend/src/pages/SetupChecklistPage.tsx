@@ -7,7 +7,8 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CheckCircle2, Circle, ExternalLink, Info } from 'lucide-react';
 import { contactNumbers, socialLinks, adminAllowlist } from '../content/siteContent';
 import { SITE_NAME } from '../config/siteConfig';
-import { PUBLIC_DOMAIN, getPublicAssetUrl } from '../config/publicDomain';
+import { PUBLIC_DOMAIN } from '../config/publicDomain';
+import { LOGO_URL } from '../config/logoConfig';
 
 export default function SetupChecklistPage() {
   const navigate = useNavigate();
@@ -16,8 +17,6 @@ export default function SetupChecklistPage() {
     title: 'Setup Checklist',
     description: `Complete setup guide for ${SITE_NAME} website configuration.`,
   });
-
-  const logoUrl = getPublicAssetUrl('/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png');
 
   const checklistItems = [
     {
@@ -64,7 +63,24 @@ export default function SetupChecklistPage() {
       title: 'Logo',
       description: 'Logo is configured and displayed in the header and footer.',
       status: 'complete',
-      details: `Logo configured via domain-relative URL: ${logoUrl}`,
+      details: (
+        <div className="space-y-2">
+          <p><strong>Current logo URL:</strong> <code className="px-2 py-1 bg-muted rounded text-sm break-all">{LOGO_URL}</code></p>
+          <Alert>
+            <Info className="h-4 w-4" />
+            <AlertDescription>
+              <strong>To change the logo:</strong>
+              <ul className="list-disc list-inside mt-2 space-y-1 text-sm">
+                <li><strong>Option A (Recommended):</strong> Set the <code className="px-1 bg-muted rounded">VITE_LOGO_URL</code> environment variable</li>
+                <li><strong>Option B:</strong> Edit the fallback value in <code className="px-1 bg-muted rounded">frontend/src/config/logoConfig.ts</code></li>
+              </ul>
+              <p className="mt-2 text-sm">
+                <strong>Note:</strong> The standalone landing page logo is configured separately in <code className="px-1 bg-muted rounded">frontend/static/growwithtutor-standalone/index.html</code>
+              </p>
+            </AlertDescription>
+          </Alert>
+        </div>
+      ),
     },
     {
       title: 'Contact Numbers (WhatsApp & Phone)',
@@ -172,10 +188,10 @@ export default function SetupChecklistPage() {
             <Card key={index}>
               <CardHeader>
                 <div className="flex items-start justify-between">
-                  <div className="flex items-start gap-3 flex-1">
+                  <div className="flex items-start gap-3">
                     {getStatusIcon(item.status)}
-                    <div className="flex-1">
-                      <CardTitle className="text-xl">{item.title}</CardTitle>
+                    <div>
+                      <CardTitle className="text-lg">{item.title}</CardTitle>
                       <CardDescription className="mt-1">{item.description}</CardDescription>
                     </div>
                   </div>
@@ -195,28 +211,17 @@ export default function SetupChecklistPage() {
           ))}
         </div>
 
-        <Card className="border-primary/20 bg-primary/5">
-          <CardHeader>
-            <CardTitle>Admin Access</CardTitle>
-            <CardDescription>
-              To manage blog posts and site settings, you need admin access.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-sm text-muted-foreground">
-              Admin access is controlled by Principal IDs. To become an admin:
-            </p>
-            <ol className="list-decimal list-inside space-y-2 text-sm text-muted-foreground">
-              <li>Log in with Internet Identity to get your Principal ID</li>
-              <li>Add your Principal ID to the adminAllowlist in frontend/src/content/siteContent.ts</li>
-              <li>Redeploy the application</li>
-              <li>Navigate to the admin panel to manage content</li>
-            </ol>
-            <Button onClick={() => navigate({ to: '/admin/blogs' })}>
-              Go to Admin Panel
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="flex gap-4">
+          <Button onClick={() => navigate({ to: '/' })}>
+            Back to Home
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => navigate({ to: '/admin/blogs' })}
+          >
+            Go to Admin Panel
+          </Button>
+        </div>
       </div>
     </div>
   );

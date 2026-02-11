@@ -5,7 +5,7 @@
  * 
  * To change the domain:
  * 1. Set the VITE_PUBLIC_DOMAIN environment variable (e.g., in .env or build config)
- * 2. Or update the fallback value below
+ * 2. The app will automatically use the current hostname when accessed via canister URLs
  * 
  * This configuration is used for:
  * - External asset URLs (logos, images hosted on the domain)
@@ -18,31 +18,23 @@
 /**
  * Get the public domain/hostname for this application.
  * Priority:
- * 1. VITE_PUBLIC_DOMAIN environment variable
- * 2. Default production domain (growithtutor.com)
- * 3. window.location.hostname (runtime fallback for development)
+ * 1. VITE_PUBLIC_DOMAIN environment variable (explicit custom domain override)
+ * 2. window.location.hostname (works for both canister URLs and custom domains)
+ * 3. Fallback to 'growithtutor.com' (only if window is unavailable, e.g., SSR)
  */
 export function getPublicDomain(): string {
-  // Check for environment variable first (explicit override)
+  // Check for environment variable first (explicit override for custom domains)
   if (import.meta.env.VITE_PUBLIC_DOMAIN) {
     return import.meta.env.VITE_PUBLIC_DOMAIN;
   }
   
-  // Production default domain
-  const productionDomain = 'growithtutor.com';
-  
-  // In production builds, always use the production domain
-  if (import.meta.env.PROD) {
-    return productionDomain;
-  }
-  
-  // Development fallback to current hostname
+  // Use current hostname (works for canister URLs like *.ic0.app and custom domains)
   if (typeof window !== 'undefined') {
     return window.location.hostname;
   }
   
-  // Final fallback
-  return productionDomain;
+  // Final fallback (only used during SSR or build-time, not at runtime)
+  return 'growithtutor.com';
 }
 
 /**

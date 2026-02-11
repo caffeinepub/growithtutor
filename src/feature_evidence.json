@@ -2,9 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-configure-the-react-app-to-use-the-public-domain-growithtutor-com-for-public-domain-based-url-generation-public-domain-getpublicurl-getpublicasseturl-ensuring-production-builds-resolve-to-growithtutor-com-rather-than-a-different-environment-provided-value",
-      "featureTitle": "Configure the React app to use the public domain \"growithtutor.com\" for public-domain-based URL generation (PUBLIC_DOMAIN / getPublicUrl / getPublicAssetUrl), ensuring production builds resolve to growithtutor.com rather than a different environment-provided value.",
+      "featureId": "feature-prepare-and-execute-a-production-deployment-for-version-30-to-the-internet-computer-mainnet-ensuring-the-deployed-production-canisters-backend-frontend-are-accessible-via-the-mainnet-canister-urls-and-are-not-subject-to-draft-expiration",
+      "featureTitle": "Prepare and execute a production deployment for Version 30 to the Internet Computer mainnet, ensuring the deployed production canisters (backend + frontend) are accessible via the mainnet canister URLs and are not subject to draft expiration.",
       "files": [
+        "frontend/DEPLOYMENT.md",
         "frontend/src/config/publicDomain.ts"
       ],
       "components": [
@@ -21,10 +22,10 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-standalone-landing-page-domain-configuration-uses-growithtutor-com-consistently-the-standalone-public-domain-constant-must-be-set-to-growithtutor-com",
-      "featureTitle": "Ensure the standalone landing page domain configuration uses \"growithtutor.com\" consistently (the standalone public domain constant must be set to growithtutor.com).",
+      "featureId": "feature-update-frontend-deployment-md-to-include-a-clear-end-to-end-section-for-promoting-an-already-working-version-version-30-to-production-including-prerequisites-cycles-the-exact-command-s-to-deploy-to-network-ic-and-a-brief-note-explaining-that-production-deployments-do-not-expire-unlike-drafts",
+      "featureTitle": "Update `frontend/DEPLOYMENT.md` to include a clear, end-to-end section for promoting an already-working version (Version 30) to production, including prerequisites (cycles), the exact command(s) to deploy to `--network ic`, and a brief note explaining that production deployments do not expire unlike drafts.",
       "files": [
-        "frontend/static/growwithtutor-standalone/index.html"
+        "frontend/DEPLOYMENT.md"
       ],
       "components": [
         "core-infrastructure@1.0.2",

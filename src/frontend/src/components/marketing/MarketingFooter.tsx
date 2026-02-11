@@ -5,7 +5,7 @@ import { contactNumbers, socialLinks, optionalContactInfo } from '../../content/
 import { useNavigate } from '@tanstack/react-router';
 import { getGenericWhatsAppLink, openEmailCompose } from '../../lib/whatsapp';
 import { SITE_NAME } from '../../config/siteConfig';
-import { getPublicAssetUrl } from '../../config/publicDomain';
+import { LOGO_URL } from '../../config/logoConfig';
 
 export default function MarketingFooter() {
   const [imageError, setImageError] = useState(false);
@@ -29,8 +29,6 @@ export default function MarketingFooter() {
     );
   };
 
-  const logoUrl = getPublicAssetUrl('/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png');
-
   return (
     <footer className="border-t bg-muted/30">
       <div className="container py-12 md:py-16">
@@ -41,8 +39,8 @@ export default function MarketingFooter() {
               <span className="text-xl font-bold text-foreground">{SITE_NAME}</span>
               {!imageError && (
                 <img
-                  src={logoUrl}
-                  alt={`${SITE_NAME} logo`}
+                  src={LOGO_URL}
+                  alt="Logo"
                   className="h-12 w-auto object-contain"
                   onError={() => setImageError(true)}
                 />

@@ -48,18 +48,86 @@ This document describes how to build and deploy the GrowWithTutor application to
    dfx deploy frontend
    ```
 
-## Deploy to IC Mainnet
+## Promote Version 30 to Production (Mainnet)
 
-To deploy to the Internet Computer mainnet:
+To deploy your application to the Internet Computer mainnet (production):
 
-1. **Ensure you have cycles** for deployment (required for mainnet)
+### Prerequisites
 
-2. **Deploy to mainnet**:
+1. **Ensure you have cycles** for deployment:
+   - Mainnet deployments require cycles (the "gas" of the Internet Computer)
+   - You can obtain cycles through the [NNS dapp](https://nns.ic0.app/) or cycles faucet
+   - Check your cycles balance: `dfx wallet --network ic balance`
+
+2. **Verify your identity**:
+   ```bash
+   dfx identity whoami
+   dfx identity get-principal
+   ```
+
+### Deployment Steps
+
+1. **Deploy to mainnet** (both backend and frontend):
    ```bash
    dfx deploy --network ic
    ```
 
-3. **Access your application** at the canister URL provided after deployment
+   This command will:
+   - Deploy the backend canister to mainnet
+   - Build the frontend with production optimizations
+   - Deploy the frontend canister to mainnet
+
+2. **Find your canister URLs** after deployment:
+   
+   The deployment output will show URLs like:
+   ```
+   Frontend canister via browser:
+     frontend: https://<canister-id>.ic0.app/
+   
+   Backend canister via Candid interface:
+     backend: https://<canister-id>.ic0.app/?id=<backend-canister-id>
+   ```
+
+   You can also retrieve URLs anytime with:
+   ```bash
+   dfx canister --network ic id frontend
+   dfx canister --network ic id backend
+   ```
+
+   Your app will be accessible at: `https://<frontend-canister-id>.ic0.app/`
+   (Also available via `.icp0.io` and `.raw.ic0.app` domains)
+
+### Post-Deploy Verification
+
+After deploying to mainnet, verify that everything works correctly:
+
+1. **Open the home page**:
+   - Navigate to `https://<frontend-canister-id>.ic0.app/`
+   - Verify the page loads without errors
+   - Check that the logo, images, and styling appear correctly
+
+2. **Test public navigation**:
+   - Navigate to `/blogs` and verify published blog posts are visible
+   - Test the student and teacher forms
+   - Verify the contact page works
+
+3. **Verify admin access control**:
+   - Navigate to `/admin/blogs` (or any admin route)
+   - Confirm you're prompted to log in with Internet Identity
+   - After logging in, verify you can access the admin panel
+   - Test creating/editing/publishing blog posts
+
+4. **Check maintenance mode** (optional):
+   - In the admin panel, test taking the site offline
+   - Verify public routes show the maintenance screen
+   - Confirm admin routes remain accessible
+
+### Important Notes
+
+- **Production deployments do not expire**: Unlike draft apps on Caffeine, mainnet deployments remain live indefinitely (as long as the canisters have cycles)
+- **Cycles management**: Monitor your canister cycles balance and top up as needed to keep your app running
+- **Custom domains**: The app works out-of-the-box with canister URLs (*.ic0.app). To use a custom domain, see the "Changing the Domain" section below
+- **Updates**: To update your production app, simply run `dfx deploy --network ic` again with your changes
 
 ## Unpublishing / Maintenance Mode
 
@@ -98,7 +166,7 @@ The application includes a maintenance mode feature that allows admins to tempor
 
 ## Changing the Domain
 
-If you need to change the public domain/hostname for your application (e.g., from `growithtutor.com` to your own domain), follow these steps:
+If you need to change the public domain/hostname for your application (e.g., from the default canister URL to your own custom domain), follow these steps:
 
 ### 1. DNS Configuration (External)
 

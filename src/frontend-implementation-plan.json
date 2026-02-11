@@ -1,36 +1,41 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Set public domain to growithtutor.com",
+  "title": "Version 30 production deployment (frontend readiness + documentation)",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Force production public-domain URL generation to resolve to growithtutor.com via PUBLIC_DOMAIN/getPublicUrl/getPublicAssetUrl while avoiding edits to immutable paths.",
+      "summary": "Ensure the production frontend build works when accessed via mainnet canister URLs and document post-deploy verification steps for Version 30.",
       "acceptanceCriteria": [
-        "When the app is built for production with the project’s default configuration, `PUBLIC_DOMAIN` evaluates to `growithtutor.com`.",
-        "Any code paths that generate public URLs via `getPublicUrl(...)` / `getPublicAssetUrl(...)` produce `https://growithtutor.com/...` URLs.",
-        "No changes are made to read-only paths listed in `frontend.immutablePaths`."
+        "Running a mainnet deployment (e.g., via `dfx deploy --network ic`) completes successfully for both backend and frontend canisters.",
+        "The app is reachable via the mainnet canister URL(s) after deployment and loads without errors.",
+        "A short post-deploy verification is performed: load the home page, navigate to /blogs, and confirm admin routes remain gated behind Internet Identity as before."
       ],
       "file_operations": [
         {
           "path": "frontend/src/config/publicDomain.ts",
           "operation": "modify",
-          "description": "Adjust getPublicDomain() resolution order so production builds default to the fixed domain growithtutor.com (not window.location.hostname or other environment-provided host), while still allowing an explicit override only when intentionally set; keep getPublicUrl/getPublicAssetUrl consistent with https://growithtutor.com/ URL generation."
+          "description": "Update production domain resolution so the app remains fully functional when accessed via mainnet frontend canister URLs (e.g., *.ic0.app / *.icp0.io), while still allowing VITE_PUBLIC_DOMAIN overrides for custom domains. Ensure any self-referential links/asset URL helpers do not force a custom domain when running under a canister hostname."
+        },
+        {
+          "path": "frontend/DEPLOYMENT.md",
+          "operation": "modify",
+          "description": "Add a concise post-deploy verification checklist section for the mainnet deployment that specifically covers: opening the home page, navigating to /blogs, and confirming /admin routes remain gated behind Internet Identity and existing admin guard behavior."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Ensure the standalone landing page constant and helper generate asset URLs using https://growithtutor.com consistently.",
+      "summary": "Update frontend/DEPLOYMENT.md with an end-to-end guide for promoting Version 30 to mainnet production, including prerequisites, exact commands, verification, and draft-vs-production expiration behavior.",
       "acceptanceCriteria": [
-        "`frontend/static/growwithtutor-standalone/index.html` has `STANDALONE_PUBLIC_DOMAIN` set to `growithtutor.com`.",
-        "Standalone landing page asset URLs constructed by the helper function resolve to `https://growithtutor.com/...`."
+        "`frontend/DEPLOYMENT.md` contains a dedicated, easy-to-follow section describing how to deploy to production (mainnet) and how to verify success.",
+        "The documentation explicitly distinguishes draft expiration behavior from production (production does not expire)."
       ],
       "file_operations": [
         {
-          "path": "frontend/static/growwithtutor-standalone/index.html",
+          "path": "frontend/DEPLOYMENT.md",
           "operation": "modify",
-          "description": "Keep STANDALONE_PUBLIC_DOMAIN set to growithtutor.com and update the standalone helper/related link construction so any URLs derived from the standalone domain configuration consistently resolve to https://growithtutor.com/... (including ensuring no remaining hardcoded mismatching domain values are used for URL construction)."
+          "description": "Add a dedicated 'Promote Version 30 to Production (Mainnet)' section including: prerequisites (cycles availability), the exact `dfx deploy --network ic` command(s) for deploying to production, where to find the mainnet canister URL(s) after deploy, a brief verification checklist, and an explicit note that production deployments on mainnet do not expire (unlike drafts)."
         }
       ]
     }

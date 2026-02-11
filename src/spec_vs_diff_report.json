@@ -1,37 +1,58 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T16:34:05.750Z",
-  "summary": "REQ-1 and REQ-2 appear to be implemented: the React app’s public domain helpers default to `growithtutor.com` in production and the standalone landing page sets `STANDALONE_PUBLIC_DOMAIN` to `growithtutor.com`. The diff does not show edits to the listed immutable paths. Some extra functionality (UTM/link handling, logo URL injection, project state tracking) was added that is not explicitly requested.",
-  "missing_requirements": [],
+  "generatedAt": "2026-02-11T01:42:46.595Z",
+  "summary": "REQ-2 appears to be implemented via an added/expanded mainnet production deployment section in `frontend/DEPLOYMENT.md`. REQ-1 (actually performing/ensuring a successful mainnet deploy and confirming reachability/verification) is not demonstrably implemented from the provided diff summary, and several code changes (backend access control + frontend logo/public domain configuration) look unrelated to the requested deployment-only scope.",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "Prepare and execute a production deployment for Version 30 to the Internet Computer mainnet, ensuring the deployed production canisters (backend + frontend) are accessible via the mainnet canister URLs and are not subject to draft expiration.",
+      "reason": "The diff summary shows documentation updates and code/config changes, but does not include evidence of actual mainnet deployment preparation/execution artifacts (e.g., CI/release scripts, `dfx.json`/canister config updates, pinned canister IDs, or any deployment output/verification results). From the diff alone, it cannot be confirmed that `dfx deploy --network ic` was run successfully, that canisters are accessible via mainnet URLs, or that post-deploy verification was performed.",
+      "evidence": [
+        "frontend/DEPLOYMENT.md",
+        "backend/main.mo",
+        "frontend/src/config/logoConfig.ts",
+        "frontend/src/config/publicDomain.ts"
+      ]
+    }
+  ],
   "hallucinated_features": [
     {
-      "description": "Standalone landing page adds runtime DOM manipulation to inject logo URLs and modify the caffeine.ai link with UTM parameters (beyond simply setting the domain constant and ensuring helper-built asset URLs resolve correctly).",
-      "reason": "REQ-2 only asks to set `STANDALONE_PUBLIC_DOMAIN` and ensure helper-constructed asset URLs resolve to `https://growithtutor.com/...`; additional behaviors (logo injection, UTM rewriting) are not requested.",
-      "evidence": [
-        "frontend/static/growwithtutor-standalone/index.html"
-      ]
-    },
-    {
-      "description": "Added/updated a project tracking/state file with new feature request entries (AR-1/AR-2/AR-3) and status metadata.",
-      "reason": "BuildRequest does not mention maintaining or changing `project_state.json`; this is extra scope.",
-      "evidence": [
-        "project_state.json"
-      ]
-    },
-    {
-      "description": "Introduced/expanded centralized public-domain configuration module including environment-variable override behavior and extra exported constants (`PUBLIC_URL`).",
-      "reason": "REQ-1 requires configuring public-domain-based URL generation and `PUBLIC_DOMAIN` defaulting to `growithtutor.com` for production; extra exports/behaviors (e.g., `PUBLIC_URL`) are not explicitly requested.",
+      "description": "Centralized public domain configuration with `VITE_PUBLIC_DOMAIN`, runtime hostname fallback, and helpers for constructing public URLs/asset URLs.",
+      "reason": "Not requested by REQ-1/REQ-2 (deployment + deployment documentation). This is a new configuration feature unrelated to the stated non-goal of avoiding new product features outside deployment.",
       "evidence": [
         "frontend/src/config/publicDomain.ts"
+      ]
+    },
+    {
+      "description": "Centralized logo URL selection logic with `VITE_LOGO_URL` override, local canister asset fallback, and custom-domain external logo path behavior.",
+      "reason": "Not requested by REQ-1/REQ-2. This is application behavior/configuration work beyond deployment documentation and may be considered a new/unrelated feature.",
+      "evidence": [
+        "frontend/src/config/logoConfig.ts"
+      ]
+    },
+    {
+      "description": "Backend authorization/admin bootstrap and email/allowed-admin allowlist mechanisms, plus site live state handling changes.",
+      "reason": "REQ-1/REQ-2 do not ask for backend behavioral/security changes; non-goals explicitly discourage unrelated feature work and changing backend data model unless strictly necessary for deployment.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Project tracking/state updates indicating in-progress/pending work items.",
+      "reason": "Not requested as part of deployment or documentation requirements; appears to be internal process metadata rather than implementation required by the BuildRequest.",
+      "evidence": [
+        "project_state.json"
       ]
     }
   ],
   "confidence": 0.74,
   "changed_files": [
+    "backend/main.mo",
     "frontend-file-summaries.txt",
+    "frontend/DEPLOYMENT.md",
+    "frontend/src/config/logoConfig.ts",
     "frontend/src/config/publicDomain.ts",
-    "frontend/static/growwithtutor-standalone/index.html",
     "project_state.json"
   ]
 }

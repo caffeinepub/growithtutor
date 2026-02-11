@@ -1,24 +1,22 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "New project with a planned custom domain setup for growithtutor.com.",
-  "architectural_notes": [
-    "Planned custom domain: growithtutor.com"
-  ],
+  "summary": "New project",
+  "architectural_notes": [],
   "known_issues": [],
   "isFixRequest": false,
   "existing_features": [
     {
-      "id": "feature-configure-the-react-app-to-use-the-public-domain-growithtutor-com-for-public-domain-based-url-generation-public-domain-getpublicurl-getpublicasseturl-ensuring-production-builds-resolve-to-growithtutor-com-rather-than-a-different-environment-provided-value",
-      "title": "Configure the React app to use the public domain \"growithtutor.com\" for public-domain-based URL generation (PUBLIC_DOMAIN / getPublicUrl / getPublicAssetUrl), ensuring production builds resolve to growithtutor.com rather than a different environment-provided value.",
+      "id": "feature-prepare-and-execute-a-production-deployment-for-version-30-to-the-internet-computer-mainnet-ensuring-the-deployed-production-canisters-backend-frontend-are-accessible-via-the-mainnet-canister-urls-and-are-not-subject-to-draft-expiration",
+      "title": "Prepare and execute a production deployment for Version 30 to the Internet Computer mainnet, ensuring the deployed production canisters (backend + frontend) are accessible via the mainnet canister URLs and are not subject to draft expiration.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-ensure-the-standalone-landing-page-domain-configuration-uses-growithtutor-com-consistently-the-standalone-public-domain-constant-must-be-set-to-growithtutor-com",
-      "title": "Ensure the standalone landing page domain configuration uses \"growithtutor.com\" consistently (the standalone public domain constant must be set to growithtutor.com).",
+      "id": "feature-update-frontend-deployment-md-to-include-a-clear-end-to-end-section-for-promoting-an-already-working-version-version-30-to-production-including-prerequisites-cycles-the-exact-command-s-to-deploy-to-network-ic-and-a-brief-note-explaining-that-production-deployments-do-not-expire-unlike-drafts",
+      "title": "Update `frontend/DEPLOYMENT.md` to include a clear, end-to-end section for promoting an already-working version (Version 30) to production, including prerequisites (cycles), the exact command(s) to deploy to `--network ic`, and a brief note explaining that production deployments do not expire unlike drafts.",
       "reqIds": [
         "REQ-2"
       ],
@@ -28,12 +26,12 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Change/set the project domain to \"growithtutor.com\"",
+      "summary": "Deploy Version 30 to production",
       "reqIds": [],
-      "status": "pending"
+      "status": "in_progress"
     }
   ],
-  "projectName": "Set public domain to growithtutor.com",
+  "projectName": "Deploy Version 30 to production",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

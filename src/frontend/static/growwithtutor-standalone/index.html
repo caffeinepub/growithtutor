@@ -1,210 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Growithtutor - Expert Tutoring for Classes 1-12</title>
-  <meta name="description" content="Transform your learning journey with personalized one-on-one tutoring. Expert tutors for all subjects from Class 1 to 12.">
-  <link rel="stylesheet" href="styles.css">
-  <script>
-    /**
-     * Standalone Landing Page Domain Configuration
-     * 
-     * IMPORTANT: This is the domain configuration for the standalone HTML page.
-     * To change the domain, update the STANDALONE_PUBLIC_DOMAIN constant below.
-     * 
-     * For the React app domain configuration, see:
-     * - frontend/src/config/publicDomain.ts
-     * - VITE_PUBLIC_DOMAIN environment variable
-     */
-    const STANDALONE_PUBLIC_DOMAIN = 'growithtutor.com';
-    
-    /**
-     * Construct a full URL to an asset hosted on the public domain.
-     */
-    function getStandaloneAssetUrl(path) {
-      const cleanPath = path.startsWith('/') ? path : '/' + path;
-      return 'https://' + STANDALONE_PUBLIC_DOMAIN + cleanPath;
-    }
-    
-    // Set logo URLs when DOM is ready
-    document.addEventListener('DOMContentLoaded', function() {
-      const logoPath = '/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png';
-      const logoUrl = getStandaloneAssetUrl(logoPath);
-      
-      // Set header logo
-      const headerLogo = document.querySelector('.logo-image');
-      if (headerLogo) {
-        headerLogo.src = logoUrl;
-      }
-      
-      // Set footer logo
-      const footerLogo = document.querySelector('.footer-logo-image');
-      if (footerLogo) {
-        footerLogo.src = logoUrl;
-      }
-      
-      // Update UTM content in footer caffeine.ai link
-      const caffeineLink = document.querySelector('a[href*="caffeine.ai"]');
-      if (caffeineLink) {
-        const appIdentifier = encodeURIComponent(STANDALONE_PUBLIC_DOMAIN);
-        caffeineLink.href = 'https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=' + appIdentifier;
-      }
-    });
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrowWithTutor - Expert Home Tutoring Services</title>
+    <meta name="description" content="Professional home tutoring services for all subjects and classes. Expert tutors, personalized learning, and flexible scheduling.">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="container">
-      <div class="header-content">
-        <div class="logo">
-          <span class="logo-text">Growithtutor</span>
-          <img 
-            src="" 
-            alt="Growithtutor logo" 
-            class="logo-image"
-            onerror="this.style.display='none';"
-          />
+    <script>
+        // ============================================
+        // CONFIGURATION - Edit these values
+        // ============================================
+        
+        // Public domain configuration (used for UTM tracking and asset URLs)
+        const STANDALONE_PUBLIC_DOMAIN = 'growithtutor.com';
+        
+        // Logo URL configuration (used for header and footer logos)
+        // You can use:
+        // - An external URL: 'https://yourdomain.com/path/to/logo.png'
+        // - A domain-relative path: '/wp-content/uploads/2025/08/logo.png'
+        // - A local file: './logo.png' (must be in the same directory)
+        const STANDALONE_LOGO_URL = `https://${STANDALONE_PUBLIC_DOMAIN}/wp-content/uploads/2025/08/cropped-cropped-growithtutor-3d-new-logo-150x150.png`;
+        
+        // ============================================
+        // END CONFIGURATION
+        // ============================================
+        
+        // Generate UTM tracking parameter using the configured domain
+        const APP_IDENTIFIER = encodeURIComponent(STANDALONE_PUBLIC_DOMAIN);
+        const CAFFEINE_LINK = `https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${APP_IDENTIFIER}`;
+    </script>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-text">GrowWithTutor</span>
+                    <img class="logo-image" alt="Logo" onerror="this.style.display='none'">
+                </div>
+                <nav class="nav desktop-nav">
+                    <a href="#home">Home</a>
+                    <a href="#services">Services</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#testimonials">Testimonials</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Toggle menu">
+                    <span class="hamburger"></span>
+                </button>
+            </div>
         </div>
-        <nav class="nav">
-          <a href="#hero" class="nav-link">Home</a>
-          <a href="#services" class="nav-link">Services</a>
-          <a href="#how-it-works" class="nav-link">How It Works</a>
-          <a href="#testimonials" class="nav-link">Testimonials</a>
-          <a href="#faq" class="nav-link">FAQ</a>
-          <a href="#contact" class="nav-link">Contact</a>
+        <nav class="mobile-nav">
+            <a href="#home">Home</a>
+            <a href="#services">Services</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#contact">Contact</a>
         </nav>
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
-    </div>
-  </header>
+    </header>
 
-  <!-- Mobile Menu -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#hero" class="mobile-menu-link">Home</a>
-    <a href="#services" class="mobile-menu-link">Services</a>
-    <a href="#how-it-works" class="mobile-menu-link">How It Works</a>
-    <a href="#testimonials" class="mobile-menu-link">Testimonials</a>
-    <a href="#faq" class="mobile-menu-link">FAQ</a>
-    <a href="#contact" class="mobile-menu-link">Contact</a>
-  </div>
-
-  <!-- Hero Section -->
-  <section id="hero" class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <div class="hero-text">
-          <h1 class="hero-title" id="heroTitle"></h1>
-          <p class="hero-subtitle" id="heroSubtitle"></p>
-          <div class="hero-buttons">
-            <a href="#contact" class="btn btn-primary">Get Started</a>
-            <a href="#contact" class="btn btn-secondary">Join as Teacher</a>
-          </div>
-          <ul class="hero-features" id="heroFeatures"></ul>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Transform Your Learning Journey with Expert Tutors</h1>
+                <p class="hero-subtitle">Personalized home tutoring for all subjects and classes. Achieve academic excellence with our experienced educators.</p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">Get Started</a>
+                    <a href="#how-it-works" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
         </div>
-        <div class="hero-image">
-          <img src="/assets/generated/tutoring-hero.dim_1600x900.png" alt="Online tutoring illustration">
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Our Tutoring Services</h2>
+            <div class="services-grid" id="services-grid"></div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Value Proposition Section -->
-  <section id="value-proposition" class="section">
-    <div class="container">
-      <h2 class="section-title" id="valuePropositionTitle"></h2>
-      <div class="grid" id="valuePropositionGrid"></div>
-    </div>
-  </section>
-
-  <!-- Services Section -->
-  <section id="services" class="section section-alt">
-    <div class="container">
-      <h2 class="section-title">Our Tutoring Services</h2>
-      <div class="grid" id="servicesGrid"></div>
-    </div>
-  </section>
-
-  <!-- How It Works Section -->
-  <section id="how-it-works" class="section">
-    <div class="container">
-      <h2 class="section-title">How It Works</h2>
-      <div class="grid" id="howItWorksGrid"></div>
-    </div>
-  </section>
-
-  <!-- Testimonials Section -->
-  <section id="testimonials" class="section section-alt">
-    <div class="container">
-      <h2 class="section-title">What Our Students Say</h2>
-      <div class="grid" id="testimonialsGrid"></div>
-    </div>
-  </section>
-
-  <!-- FAQ Section -->
-  <section id="faq" class="section">
-    <div class="container">
-      <h2 class="section-title">Frequently Asked Questions</h2>
-      <div class="faq-container" id="faqContainer"></div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="section section-alt">
-    <div class="container">
-      <h2 class="section-title">Get in Touch</h2>
-      <div class="grid" id="contactGrid"></div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <div class="footer-logo">
-            <span class="footer-logo-text">Growithtutor</span>
-            <img 
-              src="" 
-              alt="Growithtutor logo" 
-              class="footer-logo-image"
-              onerror="this.style.display='none';"
-            />
-          </div>
-          <p class="footer-about" id="footerAbout"></p>
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps-grid" id="steps-grid"></div>
         </div>
-        <div class="footer-section">
-          <h3 class="footer-title">Quick Links</h3>
-          <ul class="footer-links">
-            <li><a href="#hero">Home</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#how-it-works">How It Works</a></li>
-            <li><a href="#testimonials">Testimonials</a></li>
-            <li><a href="#faq">FAQ</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h3 class="footer-title">Contact</h3>
-          <ul class="footer-contact" id="footerContact"></ul>
-        </div>
-        <div class="footer-section">
-          <h3 class="footer-title">Follow Us</h3>
-          <div class="footer-social" id="footerSocial"></div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p id="footerCopyright"></p>
-        <p>Built with ❤️ using <a href="https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=growithtutor.com" target="_blank" rel="noopener noreferrer">caffeine.ai</a></p>
-      </div>
-    </div>
-  </footer>
+    </section>
 
-  <script src="script.js"></script>
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Students Say</h2>
+            <div class="testimonials-grid" id="testimonials-grid"></div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-grid" id="contact-grid"></div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-list" id="faq-list"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <span class="logo-text">GrowWithTutor</span>
+                        <img class="logo-image" alt="Logo" onerror="this.style.display='none'">
+                    </div>
+                    <p>Empowering students to achieve their academic goals through personalized tutoring.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul id="footer-contact"></ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links" id="social-links"></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> GrowWithTutor. All rights reserved.</p>
+                <p>Built with ❤️ using <a id="caffeine-link" href="#" target="_blank" rel="noopener noreferrer">caffeine.ai</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Set logo URLs after DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set header logo
+            const headerLogo = document.querySelector('.header .logo-image');
+            if (headerLogo) {
+                headerLogo.src = STANDALONE_LOGO_URL;
+            }
+            
+            // Set footer logo
+            const footerLogo = document.querySelector('.footer .logo-image');
+            if (footerLogo) {
+                footerLogo.src = STANDALONE_LOGO_URL;
+            }
+            
+            // Set Caffeine attribution link
+            const caffeineLink = document.getElementById('caffeine-link');
+            if (caffeineLink) {
+                caffeineLink.href = CAFFEINE_LINK;
+            }
+        });
+    </script>
 </body>
 </html>
